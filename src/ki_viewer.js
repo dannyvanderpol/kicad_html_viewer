@@ -2,11 +2,13 @@
 
 'use strict';
 
+import { KiReader } from './ki_reader.js';
+
 class KiViewer
 {
     constructor(canvas, filename)
     {
-        this.debug = debugLevels.VIEWER;
+        this.debug = debugLevels.OFF | debugLevels.READER;
         this.canvas = canvas;
         this.filename = filename;
     }
@@ -19,12 +21,15 @@ class KiViewer
             console.log('Filename:', this.filename);
             console.log('Canvas:', this.canvas);
         }
+        const reader = new KiReader(this.filename, this.debug & debugLevels.READER);
+        this.content = await reader.loadFile();
     }
 }
 
 const debugLevels = {
     OFF: 0x00,
-    VIEWER: 0x01
+    VIEWER: 0x01,
+    READER: 0x02
 }
 
 // Generate view when DOM is ready

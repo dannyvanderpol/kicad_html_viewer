@@ -40,7 +40,8 @@ export class KiReader
     _parseFile(data)
     {
         let content = {
-        }
+            type: null
+        };
         let sections = this._getSections(data);
         if (sections.length != 1)
         {

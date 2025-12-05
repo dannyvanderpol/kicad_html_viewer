@@ -2,6 +2,7 @@
 
 'use strict';
 
+import { KiDrawer } from './ki_drawer.js';
 import { KiReader } from './ki_reader.js';
 import { pageLayout } from './page_layout.js';
 
@@ -9,7 +10,7 @@ class KiViewer
 {
     constructor(canvas, filename)
     {
-        this.debug = debugLevels.OFF | debugLevels.READER;
+        this.debug = debugLevels.ALL;
         this.canvas = canvas;
         this.filename = filename;
         this.content = null;
@@ -25,13 +26,17 @@ class KiViewer
         if (this.debug & debugLevels.GENERAL) console.log('Load default sheet');
         reader = new KiReader('pageLayout', this.debug & debugLevels.READER);
         this.sheet = reader.parseFile(pageLayout);
+
+        const drawer = new KiDrawer(this.canvas, this.debug & debugLevels.DRAWER);
     }
 }
 
 const debugLevels = {
     OFF: 0x00,
     VIEWER: 0x01,
-    READER: 0x02
+    READER: 0x02,
+    DRAWER: 0x04,
+    ALL: 0xFF
 }
 
 // Generate view when DOM is ready

@@ -39,7 +39,10 @@ export class KiReader
 
     parseFile(data)
     {
-        let content = {};
+        let content = {
+            lines: [],
+            rectangles: []
+        };
         let sections = this._getSections(data);
         if (sections.length != 1)
         {
@@ -53,8 +56,16 @@ export class KiReader
             name = this._getSectionName(section);
             switch (name)
             {
+                case 'line':
+                    content.lines.push(this._readGraphics(section, name));
+                    break;
+
                 case 'paper':
                     content.paper = this._getValues(section)[0];
+                    break;
+
+                case 'rect':
+                    content.rectangles.push(this._readGraphics(section, name));
                     break;
 
                 case 'setup':
@@ -131,6 +142,57 @@ export class KiReader
         for (const subSection of this._getSections(section.substring(1, section.length - 1)))
         {
             properties[this._getSectionName(subSection)] = this._getValues(subSection)[0];
+        }
+        return properties;
+    }
+
+    _readGraphics(section, type)
+    {
+        let properties = {
+            type: type,
+            thickness: 0,
+            start: { x: 0, y: 0, relative_to: null },
+            end: { x: 0, y: 0, relative_to: null },
+            repeat: 1,
+            increment_x: 0,
+            increment_y: 0,
+        };
+        for (const subSection of this._getSections(section.substring(1, section.length - 1)))
+        {
+            let name = this._getSectionName(subSection);
+            let values = this._getValues(subSection);
+            switch (name)
+            {
+                case 'start':
+                    properties.start.x = parseFloat(values[0]);
+                    properties.start.y = parseFloat(values[1]);
+                    if (values.length > 2)
+                    {
+                        properties.start.relative_to = values[2];
+                    }
+                    break;
+
+                case 'end':
+                    properties.end.x = parseFloat(values[0]);
+                    properties.end.y = parseFloat(values[1]);
+                    if (values.length > 2)
+                    {
+                        properties.end.relative_to = values[2];
+                    }
+                    break;
+
+                case 'repeat':
+                    properties.repeat = parseInt(values[0]);
+                    break;
+
+                case 'incrx':
+                    properties.increment_x = parseFloat(values[0]);
+                    break;
+
+                case 'incry':
+                    properties.increment_y = parseFloat(values[0]);
+                    break;
+            }
         }
         return properties;
     }

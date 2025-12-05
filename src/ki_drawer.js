@@ -33,11 +33,10 @@ export class KiDrawer
         this.drawingType = content.type;
         if (this.showDebug) console.log('Drawer: Drawing type:', this.drawingType);
         this.setup = content.setup;
-        this.margins = { left: 0, right: 0, top: 0, bottom: 0 };
-        if (this.setup.left_margin) this.margins.left = parseFloat(this.setup.left_margin);
-        if (this.setup.right_margin) this.margins.right = parseFloat(this.setup.right_margin);
-        if (this.setup.top_margin) this.margins.top = parseFloat(this.setup.top_margin);
-        if (this.setup.bottom_margin) this.margins.bottom = parseFloat(this.setup.bottom_margin);
+        this.margins.left = this.setup.left_margin ? parseFloat(this.setup.left_margin) : 0;
+        this.margins.right = this.setup.right_margin ? parseFloat(this.setup.right_margin) : 0;
+        this.margins.top = this.setup.top_margin ? parseFloat(this.setup.top_margin) : 0;
+        this.margins.bottom = this.setup.bottom_margin ? parseFloat(this.setup.bottom_margin) : 0;
         this._drawObjects(content);
         this.drawingType = null;
     }
@@ -204,7 +203,7 @@ export class KiDrawer
         {
             case 'line':
             case 'rect':
-                thickness = drawingDefaults.lineThickness;
+                thickness = this.setup.lineWidth ? parseFloat(this.setup.lineWidth) : drawingDefaults.lineThickness;
                 break;
 
             default:
@@ -214,7 +213,7 @@ export class KiDrawer
     }
 }
 
-export const drawingDefaults = {
+const drawingDefaults = {
     pageOutline: 0.3,       // 0.3 units
     lineThickness: 0.152,   // 6 mil
     wireThickness: 0.152,   // 6 mil

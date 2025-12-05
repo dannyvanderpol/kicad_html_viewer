@@ -39,9 +39,7 @@ export class KiReader
 
     parseFile(data)
     {
-        let content = {
-            type: null
-        };
+        let content = {};
         let sections = this._getSections(data);
         if (sections.length != 1)
         {
@@ -57,6 +55,10 @@ export class KiReader
             {
                 case 'paper':
                     content.paper = this._getValues(section)[0];
+                    break;
+
+                case 'setup':
+                    content.setup = this._getProperties(section);
                     break;
 
                 default:
@@ -121,5 +123,15 @@ export class KiReader
             value = section.substring(pos + 1, section.length - 1).trim();
         }
         return value.replace(/^"(.*)"$/, '$1').split(' ');
+    }
+
+    _getProperties(section)
+    {
+        let properties = {};
+        for (const subSection of this._getSections(section.substring(1, section.length - 1)))
+        {
+            properties[this._getSectionName(subSection)] = this._getValues(subSection)[0];
+        }
+        return properties;
     }
 }

@@ -1,4 +1,6 @@
-(kicad_wks
+/* Default page layout */
+
+export const pageLayout = `(kicad_wks
 	(version 20231118)
 	(generator "pl_editor")
 	(generator_version "9.0")
@@ -91,7 +93,7 @@
 		(repeat 100)
 		(incry 50)
 	)
-	(tbtext "Date: ${ISSUE_DATE}"
+	(tbtext "Date: \${ISSUE_DATE}"
 		(name "")
 		(pos 87 6.9)
 	)
@@ -100,7 +102,7 @@
 		(start 110 5.5)
 		(end 2 5.5)
 	)
-	(tbtext "${KICAD_VERSION}"
+	(tbtext "\${KICAD_VERSION}"
 		(name "")
 		(pos 109 4.1)
 		(comment "Kicad version")
@@ -110,17 +112,17 @@
 		(start 110 8.5)
 		(end 2 8.5)
 	)
-	(tbtext "Rev: ${REVISION}"
+	(tbtext "Rev: \${REVISION}"
 		(name "")
 		(pos 24 6.9)
 		(font bold)
 	)
-	(tbtext "Size: ${PAPER}"
+	(tbtext "Size: \${PAPER}"
 		(name "")
 		(pos 109 6.9)
 		(comment "Paper format name")
 	)
-	(tbtext "Id: ${#}/${##}"
+	(tbtext "Id: \${#}/\${##}"
 		(name "")
 		(pos 24 4.1)
 		(comment "Sheet id")
@@ -130,13 +132,13 @@
 		(start 110 12.5)
 		(end 2 12.5)
 	)
-	(tbtext "Title: ${TITLE}"
+	(tbtext "Title: \${TITLE}"
 		(name "")
 		(pos 109 10.7)
 		(font
 			(size 2 2) bold italic)
 	)
-	(tbtext "File: ${FILENAME}"
+	(tbtext "File: \${FILENAME}"
 		(name "")
 		(pos 109 14.3)
 	)
@@ -145,32 +147,32 @@
 		(start 110 18.5)
 		(end 2 18.5)
 	)
-	(tbtext "Sheet: ${SHEETPATH}"
+	(tbtext "Sheet: \${SHEETPATH}"
 		(name "")
 		(pos 109 17)
 	)
-	(tbtext "${COMPANY}"
+	(tbtext "\${COMPANY}"
 		(name "")
 		(pos 109 20)
 		(font bold)
 		(comment "Company name")
 	)
-	(tbtext "${COMMENT1}"
+	(tbtext "\${COMMENT1}"
 		(name "")
 		(pos 109 23)
 		(comment "Comment 0")
 	)
-	(tbtext "${COMMENT2}"
+	(tbtext "\${COMMENT2}"
 		(name "")
 		(pos 109 26)
 		(comment "Comment 1")
 	)
-	(tbtext "${COMMENT3}"
+	(tbtext "\${COMMENT3}"
 		(name "")
 		(pos 109 29)
 		(comment "Comment 2")
 	)
-	(tbtext "${COMMENT4}"
+	(tbtext "\${COMMENT4}"
 		(name "")
 		(pos 109 32)
 		(comment "Comment 3")
@@ -185,4 +187,4 @@
 		(start 26 8.5)
 		(end 26 2)
 	)
-)
+)`;

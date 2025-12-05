@@ -25,7 +25,7 @@ export class KiReader
             else
             {
                 const text = await response.text();
-                content = this._parseFile(text);
+                content = this.parseFile(text);
                 content.filename = this.filename;
                 if (this.showDebug) console.log('Reader: file loaded successfully');
             }
@@ -37,7 +37,7 @@ export class KiReader
         return content;
     }
 
-    _parseFile(data)
+    parseFile(data)
     {
         let content = {
             type: null

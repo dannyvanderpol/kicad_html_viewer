@@ -3,6 +3,7 @@
 'use strict';
 
 import { KiReader } from './ki_reader.js';
+import { pageLayout } from './pagelayout.js';
 
 class KiViewer
 {
@@ -22,8 +23,8 @@ class KiViewer
         this.content = await reader.loadFile();
 
         if (this.debug & debugLevels.GENERAL) console.log('Load default sheet');
-        reader = new KiReader('/src/pagelayout.kicad_wks', this.debug & debugLevels.READER);
-        this.sheet = await reader.loadFile();
+        reader = new KiReader('pageLayout', this.debug & debugLevels.READER);
+        this.sheet = reader.parseFile(pageLayout);
     }
 }
 

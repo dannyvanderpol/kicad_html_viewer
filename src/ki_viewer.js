@@ -3,7 +3,7 @@
 'use strict';
 
 import { KiReader } from './ki_reader.js';
-import { pageLayout } from './pagelayout.js';
+import { pageLayout } from './page_layout.js';
 
 class KiViewer
 {

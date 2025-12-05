@@ -1,4 +1,4 @@
-/* KiViewer */
+/* KiViewer: view KiCad design in a HTML canvas. */
 
 'use strict';
 
@@ -63,6 +63,7 @@ class KiViewer
 
         const drawer = new KiDrawer(ctx, this.viewportTransform.scale, this.colors, this.debug & debugLevels.DRAWER);
         drawer.drawPageOutline(pageSize);
+        drawer.drawContent(this.sheet);
     }
 }
 

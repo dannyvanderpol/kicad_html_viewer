@@ -1,4 +1,4 @@
-/* Colors from KiCad's color scheme */
+/* KiColor: colors from KiCad default color scheme. */
 
 'use strict';
 

@@ -1,4 +1,4 @@
-/* KiReader */
+/* KiReader: read and parse KiCad files */
 
 'use strict';
 

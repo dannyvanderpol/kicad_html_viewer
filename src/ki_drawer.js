@@ -1,4 +1,4 @@
-/* KiDrawer */
+/* KiDrawer: drawing objects from a KiCad design in a HTML canvas. */
 
 'use strict';
 
@@ -34,7 +34,6 @@ export class KiDrawer
 
     _drawObjects(objects)
     {
-        console.log(objects);
     }
 }
 

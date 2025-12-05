@@ -13,6 +13,26 @@ export class KiColors
         this.colorPageLimits = this.colors.page_limits;
         this.colorBackground = this.colors.background;
     }
+
+    getColor(designType, itemType)
+    {
+        let color = 'grey';
+        if (this.showDebug) console.log('Colors: design type:', designType, itemType);
+        if (designType == 'kicad_wks')
+        {
+            switch (itemType)
+            {
+                case 'line':
+                case 'rect':
+                    color = this.colors.worksheet;
+                    break
+
+                default:
+                    if (this.showDebug) console.warn(`Colors: Unknown item type: ${itemType}`);
+            }
+        }
+        return color;
+    }
 }
 
 // Update from KiCad color scheme (JSON)

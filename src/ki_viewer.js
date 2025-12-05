@@ -2,6 +2,7 @@
 
 'use strict';
 
+import { KiColors } from './ki_colors.js';
 import { KiDrawer } from './ki_drawer.js';
 import { KiReader } from './ki_reader.js';
 import { pageLayout } from './page_layout.js';
@@ -15,6 +16,12 @@ class KiViewer
         this.filename = filename;
         this.content = null;
         this.sheet = null;
+        this.colors = null;
+        this.viewportTransform = {
+            x: 0,
+            y: 0,
+            scale: 1.0
+        };
     }
 
     async initialize()
@@ -27,9 +34,45 @@ class KiViewer
         reader = new KiReader('pageLayout', this.debug & debugLevels.READER);
         this.sheet = reader.parseFile(pageLayout);
 
-        const drawer = new KiDrawer(this.canvas, this.debug & debugLevels.DRAWER);
+        this.colors = new KiColors(this.content.type, this.debug & debugLevels.COLORS);
+
+        const pageSize = paperSizes[this.content.paper];
+        if (!pageSize)
+        {
+            if (this.debug & debugLevels.GENERAL) console.warn('Unknown page size:',  this.content.paper);
+            pageSize = paperSizes.A4;
+        }
+
+        // Fit page to canvas
+        this.viewportTransform.scale = this.canvas.width / (pageSize.width * 1.02);
+        this.viewportTransform.x = (this.canvas.width - pageSize.width * this.viewportTransform.scale) / 2;
+        this.viewportTransform.y = (this.canvas.height - pageSize.height * this.viewportTransform.scale) / 2;
+
+        const ctx = this.canvas.getContext('2d');
+
+        ctx.setTransform(1, 0, 0, 1, 0, 0)
+        ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
+        ctx.setTransform(
+            this.viewportTransform.scale,
+            0,
+            0,
+            this.viewportTransform.scale,
+            this.viewportTransform.x,
+            this.viewportTransform.y
+        );
+
+        const drawer = new KiDrawer(ctx, this.viewportTransform.scale, this.colors, this.debug & debugLevels.DRAWER);
+        drawer.drawPageOutline(pageSize);
     }
 }
+
+const paperSizes = {
+  A0: { width: 1189, height: 841 },
+  A1: { width: 841,  height: 594 },
+  A2: { width: 594,  height: 420 },
+  A3: { width: 420,  height: 297 },
+  A4: { width: 297,  height: 210 }
+};
 
 const debugLevels = {
     OFF: 0x00,

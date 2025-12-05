@@ -47,12 +47,24 @@ export class KiReader
         {
             throw new Error('Reader: invalid file format');
         }
-        let value = this._getSectionName(sections[0]);
-        content.type = value;
+        let name = this._getSectionName(sections[0]);
+        content.type = name;
         // Get other sections
         for (const section of this._getSections(sections[0].substring(1, sections[0].length - 1)))
         {
-            console.log('section:', this._getSectionName(section));
+            name = this._getSectionName(section);
+            switch (name)
+            {
+                case 'paper':
+                    content.paper = this._getValues(section)[0];
+                    break;
+
+                default:
+                    if (this.showDebug) {
+                        console.warn('Reader: Unknown section:', name);
+                        console.log(section);
+                    }
+            }
         }
         return content;
     }
@@ -98,5 +110,16 @@ export class KiReader
             }
         }
         return name.trim();
+    }
+
+    _getValues(section)
+    {
+        let value = '';
+        let pos = section.indexOf(' ');
+        if (pos > 0)
+        {
+            value = section.substring(pos + 1, section.length - 1).trim();
+        }
+        return value.replace(/^"(.*)"$/, '$1').split(' ');
     }
 }

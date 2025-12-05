@@ -17,7 +17,7 @@ class KiViewer
         this.sheet = null;
     }
 
-    async draw()
+    async initialize()
     {
         if (this.debug & debugLevels.VIEWER) console.log('Viewer: drawing KiCad content');
         let reader = new KiReader(this.filename, this.debug & debugLevels.READER);
@@ -47,7 +47,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         if (filename)
         {
             const viewer = new KiViewer(canvas, filename);
-            await viewer.draw();
+            await viewer.initialize();
         }
     }
 });

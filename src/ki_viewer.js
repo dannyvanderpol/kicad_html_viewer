@@ -11,7 +11,7 @@ class KiViewer
 {
     constructor(canvas, filename)
     {
-        this.debug = debugLevels.ALL;
+        this.debug = debugLevels.OFF;
         this.canvas = canvas;
         this.filename = filename;
         this.content = null;
@@ -80,6 +80,7 @@ const debugLevels = {
     VIEWER: 0x01,
     READER: 0x02,
     DRAWER: 0x04,
+    COLORS: 0x08,
     ALL: 0xFF
 }
 

@@ -20,16 +20,11 @@ export class KiColors
         if (this.showDebug) console.log('Colors: design type:', designType, itemType);
         if (designType == 'kicad_wks')
         {
-            switch (itemType)
-            {
-                case 'line':
-                case 'rect':
-                    color = this.colors.worksheet;
-                    break
-
-                default:
-                    if (this.showDebug) console.warn(`Colors: Unknown item type: ${itemType}`);
-            }
+            color = this.colors.worksheet;
+        }
+        else
+        {
+            if (this.showDebug) console.warn('Colors: unknown design type:', designType);
         }
         return color;
     }

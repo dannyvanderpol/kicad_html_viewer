@@ -31,7 +31,7 @@ export class KiDrawer
     drawContent(content)
     {
         this.drawingType = content.type;
-        if (this.showDebug) console.log('Drawer: Drawing type:', this.drawingType);
+        if (this.showDebug) console.log('Drawer: drawing type:', this.drawingType);
         this.setup = content.setup;
         this.margins.left = this.setup.left_margin ? parseFloat(this.setup.left_margin) : 0;
         this.margins.right = this.setup.right_margin ? parseFloat(this.setup.right_margin) : 0;
@@ -66,6 +66,10 @@ export class KiDrawer
 
             case 'rectangles':
                 this._drawRectangle(obj);
+                break;
+
+            case 'texts':
+                this._drawText(obj);
                 break;
 
             case 'paper':
@@ -127,6 +131,41 @@ export class KiDrawer
             if (this.showDebug) console.log(`Drawer: rectangle: (${xs}, ${ys}) to (${xe}, ${ye})`);
             this.ctx.strokeRect(xs, ys, xe - xs, ye - ys);
         }
+    }
+
+    _drawText(text)
+    {
+        if (this.showDebug) console.log('Drawer:', text);
+
+        let x = this._correctXY('x', text.pos.x, text.pos.relative_to);
+        let y = this._correctXY('y', text.pos.y, text.pos.relative_to);
+        let size = this._getTextSize(text.type, text.size);
+
+        let font = '';
+        font += text.bold ? 'bold ' : '';
+        font += text.italic ? 'italic ' : '';
+        font += `${size}px `;
+        font += 'Arial';
+
+        this.ctx.font = font;
+        this.ctx.fillStyle = this.colors.getColor(this.drawingType, text.type);
+        this.ctx.textAlign = text.align_h;
+        this.ctx.textBaseline = text.align_v;
+        let content = text.text.replace(/\\n/g, '\n');
+        for (let i = 0; i < text.repeat; i++)
+        {
+            let xt = x + i * text.increment_x;
+            let yt = y + i * text.increment_y;
+            if (xt > this.pageSize.width - this.margins.right) break;
+            if (yt > this.pageSize.height - this.margins.bottom) break;
+            if (this.showDebug) console.log(`Drawer: text: (${xt}, ${yt}) ${content}`);
+            this.ctx.fillText(content, xt, yt);
+            if (text.repeat > 1)
+            {
+                content = this._nextTextSequence(content);
+            }
+        }
+
     }
 
     _correctXY(axis, value, relativeTo)
@@ -194,10 +233,7 @@ export class KiDrawer
 
     _setThickness(type, thickness)
     {
-        if (thickness > 0)
-        {
-            return thickness;
-        }
+        if (thickness > 0) return thickness;
 
         switch (type)
         {
@@ -207,9 +243,42 @@ export class KiDrawer
                 break;
 
             default:
-                if (this.showDebug) console.warn(`Drawer: no thickness for type '${type}'`);
+                if (this.showDebug) console.warn('Drawer: no thickness for:', type);
         }
         return thickness;
+    }
+
+    _getTextSize(type, size)
+    {
+        if (size > 0) return size;
+
+        switch (type)
+        {
+            case 'tbtext':
+                size = this.setup.textSize ? parseFloat(this.setup.textSize) : drawingDefaults.textSize;
+                break;
+
+            default:
+                if (this.showDebug) console.warn('Drawer: no text size for:', type);
+        }
+        return size;
+    }
+
+    _nextTextSequence(content)
+    {
+        if (!isNaN(content))
+        {
+            content = (parseInt(content) + 1).toString();
+        }
+        else if (content.length == 1)
+        {
+            content = String.fromCharCode(content.charCodeAt(0) + 1);
+        }
+        else
+        {
+            if (this.showDebug) console.warn('Drawer: no text sequence for:', content);
+        }
+        return content;
     }
 }
 

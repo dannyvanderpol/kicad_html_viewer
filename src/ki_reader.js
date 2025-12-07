@@ -41,7 +41,8 @@ export class KiReader
     {
         let content = {
             lines: [],
-            rectangles: []
+            rectangles: [],
+            texts: [],
         };
         let sections = this._getSections(data);
         if (sections.length != 1)
@@ -69,7 +70,11 @@ export class KiReader
                     break;
 
                 case 'setup':
-                    content.setup = this._getProperties(section);
+                    content.setup = this._getProperties(section, true);
+                    break;
+
+                case 'tbtext':
+                    content.texts.push(this._readText(section, name));
                     break;
 
                 default:
@@ -79,6 +84,7 @@ export class KiReader
                     }
             }
         }
+        if (this.showDebug) console.log('Reader: parsed content:', content);
         return content;
     }
 
@@ -127,21 +133,51 @@ export class KiReader
 
     _getValues(section)
     {
-        let value = '';
+        // Remove any new lines ot tabs, and multiple spaces
+        section = section.replace(/[\r\n\t]/g, ' ').replace(/ +/g, ' ');
+        if (this.showDebug) console.log('Reader: parse values:', section);
+        let values = [];
         let pos = section.indexOf(' ');
         if (pos > 0)
         {
-            value = section.substring(pos + 1, section.length - 1).trim();
+            let start = pos;
+            let token = '';
+            // Values can be '(section_name (a b c) value "string")'
+            for (let i = pos; i < section.length - 1; i++)
+            {
+                // Start of values
+                if ((section[i] == ' ' && token == '') ||
+                    (section[i] == '"' && token == ' ') ||
+                    (section[i] == '(' && token == ' '))
+                {
+                    start = i + 1;
+                    token = section[i] == '(' ? ')' : section[i];
+                    continue;
+                }
+
+                if (token != '' && (section[i] == token || i == section.length - 2))
+                {
+                    values.push(section.substring(start, i + 1).trim().replace(/^"|"$/g, '').replace(/\)$/g, ''));
+                    if (token == ')') token = '';
+                    start = i + 1;
+                }
+            }
         }
-        return value.replace(/^"(.*)"$/, '$1').split(' ');
+        if (this.showDebug) console.log('Reader: parsed values:', values);
+        return values;
     }
 
-    _getProperties(section)
+    _getProperties(section, singleValue=false)
     {
         let properties = {};
         for (const subSection of this._getSections(section.substring(1, section.length - 1)))
         {
-            properties[this._getSectionName(subSection)] = this._getValues(subSection)[0];
+            let value = this._getValues(subSection);
+            if (singleValue && value.length >= 1)
+            {
+                value = value[0];
+            }
+            properties[this._getSectionName(subSection)] = value;
         }
         return properties;
     }
@@ -192,6 +228,84 @@ export class KiReader
                 case 'incry':
                     properties.increment_y = parseFloat(values[0]);
                     break;
+            }
+        }
+        return properties;
+    }
+
+    _readText(section, type)
+    {
+        let properties = {
+            type: type,
+            text: '',
+            size: null,
+            pos: { x: 0, y: 0, relative_to: null },
+            repeat: 1,
+            increment_x: 0,
+            increment_y: 0,
+            bold: false,
+            italic: false,
+            justify: 'left'
+        };
+        let values = [];
+        properties.text = this._getValues(section)[0];
+        for (const subSection of this._getSections(section.substring(1, section.length - 1)))
+        {
+            let name = this._getSectionName(subSection);
+            switch (name)
+            {
+                case 'font':
+                    values = this._getValues(subSection);
+                    for (let value of values)
+                    {
+                        if (value.startsWith('size '))
+                        {
+                            properties.size = parseFloat(value.split(' ')[1]);
+                        }
+                        if (value == 'bold')
+                        {
+                            properties.bold = true;
+                        }
+                        if (value == 'italic')
+                        {
+                            properties.italic = true;
+                        }
+                    }
+                    break;
+
+                case 'incrx':
+                    properties.increment_x = parseFloat(this._getValues(subSection)[0]);
+                    break;
+
+                case 'incry':
+                    properties.increment_y = parseFloat(this._getValues(subSection)[0]);
+                    break;
+
+                case 'justify':
+                    properties.justify = this._getValues(subSection)[0];
+                    break;
+
+                case 'pos':
+                    values = this._getValues(subSection);
+                    properties.pos.x = parseFloat(values[0]);
+                    properties.pos.y = parseFloat(values[1]);
+                    if (values.length > 2)
+                    {
+                        properties.pos.relative_to = values[2];
+                    }
+                    break;
+
+                case 'repeat':
+                    properties.repeat = parseInt(this._getValues(subSection)[0]);
+                    break;
+
+                case 'comment':
+                case "name":
+                    // Skip
+                    break;
+
+                default:
+                    if (this.showDebug) console.warn('Reader: unknown text subsection:', name);
             }
         }
         return properties;

@@ -238,16 +238,17 @@ export class KiReader
         let properties = {
             type: type,
             text: '',
-            size: null,
+            size: 0,
             pos: { x: 0, y: 0, relative_to: null },
             repeat: 1,
             increment_x: 0,
             increment_y: 0,
             bold: false,
             italic: false,
-            justify: 'left'
+            align_h: 'left',
+            align_v: 'middle',
+            mirror: false,
         };
-        let values = [];
         properties.text = this._getValues(section)[0];
         for (const subSection of this._getSections(section.substring(1, section.length - 1)))
         {
@@ -255,8 +256,7 @@ export class KiReader
             switch (name)
             {
                 case 'font':
-                    values = this._getValues(subSection);
-                    for (let value of values)
+                    for (let value of this._getValues(subSection))
                     {
                         if (value.startsWith('size '))
                         {
@@ -282,11 +282,25 @@ export class KiReader
                     break;
 
                 case 'justify':
-                    properties.justify = this._getValues(subSection)[0];
+                    for (let value of this._getValues(subSection))
+                    {
+                        if (['left', 'center', 'right'].includes(value))
+                        {
+                            properties.align_h = value;
+                        }
+                        if (['top', 'middle', 'bottom'].includes(value))
+                        {
+                            properties.align_v = value;
+                        }
+                        if (value == 'mirror')
+                        {
+                            properties.mirror = true;
+                        }
+                    }
                     break;
 
                 case 'pos':
-                    values = this._getValues(subSection);
+                    let values = this._getValues(subSection);
                     properties.pos.x = parseFloat(values[0]);
                     properties.pos.y = parseFloat(values[1]);
                     if (values.length > 2)

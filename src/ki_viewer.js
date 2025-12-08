@@ -59,7 +59,8 @@ class KiViewer
         // Fit page to canvas
         this.fitScaleX = this.canvas.width / this.pageSize.width;
         this.fitScaleY = this.canvas.height / this.pageSize.height;
-        this.viewportTransform.scale = this.fitScaleX * 0.98;
+        console.log('Fit scales:', this.fitScaleX, this.fitScaleY);
+        this.viewportTransform.scale = Math.min(this.fitScaleX, this.fitScaleY) * 0.98;
         this.viewportTransform.x = (this.canvas.width - this.pageSize.width * this.viewportTransform.scale) / 2;
         this.viewportTransform.y = (this.canvas.height - this.pageSize.height * this.viewportTransform.scale) / 2;
         this._render();

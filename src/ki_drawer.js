@@ -140,6 +140,8 @@ export class KiDrawer
         let x = this._correctXY('x', text.pos.x, text.pos.relative_to);
         let y = this._correctXY('y', text.pos.y, text.pos.relative_to);
         let size = this._getTextSize(text.type, text.size);
+        // Looks like the Y is a bit off, so adjust for that
+        y += size * 0.15;
 
         let font = '';
         font += text.bold ? 'bold ' : '';

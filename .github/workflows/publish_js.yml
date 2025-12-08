@@ -22,17 +22,17 @@ jobs:
       uses: actions/setup-node@v6
 
     - name: Install dependencies
-        run: npm install -g esbuild
+      run: npm install -g esbuild
 
     - name: Bundle and minify
       run: |
         esbuild src/ki_viewer.js --bundle --minify --outfile=dist/ki_viewer-dev.min.js
 
     - name: commit and push builded file
-          run: |
-            git config user.email "danny.v.der.pol@gmail.com"
-            git config user.name "Danny"
-            git config pull.rebase false
-            git commit -am "Updated build"
-            git pull
-            git push
+      run: |
+        git config user.email "danny.v.der.pol@gmail.com"
+        git config user.name "Danny"
+        git config pull.rebase false
+        git commit -am "Updated build"
+        git pull
+        git push

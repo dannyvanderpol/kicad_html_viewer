@@ -24,7 +24,8 @@ class KiViewer
             y: 0,
             scale: 1.0
         };
-        this.fitScale = 1;
+        this.fitScaleX = 1;
+        this.fitScaleY = 1;
         this.scaleSpeed = 1 / 250;
         this.minScale = 1 / 50;
         this.previousX = 0;
@@ -56,8 +57,9 @@ class KiViewer
         }
 
         // Fit page to canvas
-        this.fitScale = this.canvas.width / this.pageSize.width;
-        this.viewportTransform.scale = this.fitScale * 0.98;
+        this.fitScaleX = this.canvas.width / this.pageSize.width;
+        this.fitScaleY = this.canvas.height / this.pageSize.height;
+        this.viewportTransform.scale = this.fitScaleX * 0.98;
         this.viewportTransform.x = (this.canvas.width - this.pageSize.width * this.viewportTransform.scale) / 2;
         this.viewportTransform.y = (this.canvas.height - this.pageSize.height * this.viewportTransform.scale) / 2;
         this._render();
@@ -70,23 +72,16 @@ class KiViewer
         ctx.setTransform(1, 0, 0, 1, 0, 0)
         ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
         // Don't allow moving the page out of view
-        let scaleRatio = this.viewportTransform.scale / this.fitScale;
-        if (this.viewportTransform.x > this.canvas.width)
-        {
-            this.viewportTransform.x = this.canvas.width - 50;
-        }
-        if (this.viewportTransform.x / scaleRatio < -this.canvas.width)
-        {
-            this.viewportTransform.x = -(this.canvas.width - 50) * scaleRatio;
-        }
-        if (this.viewportTransform.y > this.canvas.height)
-        {
-            this.viewportTransform.y = this.canvas.height - 50;
-        }
-        if (this.viewportTransform.y / scaleRatio < -this.canvas.height)
-        {
-            this.viewportTransform.y = -(this.canvas.height - 50) * scaleRatio;
-        }
+        let scaleRatioX = this.viewportTransform.scale / this.fitScaleX;
+        let scaleRatioY = this.viewportTransform.scale / this.fitScaleY;
+        let maxX = this.canvas.width * 0.95;
+        let minX = -this.canvas.width * 0.95;
+        let maxY = this.canvas.height * 0.95;
+        let minY = -this.canvas.height * 0.95;
+        this.viewportTransform.x = (this.viewportTransform.x > maxX) ? maxX : this.viewportTransform.x;
+        this.viewportTransform.x = (this.viewportTransform.x / scaleRatioX < minX) ? minX * scaleRatioX : this.viewportTransform.x;
+        this.viewportTransform.y = (this.viewportTransform.y > maxY) ? maxY : this.viewportTransform.y;
+        this.viewportTransform.y = (this.viewportTransform.y / scaleRatioY < minY) ? minY * scaleRatioY : this.viewportTransform.y;
         ctx.setTransform(
             this.viewportTransform.scale,
             0,

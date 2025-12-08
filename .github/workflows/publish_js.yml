@@ -1,0 +1,31 @@
+# Publish the JS package
+# Install npm and bundle and minify the package using esbuild
+
+name: Bundle and minimify
+
+on:
+  push:
+    branches: [ "master" ]
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Use node
+      uses: actions/setup-node@v4
+
+    # - name: commit and push builded file
+    #       run: |
+    #         git config user.email "danny.v.der.pol@gmail.com"
+    #         git config user.name "Danny"
+    #         git config pull.rebase false
+    #         git commit -am "Updated build"
+    #         git pull
+    #         git push

@@ -1,7 +1,7 @@
 # Publish the JS package
 # Install npm and bundle and minify the package using esbuild
 
-name: Bundle and minimify
+name: Bundle and minify
 
 on:
   push:

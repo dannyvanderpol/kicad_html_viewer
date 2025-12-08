@@ -4,6 +4,9 @@ Viewer for viewing KiCad designs in a HTML page.
 
 Support: KiCad 9 and higher
 
+[![Bundle and minify](https://github.com/dannyvanderpol/kicad_html_viewer/actions/workflows/publish_js.yml/badge.svg)](https://github.com/dannyvanderpol/kicad_html_viewer/actions/workflows/publish_js.yml)
+
+
 ## Usage
 
 Create a HTML page and include the minified buid.

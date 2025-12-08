@@ -25,8 +25,7 @@ jobs:
       run: npm install -g esbuild
 
     - name: Bundle and minify
-      run: |
-        esbuild src/ki_viewer.js --bundle --minify --outfile=dist/ki_viewer-dev.min.js
+      run: esbuild src/ki_viewer.js --bundle --minify --outfile=dist/ki_viewer-dev.min.js
 
     - name: commit and push builded file
       run: |

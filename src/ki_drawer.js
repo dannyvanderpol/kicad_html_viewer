@@ -145,7 +145,7 @@ export class KiDrawer
         font += text.bold ? 'bold ' : '';
         font += text.italic ? 'italic ' : '';
         font += `${size}px `;
-        font += 'Arial';
+        font += 'KiCadFont';
 
         this.ctx.font = font;
         this.ctx.fillStyle = this.colors.getColor(this.drawingType, text.type);

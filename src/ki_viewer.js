@@ -4,6 +4,7 @@
 
 import { KiColors } from './ki_colors.js';
 import { KiDrawer } from './ki_drawer.js';
+import { loadFont } from './ki_font.js';
 import { KiReader } from './ki_reader.js';
 import { pageLayout } from './page_layout.js';
 
@@ -117,7 +118,6 @@ class KiViewer
         const localY = e.clientY;
         const previousScale = this.viewportTransform.scale;
         this.viewportTransform.scale += e.deltaY * -this.scaleSpeed;
-        console.log(previousScale, this.viewportTransform.scale);
         if (this.viewportTransform.scale < this.minScale)
         {
             this.viewportTransform.scale = this.minScale;
@@ -147,6 +147,7 @@ const debugLevels = {
 
 // Generate view when DOM is ready
 document.addEventListener('DOMContentLoaded', async function() {
+    loadFont();
     for (const canvas of document.querySelectorAll('canvas[type="application/kicad"]'))
     {
         let filename = canvas.getAttribute('src');

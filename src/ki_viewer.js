@@ -6,7 +6,7 @@ import { KiColors } from './ki_colors.js';
 import { KiDrawer } from './ki_drawer.js';
 import { loadFont } from './ki_font.js';
 import { KiReader } from './ki_reader.js';
-import { pageLayout } from './page_layout.js';
+import { pageLayout } from './ki_pagelayout.js';
 
 class KiViewer
 {

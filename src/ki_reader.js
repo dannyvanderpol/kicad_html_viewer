@@ -106,13 +106,15 @@ export class KiReader
                     content.uuid = this._getValues(section)[0];
                     break;
 
+                case 'embedded_fonts':
                 case 'generator':
                 case 'version':
                     // Skip
                     break;
 
                 default:
-                    if (this.showDebug) {
+                    if (this.showDebug)
+                    {
                         console.warn('Reader: Unknown section:', name);
                         console.log(section);
                     }

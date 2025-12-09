@@ -14,9 +14,9 @@ export class KiColors
         this.colorBackground = this.colors.background;
     }
 
-    getColor(designType, itemType, itemColor)
+    getColor(designType, item, itemColor=[0,0,0])
     {
-        if (this.showDebug) console.log('Colors: design type:', designType, itemType, itemColor);
+        if (this.showDebug) console.log('Colors: design type:', designType, item.type, itemColor);
         let color = 'grey';
         // Item color can be an array [r,g,b] or [r,g,b,a]
         // In case of all zeros, use default color
@@ -37,14 +37,26 @@ export class KiColors
             switch (designType)
             {
                 case 'kicad_sch':
-                    switch (itemType)
+                    switch (item.type)
                     {
                         case 'junction':
                             color = this.colors.junction;
                             break;
 
                         default:
-                            if (this.showDebug) console.warn('Colors: unknown schematic item type:', itemType);
+                            if (this.showDebug) console.warn('Colors: unknown schematic item type:', item.type);
+                    }
+                    break;
+
+                case 'kicad_pcb':
+                    let parts = item.layer.split('.');
+                    if (parts[1] == 'Cu')
+                    {
+                        color = this.colors.copper[parts[0].toLowerCase()];
+                        if (color.startsWith('rgb('))
+                        {
+                            color = color.replace('rgb', 'rgba').replace(')', `, ${defaultPcbAlpha})`);
+                        }
                     }
                     break;
 
@@ -55,6 +67,8 @@ export class KiColors
         return color;
     }
 }
+
+const defaultPcbAlpha = 0.7;
 
 // Update from KiCad color scheme (JSON)
 const kiColors = {

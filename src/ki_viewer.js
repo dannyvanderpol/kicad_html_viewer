@@ -12,7 +12,7 @@ class KiViewer
 {
     constructor(canvas, filename)
     {
-        this.debug = debugLevels.OFF;
+        this.debug = debugLevels.DRAWER | debugLevels.COLORS;
         this.canvas = canvas;
         this.filename = filename;
         this.content = null;

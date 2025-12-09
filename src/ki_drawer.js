@@ -46,7 +46,11 @@ export class KiDrawer
     {
         for (let item in objects)
         {
-            if (Array.isArray(objects[item]))
+            if (item == 'layers')
+            {
+                this._drawLayers(objects[item]);
+            }
+            else if (Array.isArray(objects[item]))
             {
                 this._drawObjects(objects[item], item);
             }
@@ -85,6 +89,37 @@ export class KiDrawer
             default:
                 if (this.showDebug) console.warn('Drawer: unknown type:', name, obj);
         }
+    }
+
+    _drawLayers(layers)
+    {
+        if (this.showDebug) console.log('Drawer: layers', layers);
+        const layerOrder = ['B.Cu']; //, 'F.Cu'];
+        let layersDrawn = [];
+        for (let layerName of layerOrder)
+        {
+            if (!layers.hasOwnProperty(layerName)) continue;
+            if (this.showDebug) console.log('Drawer: drawing layer:', layerName);
+            for (let itemType in layers[layerName])
+            {
+                switch (itemType)
+                {
+                    case 'zones':
+                        for (let zone of layers[layerName][itemType])
+                        {
+                            this._drawPolygon(zone);
+                            break;
+                        }
+                        break;
+
+                    default:
+                        if (this.showDebug) console.warn('Drawer: unknown layer item type:', itemType);
+                }
+            }
+            layersDrawn.push(layerName);
+        }
+        const undrawnLayers = Object.keys(layers).filter(layer => !layersDrawn.includes(layer));
+        if (this.showDebug && undrawnLayers.length > 0) console.warn('Drawer: undrawn layers:', undrawnLayers);
     }
 
     _drawLine(line)
@@ -184,6 +219,26 @@ export class KiDrawer
             {
                 content = this._nextTextSequence(content);
             }
+        }
+    }
+
+    _drawPolygon(polygon)
+    {
+        if (this.showDebug) console.log('Drawer: polygon', polygon);
+
+        if (polygon.points.length > 1)
+        {
+            this.ctx.fillStyle = this.colors.getColor(this.drawingType, polygon);
+            this.ctx.lineWidth = 0;
+            this.ctx.strokeStyle = '#fff';
+            this.ctx.beginPath();
+            this.ctx.moveTo(polygon.points[0].x, polygon.points[0].y);
+            for (let i = 1; i < polygon.points.length; i++)
+            {
+                this.ctx.lineTo(polygon.points[i].x, polygon.points[i].y);
+            }
+            this.ctx.fill();
+            this.ctx.stroke();
         }
     }
 

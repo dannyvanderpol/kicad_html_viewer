@@ -40,13 +40,14 @@ export class KiReader
     parseFile(data)
     {
         let content = {
+            sheetpath: '/',
+            pageNumber: 1,
+            totalPages: 1,
             lines: [],
             rectangles: [],
             texts: [],
             junctions: [],
-            sheetpath: '/',
-            pageNumber: 1,
-            totalPages: 1
+            layers: []
         };
         let sections = this._getSections(data);
         if (sections.length != 1)
@@ -104,6 +105,12 @@ export class KiReader
 
                 case 'uuid':
                     content.uuid = this._getValues(section)[0];
+                    break;
+
+                case 'zone':
+                    let zone = this._readZone(section, name);
+                    content.layers[zone.layer] ??= { zones: [] };
+                    content.layers[zone.layer].zones.push(zone);
                     break;
 
                 case 'embedded_fonts':
@@ -366,4 +373,56 @@ export class KiReader
         }
         return properties;
     }
+
+    _readZone(section, type)
+    {
+        let properties = {
+            type: type,
+            layer: '',
+            points: []
+        }
+        for (const subSection of this._getSections(section.substring(1, section.length - 1)))
+        {
+            let name = this._getSectionName(subSection);
+            switch (name)
+            {
+                case 'filled_polygon':
+                    let props = this._getProperties(subSection);
+                    properties.layer = props.layer[0];
+                    for (let pt of props.pts)
+                    {
+                        let parts = pt.split(' ');
+                        if (parts.length == 3 && parts[0] == 'xy')
+                        {
+                            properties.points.push({
+                                x: parseFloat(parts[1]),
+                                y: parseFloat(parts[2])
+                            });
+                        }
+                    }
+                    break;
+
+                case 'attr':
+                case 'connect_pads':
+                case 'fill':
+                case 'filled_areas_thickness':
+                case 'hatch':
+                case 'layer':
+                case 'min_thickness':
+                case 'name':
+                case 'net':
+                case 'net_name':
+                case 'polygon':
+                case 'priority':
+                case 'uuid':
+                    // Skip
+                    break;
+
+                default:
+                    if (this.showDebug) console.warn('Reader: unknown zone subsection:', name);
+            }
+        }
+        return properties;
+    }
+
 }

@@ -43,6 +43,7 @@ export class KiReader
             lines: [],
             rectangles: [],
             texts: [],
+            junctions: [],
             sheetpath: '/',
             pageNumber: 1,
             totalPages: 1
@@ -62,6 +63,19 @@ export class KiReader
             {
                 case 'generator_version':
                     content.version = this._getValues(section)[0];
+                    break;
+
+                case 'junction':
+                    let properties = this._getProperties(section);
+                    properties.type = name;
+                    properties.pos = {};
+                    properties.pos.x = parseFloat(properties.at[0]);
+                    properties.pos.y = parseFloat(properties.at[1]);
+                    properties.diameter = parseFloat(properties.diameter[0]);
+                    properties.color = properties.color.map(x => parseInt(x));
+                    delete properties.at;
+                    delete properties.uuid;
+                    content.junctions.push(properties);
                     break;
 
                 case 'line':

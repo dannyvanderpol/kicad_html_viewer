@@ -14,17 +14,43 @@ export class KiColors
         this.colorBackground = this.colors.background;
     }
 
-    getColor(designType, itemType)
+    getColor(designType, itemType, itemColor)
     {
+        if (this.showDebug) console.log('Colors: design type:', designType, itemType, itemColor);
         let color = 'grey';
-        if (this.showDebug) console.log('Colors: design type:', designType, itemType);
-        if (designType == 'kicad_wks')
+        // Item color can be an array [r,g,b] or [r,g,b,a]
+        // In case of all zeros, use default color
+        if (itemColor && itemColor.some(x => x !== 0))
+        {
+            if (itemColor.length < 4)
+            {
+                itemColor.push(1.0);
+            }
+            color = `rgba(${itemColor.join(', ')})`;
+        }
+        else if (designType == 'kicad_wks')
         {
             color = this.colors.worksheet;
         }
         else
         {
-            if (this.showDebug) console.warn('Colors: unknown design type:', designType);
+            switch (designType)
+            {
+                case 'kicad_sch':
+                    switch (itemType)
+                    {
+                        case 'junction':
+                            color = this.colors.junction;
+                            break;
+
+                        default:
+                            if (this.showDebug) console.warn('Colors: unknown schematic item type:', itemType);
+                    }
+                    break;
+
+                default:
+                    if (this.showDebug) console.warn('Colors: unknown design type:', designType);
+            }
         }
         return color;
     }

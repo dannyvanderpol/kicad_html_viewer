@@ -34,10 +34,10 @@ export class KiDrawer
         this.drawingType = content.type;
         if (this.showDebug) console.log('Drawer: drawing type:', this.drawingType);
         this.setup = content.setup;
-        this.margins.left = this.setup.left_margin ? parseFloat(this.setup.left_margin) : 0;
-        this.margins.right = this.setup.right_margin ? parseFloat(this.setup.right_margin) : 0;
-        this.margins.top = this.setup.top_margin ? parseFloat(this.setup.top_margin) : 0;
-        this.margins.bottom = this.setup.bottom_margin ? parseFloat(this.setup.bottom_margin) : 0;
+        this.margins.left = (this.setup && this.setup.left_margin) ? parseFloat(this.setup.left_margin) : 0;
+        this.margins.right = (this.setup && this.setup.right_margin) ? parseFloat(this.setup.right_margin) : 0;
+        this.margins.top = (this.setup && this.setup.top_margin) ? parseFloat(this.setup.top_margin) : 0;
+        this.margins.bottom = (this.setup && this.setup.bottom_margin) ? parseFloat(this.setup.bottom_margin) : 0;
         this._drawObjects(content);
         this.drawingType = null;
     }
@@ -61,6 +61,10 @@ export class KiDrawer
     {
         switch (name)
         {
+            case 'junctions':
+                this._drawCircle(obj);
+                break;
+
             case 'lines':
                 this._drawLine(obj);
                 break;
@@ -113,7 +117,7 @@ export class KiDrawer
 
     _drawRectangle(rect)
     {
-        if (this.showDebug) console.log('Drawer:', rect);
+        if (this.showDebug) console.log('Drawer: rectangle', rect);
 
         let thickness = this._setThickness(rect.type, rect.thickness);
         let x1 = this._correctXY('x', rect.start.x, rect.start.relative_to);
@@ -132,6 +136,19 @@ export class KiDrawer
             if (this.showDebug) console.log(`Drawer: rectangle: (${xs}, ${ys}) to (${xe}, ${ye})`);
             this.ctx.strokeRect(xs, ys, xe - xs, ye - ys);
         }
+    }
+
+    _drawCircle(circle)
+    {
+        if (this.showDebug) console.log('Drawer: circle', circle);
+        this.ctx.fillStyle = this.colors.getColor(this.drawingType, circle.type, circle.color);
+        // this.ctx.strokeStyle
+        this.ctx.lineWidth = 0;
+        this.ctx.beginPath();
+        this.ctx.arc(circle.pos.x, circle.pos.y, circle.diameter / 2, 0, 2 * Math.PI);
+        this.ctx.fill();  // Filled
+        // this.ctx.stroke();  // Outline only
+
     }
 
     _drawText(text)

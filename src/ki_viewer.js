@@ -129,6 +129,7 @@ class KiViewer
                                     this.debug & debugLevels.DRAWER);
         drawer.drawPageOutline(this.pageSize);
         drawer.drawContent(this.sheet);
+        drawer.drawContent(this.content);
     }
 
     /* Event handlers */

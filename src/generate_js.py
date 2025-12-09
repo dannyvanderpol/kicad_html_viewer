@@ -8,7 +8,7 @@ def generate_page_layout():
     pass
 
 def generate_font():
-    FONT_FILE = os.path.join(os.path.dirname(__file__), "newstroke.woff2");
+    FONT_FILE = os.path.join(os.path.dirname(__file__), "artifacts", "newstroke.woff2");
     JS_FILE = os.path.join(os.path.dirname(__file__), "ki_font.js");
 
     with open(FONT_FILE, "rb") as font_file:

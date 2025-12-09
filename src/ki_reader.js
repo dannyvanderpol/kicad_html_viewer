@@ -43,6 +43,9 @@ export class KiReader
             lines: [],
             rectangles: [],
             texts: [],
+            sheetpath: '/',
+            pageNumber: 1,
+            totalPages: 1
         };
         let sections = this._getSections(data);
         if (sections.length != 1)
@@ -57,6 +60,10 @@ export class KiReader
             name = this._getSectionName(section);
             switch (name)
             {
+                case 'generator_version':
+                    content.version = this._getValues(section)[0];
+                    break;
+
                 case 'line':
                     content.lines.push(this._readGraphics(section, name));
                     break;
@@ -75,6 +82,19 @@ export class KiReader
 
                 case 'tbtext':
                     content.texts.push(this._readText(section, name));
+                    break;
+
+                case 'title_block':
+                    content.titleBlock = this._getProperties(section, true);
+                    break;
+
+                case 'uuid':
+                    content.uuid = this._getValues(section)[0];
+                    break;
+
+                case 'generator':
+                case 'version':
+                    // Skip
                     break;
 
                 default:
@@ -173,11 +193,17 @@ export class KiReader
         for (const subSection of this._getSections(section.substring(1, section.length - 1)))
         {
             let value = this._getValues(subSection);
+            let name = this._getSectionName(subSection);
+            if (name == 'comment')
+            {
+                name = 'comment' + value[0];
+                value = [value[1]];
+            }
             if (singleValue && value.length >= 1)
             {
                 value = value[0];
             }
-            properties[this._getSectionName(subSection)] = value;
+            properties[name] = value;
         }
         return properties;
     }

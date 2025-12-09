@@ -4,9 +4,10 @@
 
 export class KiDrawer
 {
-    constructor(ctx, scale, colors, showDebug)
+    constructor(ctx, scale, colors, valuesDictionary, showDebug)
     {
         this.showDebug = showDebug;
+        this.valuesDictionary = valuesDictionary;
         this.colors = colors;
         this.ctx = ctx;
         this.scale = scale;
@@ -153,7 +154,7 @@ export class KiDrawer
         this.ctx.fillStyle = this.colors.getColor(this.drawingType, text.type);
         this.ctx.textAlign = text.align_h;
         this.ctx.textBaseline = text.align_v;
-        let content = text.text.replace(/\\n/g, '\n');
+        let content = this._replaceValuesInText(text.text);
         for (let i = 0; i < text.repeat; i++)
         {
             let xt = x + i * text.increment_x;
@@ -167,7 +168,6 @@ export class KiDrawer
                 content = this._nextTextSequence(content);
             }
         }
-
     }
 
     _correctXY(axis, value, relativeTo)
@@ -281,6 +281,20 @@ export class KiDrawer
             if (this.showDebug) console.warn('Drawer: no text sequence for:', content);
         }
         return content;
+    }
+
+    _replaceValuesInText(text)
+    {
+        for (let key in this.valuesDictionary)
+        {
+            let query = `\${${key.toUpperCase()}}`;
+            if (key == 'pageNumber') query = '${#}';
+            if (key == 'totalPages') query = '${##}';
+            if (this.showDebug) console.log(`Drawer: replacing ${query} with ${this.valuesDictionary[key]} in ${text}`);
+            text = text.replace(`${query}`, this.valuesDictionary[key]);
+            if (this.showDebug) console.log(`Drawer: result: ${text}`);
+        }
+        return text;
     }
 }
 

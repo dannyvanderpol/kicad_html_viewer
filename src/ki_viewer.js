@@ -35,6 +35,22 @@ class KiViewer
         this.canvas.addEventListener('mouseup', this._onMouseUp.bind(this));
         this.canvas.addEventListener('mousemove', this._onMouseMove.bind(this));
         this.canvas.addEventListener('wheel', this._onMouseWheel.bind(this));
+        this.valuesDictionary = {
+            paper: '',
+            sheetpath: '',
+            filename: '',
+            title: '',
+            kicad_version: '',
+            issue_date: '',
+            revision: '',
+            pageNumber: '',
+            totalPages: '',
+            company: '',
+            comment1: '',
+            comment2: '',
+            comment3: '',
+            comment4: '',
+        };
     }
 
     async initialize()
@@ -55,6 +71,25 @@ class KiViewer
             if (this.debug & debugLevels.GENERAL) console.warn('Unknown page size:',  this.content.paper);
             this.pageSize = paperSizes.A4;
         }
+
+        // Set values from content
+        // Must haves:
+        this.valuesDictionary.paper = this.content.paper;
+        this.valuesDictionary.sheetpath = this.content.sheetpath;
+        this.valuesDictionary.filename = this.content.filename;
+        this.valuesDictionary.title = this.content.titleBlock.title;
+        this.valuesDictionary.kicad_version = 'KiCad V' + this.content.version;
+        this.valuesDictionary.issue_date = this.content.titleBlock.date;
+        this.valuesDictionary.pageNumber = this.content.pageNumber;
+        this.valuesDictionary.totalPages = this.content.totalPages;
+        // Could haves:
+        this.valuesDictionary.revision = this.content.titleBlock.rev || '';
+        this.valuesDictionary.company = this.content.titleBlock.company || '';
+        this.valuesDictionary.comment1 = this.content.titleBlock.comment1 || '';
+        this.valuesDictionary.comment2 = this.content.titleBlock.comment2 || '';
+        this.valuesDictionary.comment3 = this.content.titleBlock.comment3 || '';
+        this.valuesDictionary.comment4 = this.content.titleBlock.comment4 || '';
+
         // Fit page to canvas
         this.fitScaleX = this.canvas.width / this.pageSize.width;
         this.fitScaleY = this.canvas.height / this.pageSize.height;
@@ -90,7 +125,8 @@ class KiViewer
             this.viewportTransform.y
         );
 
-        const drawer = new KiDrawer(ctx, this.viewportTransform.scale, this.colors, this.debug & debugLevels.DRAWER);
+        const drawer = new KiDrawer(ctx, this.viewportTransform.scale, this.colors, this.valuesDictionary,
+                                    this.debug & debugLevels.DRAWER);
         drawer.drawPageOutline(this.pageSize);
         drawer.drawContent(this.sheet);
     }

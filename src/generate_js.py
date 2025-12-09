@@ -1,5 +1,5 @@
 """
-Generate font data.
+Generate JS files with data.
 """
 
 import os

@@ -94,7 +94,7 @@ export class KiDrawer
     _drawLayers(layers)
     {
         if (this.showDebug) console.log('Drawer: layers', layers);
-        const layerOrder = ['B.Cu']; //, 'F.Cu'];
+        const layerOrder = ['B.Cu', 'F.Cu'];
         let layersDrawn = [];
         for (let layerName of layerOrder)
         {
@@ -107,8 +107,7 @@ export class KiDrawer
                     case 'zones':
                         for (let zone of layers[layerName][itemType])
                         {
-                            this._drawPolygon(zone);
-                            break;
+                            this._drawPolygons(zone);
                         }
                         break;
 
@@ -177,13 +176,10 @@ export class KiDrawer
     {
         if (this.showDebug) console.log('Drawer: circle', circle);
         this.ctx.fillStyle = this.colors.getColor(this.drawingType, circle.type, circle.color);
-        // this.ctx.strokeStyle
         this.ctx.lineWidth = 0;
         this.ctx.beginPath();
         this.ctx.arc(circle.pos.x, circle.pos.y, circle.diameter / 2, 0, 2 * Math.PI);
-        this.ctx.fill();  // Filled
-        // this.ctx.stroke();  // Outline only
-
+        this.ctx.fill();
     }
 
     _drawText(text)
@@ -222,23 +218,25 @@ export class KiDrawer
         }
     }
 
-    _drawPolygon(polygon)
+    _drawPolygons(zone)
     {
-        if (this.showDebug) console.log('Drawer: polygon', polygon);
+        if (this.showDebug) console.log('Drawer: zone', zone);
 
-        if (polygon.points.length > 1)
+        for (let points of zone.filled_polygons)
         {
-            this.ctx.fillStyle = this.colors.getColor(this.drawingType, polygon);
-            this.ctx.lineWidth = 0;
-            this.ctx.strokeStyle = '#fff';
-            this.ctx.beginPath();
-            this.ctx.moveTo(polygon.points[0].x, polygon.points[0].y);
-            for (let i = 1; i < polygon.points.length; i++)
+            if (points.length > 1)
             {
-                this.ctx.lineTo(polygon.points[i].x, polygon.points[i].y);
+                this.ctx.fillStyle = this.colors.getColor(this.drawingType, zone);
+                this.ctx.lineWidth = 0;
+                this.ctx.beginPath();
+                this.ctx.moveTo(points[0].x, points[0].y);
+                for (let i = 1; i < points.length; i++)
+                {
+                    this.ctx.lineTo(points[i].x, points[i].y);
+                }
+                this.ctx.closePath();
+                this.ctx.fill();
             }
-            this.ctx.fill();
-            this.ctx.stroke();
         }
     }
 

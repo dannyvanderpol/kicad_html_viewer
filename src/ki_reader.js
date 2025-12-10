@@ -379,7 +379,7 @@ export class KiReader
         let properties = {
             type: type,
             layer: '',
-            points: []
+            filled_polygons: []
         }
         for (const subSection of this._getSections(section.substring(1, section.length - 1)))
         {
@@ -387,6 +387,7 @@ export class KiReader
             switch (name)
             {
                 case 'filled_polygon':
+                    let points = [];
                     let props = this._getProperties(subSection);
                     properties.layer = props.layer[0];
                     for (let pt of props.pts)
@@ -394,12 +395,13 @@ export class KiReader
                         let parts = pt.split(' ');
                         if (parts.length == 3 && parts[0] == 'xy')
                         {
-                            properties.points.push({
+                            points.push({
                                 x: parseFloat(parts[1]),
                                 y: parseFloat(parts[2])
                             });
                         }
                     }
+                    properties.filled_polygons.push(points);
                     break;
 
                 case 'attr':

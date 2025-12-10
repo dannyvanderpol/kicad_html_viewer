@@ -221,7 +221,6 @@ export class KiDrawer
     _drawPolygon(zone)
     {
         if (this.showDebug) console.log('Drawer: zone', zone);
-        console.log(zone);
         if (zone.points.length > 1)
         {
             this.ctx.fillStyle = this.colors.getColor(this.drawingType, zone);

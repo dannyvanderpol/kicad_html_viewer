@@ -5,8 +5,8 @@ Generate JS files with data.
 import os
 
 def generate_page_layout():
-    SRC_FILE = os.path.join(os.path.dirname(__file__), "artifacts", "pagelayout.kicad_wks");
-    JS_FILE = os.path.join(os.path.dirname(__file__), "ki_pagelayout.js");
+    SRC_FILE = os.path.join(os.path.dirname(__file__), "pagelayout.kicad_wks")
+    JS_FILE = os.path.join(os.path.dirname(__file__), "ki_pagelayout.js")
 
     with open(SRC_FILE, "r") as font_file:
         data = font_file.read()
@@ -38,8 +38,8 @@ def generate_page_layout():
 
 
 def generate_font():
-    SRC_FILE = os.path.join(os.path.dirname(__file__), "artifacts", "newstroke.woff2");
-    JS_FILE = os.path.join(os.path.dirname(__file__), "ki_font.js");
+    SRC_FILE = os.path.join(os.path.dirname(__file__), "newstroke.woff2")
+    JS_FILE = os.path.join(os.path.dirname(__file__), "ki_font.js")
 
     with open(SRC_FILE, "rb") as font_file:
         data = font_file.read()

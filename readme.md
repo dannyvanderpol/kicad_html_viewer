@@ -52,5 +52,5 @@ The JS module starts working on the `DOMContentLoaded` event.
 
 ### Disclamer
 
-This software can be used for any purphose, in case of any issues, open an issue in the issue tracker.
+This software can be used for any purpose, in case of any issues, open an issue in the issue tracker.
 For the rest, you are on your own. I do not accept any liabilities when using this software.

@@ -175,7 +175,7 @@ export class KiDrawer
     _drawCircle(circle)
     {
         if (this.showDebug) console.log('Drawer: circle', circle);
-        this.ctx.fillStyle = this.colors.getColor(this.drawingType, circle.type, circle.color);
+        this.ctx.fillStyle = this.colors.getColor(this.drawingType, circle, circle.color);
         this.ctx.lineWidth = 0;
         this.ctx.beginPath();
         this.ctx.arc(circle.pos.x, circle.pos.y, circle.diameter / 2, 0, 2 * Math.PI);

@@ -108,9 +108,12 @@ export class KiReader
                     break;
 
                 case 'zone':
-                    let zone = this._readZone(section, name);
-                    content.layers[zone.layer] ??= { zones: [] };
-                    content.layers[zone.layer].zones.push(zone);
+                    let zones = this._readZones(section, name);
+                    for (let zone of zones)
+                    {
+                        content.layers[zone.layer] ??= { zones: [] };
+                        content.layers[zone.layer].zones.push(zone);
+                    }
                     break;
 
                 case 'embedded_fonts':
@@ -374,20 +377,20 @@ export class KiReader
         return properties;
     }
 
-    _readZone(section, type)
+    _readZones(section, type)
     {
-        let properties = {
-            type: type,
-            layer: '',
-            filled_polygons: []
-        }
+        let zones = [];
         for (const subSection of this._getSections(section.substring(1, section.length - 1)))
         {
             let name = this._getSectionName(subSection);
             switch (name)
             {
                 case 'filled_polygon':
-                    let points = [];
+                    let properties = {
+                        type: type,
+                        layer: '',
+                        points: []
+                    }
                     let props = this._getProperties(subSection);
                     properties.layer = props.layer[0];
                     for (let pt of props.pts)
@@ -395,13 +398,13 @@ export class KiReader
                         let parts = pt.split(' ');
                         if (parts.length == 3 && parts[0] == 'xy')
                         {
-                            points.push({
+                            properties.points.push({
                                 x: parseFloat(parts[1]),
                                 y: parseFloat(parts[2])
                             });
                         }
                     }
-                    properties.filled_polygons.push(points);
+                    zones.push(properties);
                     break;
 
                 case 'attr':
@@ -424,7 +427,7 @@ export class KiReader
                     if (this.showDebug) console.warn('Reader: unknown zone subsection:', name);
             }
         }
-        return properties;
+        return zones;
     }
 
 }

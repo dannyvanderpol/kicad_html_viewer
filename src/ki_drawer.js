@@ -107,7 +107,7 @@ export class KiDrawer
                     case 'zones':
                         for (let zone of layers[layerName][itemType])
                         {
-                            this._drawPolygons(zone);
+                            this._drawPolygon(zone);
                         }
                         break;
 
@@ -218,25 +218,22 @@ export class KiDrawer
         }
     }
 
-    _drawPolygons(zone)
+    _drawPolygon(zone)
     {
         if (this.showDebug) console.log('Drawer: zone', zone);
-
-        for (let points of zone.filled_polygons)
+        console.log(zone);
+        if (zone.points.length > 1)
         {
-            if (points.length > 1)
+            this.ctx.fillStyle = this.colors.getColor(this.drawingType, zone);
+            this.ctx.lineWidth = 0;
+            this.ctx.beginPath();
+            this.ctx.moveTo(zone.points[0].x, zone.points[0].y);
+            for (let i = 1; i < zone.points.length; i++)
             {
-                this.ctx.fillStyle = this.colors.getColor(this.drawingType, zone);
-                this.ctx.lineWidth = 0;
-                this.ctx.beginPath();
-                this.ctx.moveTo(points[0].x, points[0].y);
-                for (let i = 1; i < points.length; i++)
-                {
-                    this.ctx.lineTo(points[i].x, points[i].y);
-                }
-                this.ctx.closePath();
-                this.ctx.fill();
+                this.ctx.lineTo(zone.points[i].x, zone.points[i].y);
             }
+            this.ctx.closePath();
+            this.ctx.fill();
         }
     }
 

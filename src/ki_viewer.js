@@ -8,6 +8,10 @@ import { loadFont } from './ki_font.js';
 import { KiReader } from './ki_reader.js';
 import { pageLayout } from './ki_pagelayout.js';
 
+// New parser
+import { parseFile } from './parser/parser.js';
+
+
 class KiViewer
 {
     constructor(canvas, filename)
@@ -55,6 +59,9 @@ class KiViewer
 
     async initialize()
     {
+        let design = await parseFile(this.filename);
+        console.log(design);
+
         if (this.debug & debugLevels.VIEWER) console.log('Viewer: drawing KiCad content');
         let reader = new KiReader(this.filename, this.debug & debugLevels.READER);
         this.content = await reader.loadFile();

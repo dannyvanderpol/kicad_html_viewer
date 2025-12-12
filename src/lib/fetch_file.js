@@ -4,6 +4,8 @@
 
 'use strict';
 
+import { logger } from './logger.js';
+
 export async function fetchFile(filename)
 {
     let content = null;
@@ -12,13 +14,13 @@ export async function fetchFile(filename)
         const response = await fetch(filename);
         if (!response.ok)
         {
-            console.error(`fetchFile: HTTP error status: ${response.status}`);
+            logger.error(`fetchFile: HTTP error status: ${response.status}`);
         }
         content = await response.text();
     }
     catch (error)
     {
-        console.error('fetchFile: error loading file:', error);
+        logger.error('fetchFile: error loading file:', error);
     }
     return content;
 }

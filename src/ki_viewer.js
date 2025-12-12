@@ -10,12 +10,14 @@ import { pageLayout } from './ki_pagelayout.js';
 
 // New parser
 import { parseFile } from './parser/parser.js';
-
+import { logger } from './lib/logger.js';
 
 class KiViewer
 {
     constructor(canvas, filename)
     {
+        logger.logLevel = logger.LEVEL_SYSTEM | logger.LEVEL_PARSER;
+
         this.debug = debugLevels.OFF;
         this.canvas = canvas;
         this.filename = filename;
@@ -59,9 +61,11 @@ class KiViewer
 
     async initialize()
     {
+        if (logger.logLevel & logger.LEVEL_VIEWER_GENERAL) logger.info(`[Viewer] viewing file '${this.filename}'`);
         let design = await parseFile(this.filename);
-        console.log(design);
 
+
+        // Old reader, to be replaced
         if (this.debug & debugLevels.VIEWER) console.log('Viewer: drawing KiCad content');
         let reader = new KiReader(this.filename, this.debug & debugLevels.READER);
         this.content = await reader.loadFile();

@@ -78,7 +78,7 @@ class Logger
             // End timing
             const elapsed = performance.now() - this.#timers[label];
             delete this.#timers[label];
-            console.info(`${label} - Elapsed time: ${elapsed.toFixed(3)} ms`);
+            console.info(`[${label}] Elapsed time: ${elapsed.toFixed(3)} ms`);
         }
         this.info(...args);
     }

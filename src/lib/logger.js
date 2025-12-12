@@ -36,8 +36,6 @@ class Logger
 
     logLevel = this.LEVEL_OFF;
 
-    #timers = {};
-
     constructor() {}
 
     info(...args)
@@ -62,25 +60,6 @@ class Logger
         {
             console.error(...args);
         }
-    }
-
-    // Time a process, call this function at the start and end of the process
-    // the time will be automatically calculated
-    time(label, ...args)
-    {
-        if (!(label in this.#timers))
-        {
-            // Start timing
-            this.#timers[label] = performance.now();
-        }
-        else
-        {
-            // End timing
-            const elapsed = performance.now() - this.#timers[label];
-            delete this.#timers[label];
-            console.info(`[${label}] Elapsed time: ${elapsed.toFixed(1)} ms`);
-        }
-        this.info(...args);
     }
 }
 

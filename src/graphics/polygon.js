@@ -6,4 +6,8 @@ import { GraphicsBase } from './graphics_base.js';
 
 export class Polygon extends GraphicsBase
 {
+    drawElement()
+    {
+
+    }
 }

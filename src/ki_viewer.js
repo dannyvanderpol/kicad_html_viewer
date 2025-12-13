@@ -10,7 +10,8 @@ import { pageLayout } from './ki_pagelayout.js';
 
 // New parser
 import { parseFile } from './parser/parser.js';
-import { logger } from './lib/logger.js';
+import { logger    } from './lib/logger.js';
+import { timer     } from './lib/timer.js';
 
 class KiViewer
 {
@@ -61,6 +62,7 @@ class KiViewer
 
     async initialize()
     {
+        timer.start('Viewer');
         if (logger.logLevel & logger.LEVEL_VIEWER_GENERAL) logger.info(`[Viewer] viewing file '${this.filename}'`);
         let design = await parseFile(this.filename);
 
@@ -108,10 +110,13 @@ class KiViewer
         this.viewportTransform.x = (this.canvas.width - this.pageSize.width * this.viewportTransform.scale) / 2;
         this.viewportTransform.y = (this.canvas.height - this.pageSize.height * this.viewportTransform.scale) / 2;
         this._render();
+        timer.stop('Viewer');
+        if (logger.logLevel & logger.LEVEL_TIMER) timer.showReport();
     }
 
     _render()
     {
+        timer.start('Render');
         const ctx = this.canvas.getContext('2d');
 
         ctx.setTransform(1, 0, 0, 1, 0, 0)
@@ -141,6 +146,7 @@ class KiViewer
         drawer.drawPageOutline(this.pageSize);
         drawer.drawContent(this.sheet);
         drawer.drawContent(this.content);
+        timer.stop('Render');
     }
 
     /* Event handlers */

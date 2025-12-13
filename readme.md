@@ -9,13 +9,19 @@ Support: KiCad 9 and higher
 ## Features
 
 * Drawing designs in a canvas.
-    * pan and zoom is working    
+    * pan and zoom is working
     * Schematics: not yet working
     * PCB:
         * drawing zones on copper layers is working
 
 * Roadmap:
    * V1.0: Can draw a complete schematics and PCB.
+
+## Screenshots
+
+### PCB
+
+<img src="test/screenshot_pcb.png" alt="PCB screenshot" style="border:1px solid #ccc; max-width:100%; height:auto;" />
 
 ## Usage
 

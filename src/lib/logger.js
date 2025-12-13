@@ -21,6 +21,7 @@ class Logger
     LEVEL_WARN = 0x02;
     LEVEL_INFO = 0x04;
     LEVEL_TIMER = 0x08;
+    LEVEL_EVENTS = 0x10;
 
     // Viewer levels
     LEVEL_VIEWER = 0xFF00;
@@ -34,6 +35,7 @@ class Logger
 
     // Drawer levels
     LEVEL_DRAWER = 0xFF000000;
+    LEVEL_DRAWER_GENERAL = 0x01000000;
 
     logLevel = this.LEVEL_OFF;
 

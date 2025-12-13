@@ -36,6 +36,8 @@ class Logger
     // Drawer levels
     LEVEL_DRAWER = 0xFF000000;
     LEVEL_DRAWER_GENERAL = 0x01000000;
+    LEVEL_DRAWER_LAYER = 0x02000000;
+    LEVEL_DRAWER_ELEMENT = 0x04000000;
 
     logLevel = this.LEVEL_OFF;
 

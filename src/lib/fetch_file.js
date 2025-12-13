@@ -9,7 +9,7 @@ import { timer  } from './timer.js';
 
 export async function fetchFile(filename)
 {
-    timer.start('Fetch');
+    timer.start('Fetch file');
     let content = null;
     try
     {
@@ -24,6 +24,6 @@ export async function fetchFile(filename)
     {
         logger.error('fetchFile: error loading file:', error);
     }
-    timer.stop('Fetch');
+    timer.stop('Fetch file');
     return content;
 }

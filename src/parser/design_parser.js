@@ -7,12 +7,13 @@
 import { Design     } from '../design/design.js';
 import { fetchFile  } from '../lib/fetch_file.js';
 import { logger     } from '../lib/logger.js';
-import { Sections   } from './sections.js';
+import { Sections   } from './sections_parser.js';
 import { timer      } from '../lib/timer.js';
+import { ZoneParser } from './zone_parser.js';
 
 export async function parseFile(filename)
 {
-    timer.start('Parser');
+    timer.start('Parse design');
     if (logger.logLevel & logger.LEVEL_PARSER_FETCH) logger.info('Fetcher', '[Parser] Fetching file content');
 
     const content = await fetchFile(filename);
@@ -37,6 +38,12 @@ export async function parseFile(filename)
             let sectionName = Sections.getSectionName(section);
             switch (sectionName)
             {
+                case 'zone':
+                    const zone = new ZoneParser(section);
+                    design.designObjects.push(zone.designObject);
+                    design.graphicsObjects.push(...zone.graphicsObjects);
+                    break;
+
                 // Skip
                 case 'embedded_fonts':
                     if (logger.logLevel & logger.LEVEL_PARSER_GENERAL) logger.info(`[Parser] Skip '${sectionName}'`);
@@ -52,6 +59,6 @@ export async function parseFile(filename)
 
     timer.stop('Parse content');
     if (logger.logLevel & logger.LEVEL_PARSER_GENERAL) logger.info('Parser', '[Parser] Parsed design:', design);
-    timer.stop('Parser');
+    timer.stop('Parse design');
     return design;
 }

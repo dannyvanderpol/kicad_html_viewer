@@ -9,7 +9,7 @@ import { KiReader } from './ki_reader.js';
 import { pageLayout } from './ki_pagelayout.js';
 
 // New parser
-import { parseFile } from './parser/parser.js';
+import { parseFile } from './parser/design_parser.js';
 import { logger    } from './lib/logger.js';
 import { timer     } from './lib/timer.js';
 

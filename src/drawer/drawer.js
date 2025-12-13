@@ -35,8 +35,6 @@ export const Drawer = {
             }
         }
         if (logger.logLevel & logger.LEVEL_DRAWER_GENERAL) logger.info('[Drawer] drawn layers:', drawnLayers);
-
-        console.log('byLayer:', byLayer);
         const undrawn = Object.keys(byLayer).filter(layer => !drawnLayers.includes(layer));
         if (undrawn.length > 0 && logger.logLevel & logger.LEVEL_DRAWER_GENERAL) logger.warn('[Drawer] undrawn layers:', undrawn);
 

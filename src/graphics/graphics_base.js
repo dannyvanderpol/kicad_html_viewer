@@ -2,6 +2,7 @@
  * Base class for all graphics objects.
  */
 
+import { Colors } from '../lib/colors.js';
 import { logger } from '../lib/logger.js';
 import { timer } from '../lib/timer.js';
 
@@ -11,7 +12,7 @@ export class GraphicsBase
     {
         this.type = GraphicsBase.name;
         this.layer = 'design';
-        this.color = 'gray';
+        this.color = Colors.default;
         this.points = [];
     }
 

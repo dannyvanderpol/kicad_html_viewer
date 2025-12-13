@@ -39,9 +39,9 @@ export async function parseFile(filename)
             switch (sectionName)
             {
                 case 'zone':
-                    const zone = new ZoneParser(section);
-                    design.designElements.push(zone.designObject);
-                    design.graphicsElements.push(...zone.graphicsObjects);
+                    const zone = new ZoneParser(design.designType, section);
+                    design.designElements.push(zone.designElement);
+                    design.graphicsElements.push(...zone.graphicsElements);
                     break;
 
                 // Skip

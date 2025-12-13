@@ -32,7 +32,16 @@ export async function parseFile(filename)
     {
         design.fileType = Sections.getSectionName(sections[0]);
         if (logger.logLevel & logger.LEVEL_PARSER_GENERAL) logger.info(`[Parser] Design type: '${design.fileType}'`);
-
+        for (let section of Sections.getSections(sections[0].substring(1, sections[0].length - 1)))
+        {
+            let sectionName = Sections.getSectionName(section);
+            switch (sectionName)
+            {
+                default:
+                    if (logger.logLevel & logger.LEVEL_PARSER_GENERAL) logger.warn('[Parser] Unknown section:', sectionName);
+                    break;
+            }
+        }
     }
     timer.stop('Parse content');
     if (logger.logLevel & logger.LEVEL_PARSER_GENERAL) logger.info('Parser', '[Parser] Parsed design:', design);

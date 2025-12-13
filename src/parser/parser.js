@@ -37,6 +37,12 @@ export async function parseFile(filename)
             let sectionName = Sections.getSectionName(section);
             switch (sectionName)
             {
+                // Skip
+                case 'embedded_fonts':
+                    if (logger.logLevel & logger.LEVEL_PARSER_GENERAL) logger.info(`[Parser] Skip '${sectionName}'`);
+                    break;
+
+                // Unknown
                 default:
                     if (logger.logLevel & logger.LEVEL_PARSER_GENERAL) logger.warn('[Parser] Unknown section:', sectionName);
                     break;

@@ -4,11 +4,11 @@
  * output: design object
  */
 
-import { Design     } from '../design/design.js';
-import { fetchFile  } from '../lib/fetch_file.js';
-import { logger     } from '../lib/logger.js';
-import { Sections   } from './sections_parser.js';
-import { timer      } from '../lib/timer.js';
+import { DesignObject } from '../design/design_object.js';
+import { fetchFile } from '../lib/fetch_file.js';
+import { logger } from '../lib/logger.js';
+import { Sections } from './sections_parser.js';
+import { timer } from '../lib/timer.js';
 import { ZoneParser } from './zone_parser.js';
 
 export async function parseFile(filename)
@@ -23,7 +23,7 @@ export async function parseFile(filename)
     timer.start('Parse content');
     if (logger.logLevel & logger.LEVEL_PARSER_GENERAL) logger.info('Parser', `[Parser] Parsing file: '${filename}'`);
 
-    let design = new Design();
+    let design = new DesignObject();
     let sections = Sections.getSections(content);
     if (sections.length != 1)
     {
@@ -40,8 +40,8 @@ export async function parseFile(filename)
             {
                 case 'zone':
                     const zone = new ZoneParser(section);
-                    design.designObjects.push(zone.designObject);
-                    design.graphicsObjects.push(...zone.graphicsObjects);
+                    design.designElements.push(zone.designObject);
+                    design.graphicsElements.push(...zone.graphicsObjects);
                     break;
 
                 // Skip

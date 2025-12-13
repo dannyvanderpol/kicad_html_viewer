@@ -15,10 +15,10 @@ class KiViewer
         // Default off
         logger.logLevel = logger.LEVEL_OFF;
         // Enable one of the levels below for debugging (see logger for other levels)
-        logger.logLevel |= logger.LEVEL_SYSTEM;
-        logger.logLevel |= logger.LEVEL_VIEWER;
-        logger.logLevel |= logger.LEVEL_PARSER;
-        logger.logLevel |= logger.LEVEL_DRAWER;
+        // logger.logLevel |= logger.LEVEL_SYSTEM;
+        // logger.logLevel |= logger.LEVEL_VIEWER;
+        // logger.logLevel |= logger.LEVEL_PARSER;
+        // logger.logLevel |= logger.LEVEL_DRAWER;
 
         this.canvas = canvas;
         this.filename = filename;

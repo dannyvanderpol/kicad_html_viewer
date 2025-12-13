@@ -14,15 +14,15 @@ export async function parseFile(filename)
 {
     timer.start('Parser');
     if (logger.logLevel & logger.LEVEL_PARSER_FETCH) logger.info('Fetcher', '[Parser] Fetching file content');
-    timer.start('Fetch');
+
     const content = await fetchFile(filename);
-    timer.stop('Fetch');
-    if (logger.logLevel & logger.LEVEL_PARSER_FETCH) logger.info('Fetcher', `[Parser] Content length: ${content.length}`);
+
+    if (logger.logLevel & logger.LEVEL_PARSER_FETCH) logger.info('Fetcher', `[Parser] Content length: ${content.length} bytes`);
 
     timer.start('Parse content');
     if (logger.logLevel & logger.LEVEL_PARSER_GENERAL) logger.info('Parser', `[Parser] Parsing file: '${filename}'`);
-    let design = new Design();
 
+    let design = new Design();
     let sections = Sections.getSections(content);
     if (sections.length != 1)
     {
@@ -43,6 +43,7 @@ export async function parseFile(filename)
             }
         }
     }
+
     timer.stop('Parse content');
     if (logger.logLevel & logger.LEVEL_PARSER_GENERAL) logger.info('Parser', '[Parser] Parsed design:', design);
     timer.stop('Parser');

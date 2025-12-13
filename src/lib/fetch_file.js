@@ -5,9 +5,11 @@
 'use strict';
 
 import { logger } from './logger.js';
+import { timer  } from './timer.js';
 
 export async function fetchFile(filename)
 {
+    timer.start('Fetch');
     let content = null;
     try
     {
@@ -22,5 +24,6 @@ export async function fetchFile(filename)
     {
         logger.error('fetchFile: error loading file:', error);
     }
+    timer.stop('Fetch');
     return content;
 }

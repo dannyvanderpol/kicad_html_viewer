@@ -4,7 +4,7 @@
 
 import { Drawer } from './drawer/drawer.js';
 import { parseFile } from './parser/design_parser.js';
-import { loadFont } from './lib/ki_font.js';
+import { KI_FONT } from './lib/ki_font.js';
 import { logger } from './lib/logger.js';
 import { timer } from './lib/timer.js';
 
@@ -131,7 +131,12 @@ class KiViewer
 
 // Generate view when DOM is ready
 document.addEventListener('DOMContentLoaded', async function() {
-    loadFont();
+    // Load font
+    const font = new FontFace('KiCadFont', KI_FONT.buffer);
+    font.load().then(function(loadedFont) {
+        document.fonts.add(loadedFont);
+    });
+
     for (const canvas of document.querySelectorAll('canvas[type="application/kicad"]'))
     {
         let filename = canvas.getAttribute('src');

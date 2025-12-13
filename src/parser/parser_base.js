@@ -13,10 +13,10 @@ export class ParserBase
         this.designObject = new DesignObject;
         this.graphicsObjects = [];
         this.sectionName = Sections.getSectionName(sectionContent);
-        timer.start(this.sectionName);
+        timer.start(`Parse ${this.sectionName}`);
         this.sections = Sections.getSections(sectionContent.substring(1, sectionContent.length - 1));
         this.parseSection();
-        timer.stop(this.sectionName);
+        timer.stop(`Parse ${this.sectionName}`);
     }
 
     parseSection()

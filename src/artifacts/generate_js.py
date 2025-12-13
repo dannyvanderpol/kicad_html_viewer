@@ -5,6 +5,8 @@ Generate JS files with data.
 import os
 
 def generate_page_layout():
+    # Source: C:\Program Files\KiCad\9.0\share\kicad\template\pagelayout_default.kicad_wks
+    # Turns out its not format V9.0, open in KiCad and save as V9.0 to fix it.
     SRC_FILE = os.path.join(os.path.dirname(__file__), "pagelayout.kicad_wks")
     JS_FILE = os.path.join(os.path.dirname(__file__), "../lib/ki_pagelayout.js")
 

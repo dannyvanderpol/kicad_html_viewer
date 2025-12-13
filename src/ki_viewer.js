@@ -56,7 +56,6 @@ class KiViewer
     {
         timer.start('Render');
         const ctx = this.canvas.getContext('2d');
-
         ctx.setTransform(1, 0, 0, 1, 0, 0)
         ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
         // Don't allow moving the page out of view
@@ -78,7 +77,7 @@ class KiViewer
             this.viewportTransform.x,
             this.viewportTransform.y
         );
-        Drawer.draw(this.design);
+        Drawer.draw(ctx, this.design);
         timer.stop('Render');
     }
 

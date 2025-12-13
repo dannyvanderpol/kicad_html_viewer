@@ -14,7 +14,7 @@ export const Drawer = {
         'kicad_pcb': ['sheet']
     },
 
-    draw: function (designObject)
+    draw: function (ctx, designObject)
     {
         timer.start('Drawer');
         if (logger.logLevel & logger.LEVEL_DRAWER_GENERAL) logger.info(`[Drawer] drawing '${designObject.filename}'`, designObject);
@@ -28,7 +28,7 @@ export const Drawer = {
                 if (logger.logLevel & logger.LEVEL_DRAWER_ELEMENT) logger.info('[Drawer] drawing elements:' , byLayer[layer]);
                 for (const element of byLayer[layer])
                 {
-                    element.draw();
+                    element.draw(ctx);
                 }
             }
         }

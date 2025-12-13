@@ -21,7 +21,7 @@ Support: KiCad 9 and higher
 
 ### PCB
 
-<img src="test/screenshot_pcb.png" alt="PCB screenshot" style="border:1px solid #ccc; max-width:100%; height:auto;" />
+<kbd><img src="test/screenshot_pcb.png" alt="PCB screenshot" /></kdb>
 
 ## Usage
 

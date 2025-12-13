@@ -23,7 +23,7 @@ export async function parseFile(filename)
     timer.start('Parse content');
     if (logger.logLevel & logger.LEVEL_PARSER_GENERAL) logger.info('Parser', `[Parser] Parsing file: '${filename}'`);
 
-    let design = new DesignObject();
+    let design = new DesignObject(filename);
     let sections = Sections.getSections(content);
     if (sections.length != 1)
     {

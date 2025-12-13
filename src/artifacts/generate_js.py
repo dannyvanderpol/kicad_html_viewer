@@ -27,13 +27,13 @@ def generate_page_layout():
         if data[pos] == ")":
             old_pos = pos
         if pos > max_line_length:
-            output += "    "" + data[:old_pos + 1] + "" +\n"
+            output += "    '" + data[:old_pos + 1] + "' +\n"
             data = data[old_pos + 1:]
             pos = 0
             old_pos = 0
         pos += 1
     if len(data) > 0:
-        output += "    "" + data + ""\n"
+        output += "    '" + data + "'\n"
     output += ");\n"
 
     with open(JS_FILE, "w") as js_file:

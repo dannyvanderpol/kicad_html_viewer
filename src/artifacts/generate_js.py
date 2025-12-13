@@ -39,7 +39,7 @@ def generate_page_layout():
 
 def generate_font():
     SRC_FILE = os.path.join(os.path.dirname(__file__), "newstroke.woff2")
-    JS_FILE = os.path.join(os.path.dirname(__file__), "ki_font.js")
+    JS_FILE = os.path.join(os.path.dirname(__file__), "../lib/ki_font.js")
 
     with open(SRC_FILE, "rb") as font_file:
         data = font_file.read()

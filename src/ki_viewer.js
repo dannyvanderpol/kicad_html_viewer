@@ -7,7 +7,7 @@ import { logger    } from './lib/logger.js';
 import { timer     } from './lib/timer.js';
 
 // Old imports
-import { loadFont } from './ki_font.js';
+import { loadFont } from './lib/ki_font.js';
 
 class KiViewer
 {

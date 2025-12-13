@@ -3,8 +3,8 @@
  */
 
 import { DesignObject } from '../design/design_object.js';
-import { Sections     } from './sections_parser.js';
-import { timer        } from '../lib/timer.js';
+import { Sections } from './sections_parser.js';
+import { timer } from '../lib/timer.js';
 
 export class ParserBase
 {

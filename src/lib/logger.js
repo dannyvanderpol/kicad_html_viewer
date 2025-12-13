@@ -20,6 +20,7 @@ class Logger
     LEVEL_ERROR = 0x01;
     LEVEL_WARN = 0x02;
     LEVEL_INFO = 0x04;
+    LEVEL_TIMER = 0x08;
 
     // Viewer levels
     LEVEL_VIEWER = 0xFF00;

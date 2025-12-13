@@ -5,9 +5,10 @@
 
 export class DesignObject
 {
-    constructor()
+    constructor(filename)
     {
-        this.fileType = null;
+        this.filename = filename;
+        this.fileType = '';
         this.designElements = [];
         this.graphicsElements = [];
     }

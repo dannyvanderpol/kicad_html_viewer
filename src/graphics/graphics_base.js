@@ -24,8 +24,8 @@ export class GraphicsBase
         if (this.points.length > 0)
         {
             // default drawing settings
-            this.ctx.lineCap = 'round';
-            this.ctx.lineJoin = 'round';
+            ctx.lineCap = 'round';
+            ctx.lineJoin = 'round';
             this.drawElement(ctx);
         }
         else if (logger.logLevel & logger.LEVEL_DRAWER_ELEMENT)

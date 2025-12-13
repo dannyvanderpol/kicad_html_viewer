@@ -11,7 +11,7 @@ import { timer } from '../lib/timer.js';
 export const Drawer = {
     layerOrder: {
         'kicad_sch': ['sheet', 'design'],
-        'kicad_pcb': ['sheet', 'design']
+        'kicad_pcb': ['sheet', 'B.Cu', 'F.Cu', 'design']
     },
 
     draw: function (ctx, designObject)

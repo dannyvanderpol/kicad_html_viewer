@@ -2,24 +2,27 @@
 
 'use strict';
 
+import { Drawer } from './drawer/drawer.js';
 import { parseFile } from './parser/design_parser.js';
-import { logger    } from './lib/logger.js';
-import { timer     } from './lib/timer.js';
-
-// Old imports
 import { loadFont } from './lib/ki_font.js';
+import { logger } from './lib/logger.js';
+import { timer } from './lib/timer.js';
 
 class KiViewer
 {
     constructor(canvas, filename)
     {
-        logger.logLevel = logger.LEVEL_SYSTEM | logger.LEVEL_PARSER;
+        // Default off
+        logger.logLevel = logger.LEVEL_OFF;
+        // Enable one of the levels below for debugging (see logger for other levels)
+        logger.logLevel |= logger.LEVEL_SYSTEM;
+        logger.logLevel |= logger.LEVEL_VIEWER;
+        logger.logLevel |= logger.LEVEL_PARSER;
+        logger.logLevel |= logger.LEVEL_DRAWER;
 
         this.canvas = canvas;
         this.filename = filename;
-        this.content = null;
-        this.sheet = null;
-        this.colors = null;
+        this.design = null;
         this.viewportTransform = {
             x: 0,
             y: 0,
@@ -42,7 +45,7 @@ class KiViewer
     {
         timer.start('Viewer');
         if (logger.logLevel & logger.LEVEL_VIEWER_GENERAL) logger.info(`[Viewer] viewing file '${this.filename}'`);
-        let design = await parseFile(this.filename);
+        this.design = await parseFile(this.filename);
 
         this._render();
         timer.stop('Viewer');
@@ -75,13 +78,14 @@ class KiViewer
             this.viewportTransform.x,
             this.viewportTransform.y
         );
+        Drawer.draw(this.design);
         timer.stop('Render');
     }
 
     /* Event handlers */
     _onMouseDown(e)
     {
-        if (this.debug & debugLevels.EVENTS) console.log('Mouse down:', e);
+        if (logger.logLevel & logger.LEVEL_EVENTS) console.log('Mouse down:', e);
         this.previousX = e.clientX;
         this.previousY = e.clientY;
         this.isMoving = true;
@@ -89,14 +93,14 @@ class KiViewer
 
     _onMouseUp(e)
     {
-        if (this.debug & debugLevels.EVENTS) console.log('Mouse up:', e);
+        if (logger.logLevel & logger.LEVEL_EVENTS) console.log('Mouse up:', e);
         this.isMoving = false;
     }
 
     _onMouseMove(e)
     {
         if (!this.isMoving) return;
-        if (this.debug & debugLevels.EVENTS) console.log('Mouse move:', e);
+        if (logger.logLevel & logger.LEVEL_EVENTS) console.log('Mouse move:', e);
         const localX = e.clientX;
         const localY = e.clientY;
         this.viewportTransform.x += localX - this.previousX;
@@ -107,7 +111,7 @@ class KiViewer
     }
 
     _onMouseWheel(e) {
-        if (this.debug & debugLevels.EVENTS) console.log('Mouse wheel:', e);
+        if (logger.logLevel & logger.LEVEL_EVENTS) console.log('Mouse wheel:', e);
         e.preventDefault();
         const oldX = this.viewportTransform.x;
         const oldY = this.viewportTransform.y;

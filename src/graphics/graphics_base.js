@@ -11,20 +11,32 @@ export class GraphicsBase
     {
         this.type = GraphicsBase.name;
         this.layer = 'design';
+        this.color = 'gray';
+        this.points = [];
     }
 
-    draw()
+    draw(ctx)
     {
         const name = this.constructor.name;
         timer.start(`Draw ${name}`);
-        if (logger.logLevel & logger.LEVEL_DRAWER_ELEMENT) console.log(`Drawing '${name}' on layer '${this.layer}'`);
-        this.drawElement();
+        if (logger.logLevel & logger.LEVEL_DRAWER_ELEMENT) console.log(`[Drawer] Drawing '${name}' on layer '${this.layer}'`);
+        if (this.points.length > 0)
+        {
+            // default drawing settings
+            this.ctx.lineCap = 'round';
+            this.ctx.lineJoin = 'round';
+            this.drawElement(ctx);
+        }
+        else if (logger.logLevel & logger.LEVEL_DRAWER_ELEMENT)
+        {
+            console.warn('[Drawer] Drawing skipped');
+        }
         timer.stop(`Draw ${name}`);
     }
 
-    drawElement()
+    drawElement(ctx)
     {
         // To be implemented by subclasses.
-        console.error('drawElement() not implemented in subclass');
+        console.error('[Drawer] drawElement() not implemented in subclass');
     }
 }

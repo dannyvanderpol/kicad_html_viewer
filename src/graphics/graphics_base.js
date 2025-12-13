@@ -6,5 +6,6 @@ export class GraphicsBase
 {
     constructor()
     {
+        this.layer = '';
     }
 }

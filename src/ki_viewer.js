@@ -2,16 +2,12 @@
 
 'use strict';
 
-import { KiColors } from './ki_colors.js';
-import { KiDrawer } from './ki_drawer.js';
-import { loadFont } from './ki_font.js';
-import { KiReader } from './ki_reader.js';
-import { pageLayout } from './ki_pagelayout.js';
-
-// New parser
 import { parseFile } from './parser/design_parser.js';
 import { logger    } from './lib/logger.js';
 import { timer     } from './lib/timer.js';
+
+// Old imports
+import { loadFont } from './ki_font.js';
 
 class KiViewer
 {
@@ -19,13 +15,11 @@ class KiViewer
     {
         logger.logLevel = logger.LEVEL_SYSTEM | logger.LEVEL_PARSER;
 
-        this.debug = debugLevels.OFF;
         this.canvas = canvas;
         this.filename = filename;
         this.content = null;
         this.sheet = null;
         this.colors = null;
-        this.pageSize = paperSizes.A4;
         this.viewportTransform = {
             x: 0,
             y: 0,
@@ -42,22 +36,6 @@ class KiViewer
         this.canvas.addEventListener('mouseup', this._onMouseUp.bind(this));
         this.canvas.addEventListener('mousemove', this._onMouseMove.bind(this));
         this.canvas.addEventListener('wheel', this._onMouseWheel.bind(this));
-        this.valuesDictionary = {
-            paper: '',
-            sheetpath: '',
-            filename: '',
-            title: '',
-            kicad_version: '',
-            issue_date: '',
-            revision: '',
-            pageNumber: '',
-            totalPages: '',
-            company: '',
-            comment1: '',
-            comment2: '',
-            comment3: '',
-            comment4: '',
-        };
     }
 
     async initialize()
@@ -66,49 +44,6 @@ class KiViewer
         if (logger.logLevel & logger.LEVEL_VIEWER_GENERAL) logger.info(`[Viewer] viewing file '${this.filename}'`);
         let design = await parseFile(this.filename);
 
-
-        // Old reader, to be replaced
-        if (this.debug & debugLevels.VIEWER) console.log('Viewer: drawing KiCad content');
-        let reader = new KiReader(this.filename, this.debug & debugLevels.READER);
-        this.content = await reader.loadFile();
-
-        if (this.debug & debugLevels.GENERAL) console.log('Load default sheet');
-        reader = new KiReader('pageLayout', this.debug & debugLevels.READER);
-        this.sheet = reader.parseFile(pageLayout);
-
-        this.colors = new KiColors(this.content.type, this.debug & debugLevels.COLORS);
-
-        this.pageSize = paperSizes[this.content.paper];
-        if (!this.pageSize)
-        {
-            if (this.debug & debugLevels.GENERAL) console.warn('Unknown page size:',  this.content.paper);
-            this.pageSize = paperSizes.A4;
-        }
-
-        // Set values from content
-        // Must haves:
-        this.valuesDictionary.paper = this.content.paper;
-        this.valuesDictionary.sheetpath = this.content.sheetpath;
-        this.valuesDictionary.filename = this.content.filename;
-        this.valuesDictionary.title = this.content.titleBlock.title;
-        this.valuesDictionary.kicad_version = 'KiCad V' + this.content.version;
-        this.valuesDictionary.issue_date = this.content.titleBlock.date;
-        this.valuesDictionary.pageNumber = this.content.pageNumber;
-        this.valuesDictionary.totalPages = this.content.totalPages;
-        // Could haves:
-        this.valuesDictionary.revision = this.content.titleBlock.rev || '';
-        this.valuesDictionary.company = this.content.titleBlock.company || '';
-        this.valuesDictionary.comment1 = this.content.titleBlock.comment1 || '';
-        this.valuesDictionary.comment2 = this.content.titleBlock.comment2 || '';
-        this.valuesDictionary.comment3 = this.content.titleBlock.comment3 || '';
-        this.valuesDictionary.comment4 = this.content.titleBlock.comment4 || '';
-
-        // Fit page to canvas
-        this.fitScaleX = this.canvas.width / this.pageSize.width;
-        this.fitScaleY = this.canvas.height / this.pageSize.height;
-        this.viewportTransform.scale = Math.min(this.fitScaleX, this.fitScaleY) * 0.98;
-        this.viewportTransform.x = (this.canvas.width - this.pageSize.width * this.viewportTransform.scale) / 2;
-        this.viewportTransform.y = (this.canvas.height - this.pageSize.height * this.viewportTransform.scale) / 2;
         this._render();
         timer.stop('Viewer');
         if (logger.logLevel & logger.LEVEL_TIMER) timer.showReport();
@@ -140,12 +75,6 @@ class KiViewer
             this.viewportTransform.x,
             this.viewportTransform.y
         );
-
-        const drawer = new KiDrawer(ctx, this.viewportTransform.scale, this.colors, this.valuesDictionary,
-                                    this.debug & debugLevels.DRAWER);
-        drawer.drawPageOutline(this.pageSize);
-        drawer.drawContent(this.sheet);
-        drawer.drawContent(this.content);
         timer.stop('Render');
     }
 
@@ -194,23 +123,6 @@ class KiViewer
         this.viewportTransform.y = localY - (localY - oldY) * (this.viewportTransform.scale / previousScale);
         this._render()
     }
-}
-
-const paperSizes = {
-  A0: { width: 1189, height: 841 },
-  A1: { width: 841,  height: 594 },
-  A2: { width: 594,  height: 420 },
-  A3: { width: 420,  height: 297 },
-  A4: { width: 297,  height: 210 }
-};
-
-const debugLevels = {
-    OFF: 0x00,
-    VIEWER: 0x01,
-    READER: 0x02,
-    DRAWER: 0x04,
-    COLORS: 0x08,
-    ALL: 0xFF
 }
 
 // Generate view when DOM is ready

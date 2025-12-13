@@ -4,17 +4,22 @@
  * output: design object
  */
 
-import { Design } from '../design/design.js';
-import { fetchFile } from '../lib/fetch_file.js';
-import { logger } from '../lib/logger.js';
-import { Sections } from './sections.js';
+import { Design     } from '../design/design.js';
+import { fetchFile  } from '../lib/fetch_file.js';
+import { logger     } from '../lib/logger.js';
+import { Sections   } from './sections.js';
+import { timer      } from '../lib/timer.js';
 
 export async function parseFile(filename)
 {
+    timer.start('Parser');
     if (logger.logLevel & logger.LEVEL_PARSER_FETCH) logger.info('Fetcher', '[Parser] Fetching file content');
+    timer.start('Fetch');
     const content = await fetchFile(filename);
+    timer.stop('Fetch');
     if (logger.logLevel & logger.LEVEL_PARSER_FETCH) logger.info('Fetcher', `[Parser] Content length: ${content.length}`);
 
+    timer.start('Parse content');
     if (logger.logLevel & logger.LEVEL_PARSER_GENERAL) logger.info('Parser', `[Parser] Parsing file: '${filename}'`);
     let design = new Design();
 
@@ -29,7 +34,8 @@ export async function parseFile(filename)
         if (logger.logLevel & logger.LEVEL_PARSER_GENERAL) logger.info(`[Parser] Design type: '${design.fileType}'`);
 
     }
-
+    timer.stop('Parse content');
     if (logger.logLevel & logger.LEVEL_PARSER_GENERAL) logger.info('Parser', '[Parser] Parsed design:', design);
+    timer.stop('Parser');
     return design;
 }

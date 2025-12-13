@@ -2,6 +2,8 @@
  * Parsing a zone into a design object and graphics objects.
  */
 
+'use strict';
+
 import { ParserBase } from './parser_base.js';
 import { Sections   } from './sections_parser.js';
 import { Polygon    } from '../graphics/polygon.js';
@@ -17,8 +19,22 @@ export class ZoneParser extends ParserBase
             {
                 // Graphics
                 case 'filled_polygon':
+                    let props = Sections.getProperties(subSection);
                     let polygon = new Polygon();
-                    this.graphicsObjects.push(polygon);
+                    polygon.layer = props.layer[0];
+                    polygon.color = this.getColor(polygon.layer);
+                    for (let pt of props.pts)
+                    {
+                        let parts = pt.split(' ');
+                        if (parts.length == 3 && parts[0] == 'xy')
+                        {
+                            polygon.points.push({
+                                x: parseFloat(parts[1]),
+                                y: parseFloat(parts[2])
+                            });
+                        }
+                    }
+                    this.graphicsElements.push(polygon);
                     break;
 
                 // Skip
@@ -38,7 +54,7 @@ export class ZoneParser extends ParserBase
                     break;
 
                 default:
-                    if (this.showDebug) console.warn('Reader: unknown zone subsection:', name);
+                    if (this.showDebug) console.warn('[ZoneParser]: unknown zone subsection:', name);
             }
         }
     }

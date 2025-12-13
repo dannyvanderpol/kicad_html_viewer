@@ -29,8 +29,8 @@ jobs:
 
     - name: commit and push builded file
       run: |
-        git config user.email "danny.v.der.pol@gmail.com"
-        git config user.name "Danny"
+        git config user.email "build_and_minify@github.com"
+        git config user.name "Workflow"
         git config pull.rebase false
         git add build/ki_viewer-dev.min.js
         if ! git diff --cached --quiet; then
@@ -40,3 +40,4 @@ jobs:
         else
           echo "No changes"
         fi
+

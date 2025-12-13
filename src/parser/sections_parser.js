@@ -46,5 +46,59 @@ export const Sections = {
             }
         }
         return name.trim();
+    },
+
+    getValues: function (section)
+    {
+        // Remove any new lines ot tabs, and multiple spaces
+        section = section.replace(/[\r\n\t]/g, ' ').replace(/ +/g, ' ');
+        let values = [];
+        let pos = section.indexOf(' ');
+        if (pos > 0)
+        {
+            let start = pos;
+            let token = '';
+            // Values can be '(section_name (a b c) value "string")'
+            for (let i = pos; i < section.length - 1; i++)
+            {
+                // Start of values
+                if ((section[i] == ' ' && token == '') ||
+                    (section[i] == '"' && token == ' ') ||
+                    (section[i] == '(' && token == ' '))
+                {
+                    start = i + 1;
+                    token = section[i] == '(' ? ')' : section[i];
+                    continue;
+                }
+                if (token != '' && (section[i] == token || i == section.length - 2))
+                {
+                    values.push(section.substring(start, i + 1).trim().replace(/^"|"$/g, '').replace(/\)$/g, ''));
+                    if (token == ')') token = '';
+                    start = i + 1;
+                }
+            }
+        }
+        return values;
+    },
+
+    getProperties: function (section, singleValue=false)
+    {
+        let properties = {};
+        for (const subSection of this.getSections(section.substring(1, section.length - 1)))
+        {
+            let value = this.getValues(subSection);
+            let name = this.getSectionName(subSection);
+            if (name == 'comment')
+            {
+                name = 'comment' + value[0];
+                value = [value[1]];
+            }
+            if (singleValue && value.length >= 1)
+            {
+                value = value[0];
+            }
+            properties[name] = value;
+        }
+        return properties;
     }
 }

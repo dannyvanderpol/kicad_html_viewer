@@ -8,7 +8,7 @@ export class DesignObject
     constructor(filename)
     {
         this.filename = filename;
-        this.fileType = '';
+        this.designType = '';
         this.designElements = [];
         this.graphicsElements = [];
     }

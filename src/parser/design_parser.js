@@ -31,8 +31,8 @@ export async function parseFile(filename)
     }
     else
     {
-        design.fileType = Sections.getSectionName(sections[0]);
-        if (logger.logLevel & logger.LEVEL_PARSER_GENERAL) logger.info(`[Parser] Design type: '${design.fileType}'`);
+        design.designType = Sections.getSectionName(sections[0]);
+        if (logger.logLevel & logger.LEVEL_PARSER_GENERAL) logger.info(`[Parser] Design type: '${design.designType}'`);
         for (let section of Sections.getSections(sections[0].substring(1, sections[0].length - 1)))
         {
             let sectionName = Sections.getSectionName(section);

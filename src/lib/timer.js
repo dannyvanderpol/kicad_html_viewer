@@ -17,8 +17,7 @@ class Timer
     {
         if (this.#timers[label] !== undefined)
         {
-            const elapsed = performance.now() - this.#timers[label];
-            this.#timers[label] = `${elapsed.toFixed(1)} ms`;
+            this.#timers[label] = Math.round((performance.now() - this.#timers[label]) * 10) / 10;
         }
     }
 

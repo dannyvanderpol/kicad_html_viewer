@@ -3,7 +3,7 @@
 'use strict';
 
 import { Drawer } from './drawer/drawer.js';
-import { parseFile } from './parser/design_parser.js';
+import { DesignParser } from './parser/design_parser.js';
 import { KI_FONT } from './lib/ki_font.js';
 import { logger } from './lib/logger.js';
 import { timer } from './lib/timer.js';
@@ -45,7 +45,7 @@ class KiViewer
     {
         timer.start('Viewer');
         if (logger.logLevel & logger.LEVEL_VIEWER_GENERAL) logger.info(`[Viewer] viewing file '${this.filename}'`);
-        this.design = await parseFile(this.filename);
+        this.design = await DesignParser.parseFile(this.filename);
 
         this._render();
         timer.stop('Viewer');

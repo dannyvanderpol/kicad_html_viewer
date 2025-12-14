@@ -7,6 +7,7 @@
 import { DesignObject } from '../design/design_object.js';
 import { fetchFile } from '../lib/fetch_file.js';
 import { logger } from '../lib/logger.js';
+import { PAGE_LAYOUT } from '../lib/ki_pagelayout.js';
 import { Sections } from './sections_parser.js';
 import { timer } from '../lib/timer.js';
 import { ZoneParser } from './zone_parser.js';
@@ -26,6 +27,10 @@ export const DesignParser = {
 
         let design = this.parseContent(content);
         design.filename = filename;
+
+        let pageLayout = this.parseContent(PAGE_LAYOUT);
+        design.designElements.push(...pageLayout.designElements);
+        design.graphicsElements.push(...pageLayout.graphicsElements);
 
         if (logger.logLevel & logger.LEVEL_PARSER_GENERAL) logger.info('[Parser] Parsed design:', design);
         timer.stop('Parse design');

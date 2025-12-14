@@ -4,4 +4,8 @@
 
 export class DesignElement
 {
+    constructor(reference)
+    {
+        this.reference = reference;
+    }
 }

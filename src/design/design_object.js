@@ -12,4 +12,9 @@ export class DesignObject
         this.designElements = [];
         this.graphicsElements = [];
     }
+
+    getDesignElement(reference)
+    {
+        return this.designElements.find(o => o.reference === reference);
+    }
 }

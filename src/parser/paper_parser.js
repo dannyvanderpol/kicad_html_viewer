@@ -1,0 +1,45 @@
+/*
+ * Parsing a paper section into a design object and graphics objects.
+ */
+
+'use strict';
+
+import { logger } from '../lib/logger.js';
+import { ParserBase } from './parser_base.js';
+import { Sections } from './sections_parser.js';
+import { Rectangle } from '../graphics/rectangle.js';
+import { PageElement } from '../design/page_element.js';
+
+export class PaperParser extends ParserBase
+{
+    parse(sections)
+    {
+        let values = Sections.getValues(sections);
+        let pageSize = paperSizes[values[0]];
+        if (!pageSize)
+        {
+            if (logger.logLevel & logger.LEVEL_PARSER_ELEMENT) console.warn('Unknown page size:',  values[0]);
+            pageSize = paperSizes.A4;
+        }
+
+        this.designElement = new PageElement('page');
+        this.designElement.width = pageSize.width;
+        this.designElement.height = pageSize.height;
+
+        let rectangle = new Rectangle();
+        rectangle.layer = 'sheet';
+        rectangle.color = this.getColor('page_limits');
+        rectangle.thickness = 0.15;
+        rectangle.points.push({ x: 0, y: 0 });
+        rectangle.points.push({ x: pageSize.width, y: pageSize.height });
+        this.graphicsElements.push(rectangle);
+    }
+}
+
+const paperSizes = {
+  A0: { width: 1189, height: 841 },
+  A1: { width: 841,  height: 594 },
+  A2: { width: 594,  height: 420 },
+  A3: { width: 420,  height: 297 },
+  A4: { width: 297,  height: 210 }
+};

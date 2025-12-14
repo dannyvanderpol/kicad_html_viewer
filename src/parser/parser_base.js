@@ -12,19 +12,23 @@ import { timer } from '../lib/timer.js';
 
 export class ParserBase
 {
-    constructor(designType, sectionContent)
+    constructor()
     {
-        this.designType = designType;
+        this.designType = '';
         this.designElement = new DesignElement;
         this.graphicsElements = [];
+    }
+
+    parseSection(sectionContent, designType)
+    {
+        this.designType = designType;
         this.sectionName = Sections.getSectionName(sectionContent);
         timer.start(`Parse ${this.sectionName}`);
-        this.sections = Sections.getSections(sectionContent.substring(1, sectionContent.length - 1));
-        this.parseSection();
+        this.parse(Sections.getSections(sectionContent.substring(1, sectionContent.length - 1)));
         timer.stop(`Parse ${this.sectionName}`);
     }
 
-    parseSection()
+    parse(sections)
     {
         // To be implemented by subclasses
         console.error('parseSection() not implemented in subclass');

@@ -10,15 +10,16 @@ import { Polygon    } from '../graphics/polygon.js';
 
 export class ZoneParser extends ParserBase
 {
-    parseSection()
+    parse(sections)
     {
-        for (const subSection of this.sections)
+        for (const subSection of sections)
         {
             let name = Sections.getSectionName(subSection);
             switch (name)
             {
                 // Graphics
                 case 'filled_polygon':
+                    console.log('!!');
                     let props = Sections.getProperties(subSection);
                     let polygon = new Polygon();
                     polygon.layer = props.layer[0];

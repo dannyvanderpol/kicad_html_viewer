@@ -53,13 +53,12 @@ export const DesignParser = {
             if (logger.logLevel & logger.LEVEL_PARSER_GENERAL) logger.info(`[Parser] Design type: '${design.designType}'`);
             for (let section of Sections.getSections(sections[0].substring(1, sections[0].length - 1)))
             {
+                let elementParser = null;
                 let sectionName = Sections.getSectionName(section);
                 switch (sectionName)
                 {
                     case 'zone':
-                        const zone = new ZoneParser(design.designType, section);
-                        design.designElements.push(zone.designElement);
-                        design.graphicsElements.push(...zone.graphicsElements);
+                        elementParser = new ZoneParser();
                         break;
 
                     // Skip
@@ -71,6 +70,12 @@ export const DesignParser = {
                     default:
                         if (logger.logLevel & logger.LEVEL_PARSER_GENERAL) logger.warn('[Parser] Unknown section:', sectionName);
                         break;
+                }
+                if (elementParser != null)
+                {
+                    elementParser.parseSection(section, design.designType);
+                    design.designElements.push(elementParser.designElement);
+                    design.graphicsElements.push(...elementParser.graphicsElements);
                 }
             }
         }

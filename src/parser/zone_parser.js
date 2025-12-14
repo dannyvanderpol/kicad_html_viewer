@@ -4,6 +4,7 @@
 
 'use strict';
 
+import { logger } from '../lib/logger.js';
 import { ParserBase } from './parser_base.js';
 import { Sections   } from './sections_parser.js';
 import { Polygon    } from '../graphics/polygon.js';
@@ -54,7 +55,7 @@ export class ZoneParser extends ParserBase
                     break;
 
                 default:
-                    if (this.showDebug) console.warn('[ZoneParser]: unknown zone subsection:', name);
+                    if (logger.logLevel & logger.LEVEL_PARSER_ELEMENT) console.warn('[ZoneParser]: unknown zone subsection:', name);
             }
         }
     }

@@ -19,7 +19,6 @@ export class ZoneParser extends ParserBase
             {
                 // Graphics
                 case 'filled_polygon':
-                    console.log('!!');
                     let props = Sections.getProperties(subSection);
                     let polygon = new Polygon();
                     polygon.layer = props.layer[0];

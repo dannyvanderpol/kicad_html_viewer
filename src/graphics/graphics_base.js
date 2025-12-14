@@ -2,6 +2,8 @@
  * Base class for all graphics objects.
  */
 
+'use strict';
+
 import { Colors } from '../lib/colors.js';
 import { logger } from '../lib/logger.js';
 import { timer } from '../lib/timer.js';
@@ -13,6 +15,7 @@ export class GraphicsBase
         this.type = GraphicsBase.name;
         this.layer = 'design';
         this.color = Colors.default;
+        this.thickness = 1;
         this.points = [];
     }
 
@@ -20,8 +23,8 @@ export class GraphicsBase
     {
         const name = this.constructor.name;
         timer.start(`Draw ${name}`);
-        if (logger.logLevel & logger.LEVEL_DRAWER_ELEMENT) console.log(`[Drawer] Drawing '${name}' on layer '${this.layer}'`);
-        if (this.points.length > 0)
+        if (logger.logLevel & logger.LEVEL_DRAWER_ELEMENT) console.log(`[GraphicsBase] Drawing '${name}' on layer '${this.layer}'`);
+        if (this.points.length >= MIN_POINTS[name])
         {
             // default drawing settings
             ctx.lineCap = 'round';
@@ -30,7 +33,7 @@ export class GraphicsBase
         }
         else if (logger.logLevel & logger.LEVEL_DRAWER_ELEMENT)
         {
-            console.warn('[Drawer] Drawing skipped');
+            console.warn(`[GraphicsBase] Drawing '${name}' skipped`, this, MIN_POINTS[name]);
         }
         timer.stop(`Draw ${name}`);
     }
@@ -38,6 +41,11 @@ export class GraphicsBase
     drawElement(ctx)
     {
         // To be implemented by subclasses.
-        console.error('[Drawer] drawElement() not implemented in subclass');
+        console.error('[GraphicsBase] drawElement() not implemented in subclass');
     }
+}
+
+const MIN_POINTS = {
+    'Polygon': 3,
+    'Rectangle': 2
 }

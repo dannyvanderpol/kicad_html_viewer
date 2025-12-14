@@ -24,7 +24,12 @@ export class ParserBase
         this.designType = designType;
         this.sectionName = Sections.getSectionName(sectionContent);
         timer.start(`Parse ${this.sectionName}`);
-        this.parse(Sections.getSections(sectionContent.substring(1, sectionContent.length - 1)));
+        let sections = Sections.getSections(sectionContent.substring(1, sectionContent.length - 1))
+        if (sections.length == 0)
+        {
+            sections = sectionContent;
+        }
+        this.parse(sections);
         timer.stop(`Parse ${this.sectionName}`);
     }
 

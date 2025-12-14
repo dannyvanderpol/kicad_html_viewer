@@ -22,7 +22,7 @@ export class PaperParser extends ParserBase
             pageSize = paperSizes.A4;
         }
 
-        this.designElement = new PageElement('page');
+        this.designElement = new PageElement('paper');
         this.designElement.width = pageSize.width;
         this.designElement.height = pageSize.height;
 

@@ -11,6 +11,7 @@ import { PAGE_LAYOUT } from '../lib/ki_pagelayout.js';
 import { Sections } from './sections_parser.js';
 import { timer } from '../lib/timer.js';
 import { ZoneParser } from './zone_parser.js';
+import { PaperParser } from './paper_parser.js';
 
 export const DesignParser = {
     parseFile: async function (filename)
@@ -57,6 +58,10 @@ export const DesignParser = {
                 let sectionName = Sections.getSectionName(section);
                 switch (sectionName)
                 {
+                    case 'paper':
+                        elementParser = new PaperParser();
+                        break;
+
                     case 'zone':
                         elementParser = new ZoneParser();
                         break;

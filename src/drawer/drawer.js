@@ -14,7 +14,7 @@ export const Drawer = {
         'kicad_pcb': ['sheet', 'B.Cu', 'F.Cu', 'design']
     },
 
-    draw: function (ctx, designObject)
+    draw: function (ctx, designObject, scale)
     {
         let drawnLayers = [];
         timer.start('Drawer');
@@ -29,6 +29,7 @@ export const Drawer = {
                 if (logger.logLevel & logger.LEVEL_DRAWER_ELEMENT) logger.info('[Drawer] drawing elements:' , byLayer[layer]);
                 for (const element of byLayer[layer])
                 {
+                    element.scale = scale;
                     element.draw(ctx);
                 }
                 drawnLayers.push(layer);

@@ -10,6 +10,10 @@ export class Rectangle extends GraphicsBase
     {
         ctx.strokeStyle = this.color;
         ctx.lineWidth = this.thickness;
+        if (this.scaledThickness)
+        {
+            ctx.lineWidth /= this.scale;
+        }
         ctx.strokeRect(this.points[0].x, this.points[0].y, this.points[1].x, this.points[1].y);
     }
 }

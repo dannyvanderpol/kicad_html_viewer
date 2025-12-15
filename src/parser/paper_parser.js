@@ -29,7 +29,8 @@ export class PaperParser extends ParserBase
         let rectangle = new Rectangle();
         rectangle.layer = 'sheet';
         rectangle.color = this.getColor('page_limits');
-        rectangle.thickness = 0.15;
+        rectangle.thickness = 0.5;
+        rectangle.scaledThickness = true;
         rectangle.points.push({ x: 0, y: 0 });
         rectangle.points.push({ x: pageSize.width, y: pageSize.height });
         this.graphicsElements.push(rectangle);

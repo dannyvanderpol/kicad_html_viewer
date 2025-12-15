@@ -15,9 +15,9 @@ class KiViewer
         // Default off
         logger.logLevel = logger.LEVEL_OFF;
         // Enable one of the levels below for debugging (see logger for other levels)
-        // logger.logLevel |= logger.LEVEL_SYSTEM;
+        logger.logLevel |= logger.LEVEL_SYSTEM;
         // logger.logLevel |= logger.LEVEL_VIEWER;
-        // logger.logLevel |= logger.LEVEL_PARSER;
+        logger.logLevel |= logger.LEVEL_PARSER;
         // logger.logLevel |= logger.LEVEL_DRAWER;
 
         this.canvas = canvas;
@@ -85,7 +85,7 @@ class KiViewer
             this.viewportTransform.x,
             this.viewportTransform.y
         );
-        Drawer.draw(ctx, this.design);
+        Drawer.draw(ctx, this.design, this.viewportTransform.scale);
         timer.stop('Render');
     }
 

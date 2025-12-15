@@ -16,6 +16,8 @@ export class GraphicsBase
         this.layer = 'design';
         this.color = Colors.default;
         this.thickness = 1;
+        this.scaledThickness = false;
+        this.scale = 1;
         this.points = [];
     }
 
@@ -38,7 +40,7 @@ export class GraphicsBase
         timer.stop(`Draw ${name}`);
     }
 
-    drawElement(ctx)
+    drawElement(ctx, scale)
     {
         // To be implemented by subclasses.
         console.error('[GraphicsBase] drawElement() not implemented in subclass');

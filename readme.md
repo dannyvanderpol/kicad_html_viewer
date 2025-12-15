@@ -9,15 +9,21 @@ Support: KiCad 9 and higher
 ## Features
 
 * Drawing designs in a canvas.
-  * Schematics: not yet working
+  * Schematics:
+    * Drawing sheet border.
   * PCB:
-    * drawing zones on copper layers is working
-  * Pan and zoom
+    * Drawing sheet border.
+    * Drawing zones on copper layers.
+  * Pan and zoom.
 
 * Roadmap:
   * V1.0: Can draw a complete schematics and PCB.
 
 ## Screenshots
+
+### Schematics
+
+![Schematics screenshot](test/screenshot_sch.png)
 
 ### PCB
 

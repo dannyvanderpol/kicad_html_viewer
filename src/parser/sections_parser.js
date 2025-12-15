@@ -81,10 +81,15 @@ export const Sections = {
         return values;
     },
 
-    getProperties: function (section, singleValue=false)
+    getProperties: function (sectionContent, singleValue=false)
     {
+        // Section content can be a list of sub-sections with values or a string with a section
+        if (typeof sectionContent === 'string')
+        {
+            sectionContent = this.getSections(sectionContent.substring(1, sectionContent.length - 1));
+        }
         let properties = {};
-        for (const subSection of this.getSections(section.substring(1, section.length - 1)))
+        for (const subSection of sectionContent)
         {
             let value = this.getValues(subSection);
             let name = this.getSectionName(subSection);

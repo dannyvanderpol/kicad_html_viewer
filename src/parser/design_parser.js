@@ -4,14 +4,15 @@
  * output: design object
  */
 
-import { DesignObject } from '../design/design_object.js';
-import { fetchFile } from '../lib/fetch_file.js';
 import { logger } from '../lib/logger.js';
-import { PAGE_LAYOUT } from '../lib/ki_pagelayout.js';
-import { Sections } from './sections_parser.js';
 import { timer } from '../lib/timer.js';
+import { fetchFile } from '../lib/fetch_file.js';
+import { DesignObject } from '../design/design_object.js';
+import { Sections } from './sections_parser.js';
+import { PAGE_LAYOUT } from '../lib/ki_pagelayout.js';
 import { ZoneParser } from './zone_parser.js';
 import { PaperParser } from './paper_parser.js';
+import { SetupParser } from './setup_parser.js';
 
 export const DesignParser = {
     parseFile: async function (filename)
@@ -60,6 +61,10 @@ export const DesignParser = {
                 {
                     case 'paper':
                         elementParser = new PaperParser();
+                        break;
+
+                    case 'setup':
+                        elementParser = new SetupParser();
                         break;
 
                     case 'zone':

@@ -10,9 +10,10 @@ import { fetchFile } from '../lib/fetch_file.js';
 import { DesignObject } from '../design/design_object.js';
 import { Sections } from './sections_parser.js';
 import { PAGE_LAYOUT } from '../lib/ki_pagelayout.js';
-import { ZoneParser } from './zone_parser.js';
 import { PaperParser } from './paper_parser.js';
+import { RectangleParser } from './rectangle_parser.js';
 import { SetupParser } from './setup_parser.js';
+import { ZoneParser } from './zone_parser.js';
 
 export const DesignParser = {
     parseFile: async function (filename)
@@ -24,13 +25,12 @@ export const DesignParser = {
 
         if (logger.logLevel & logger.LEVEL_PARSER_FETCH) logger.info(`[Parser] Content length: ${content.length} bytes`);
 
-
         if (logger.logLevel & logger.LEVEL_PARSER_GENERAL) logger.info(`[Parser] Parsing file: '${filename}'`);
 
         let design = this.parseContent(content);
         design.filename = filename;
 
-        let pageLayout = this.parseContent(PAGE_LAYOUT);
+        let pageLayout = this.parseContent(PAGE_LAYOUT, design.designType, design.getDesignElement('paper'));
         design.designElements.push(...pageLayout.designElements);
         design.graphicsElements.push(...pageLayout.graphicsElements);
 
@@ -39,7 +39,7 @@ export const DesignParser = {
         return design;
     },
 
-    parseContent: function (content)
+    parseContent: function (content, parentType=null, paper=null)
     {
         timer.start('Parse content');
 
@@ -67,6 +67,10 @@ export const DesignParser = {
                         elementParser = new PaperParser();
                         break;
 
+                    case 'rect':
+                        elementParser = new RectangleParser();
+                        break;
+
                     case 'setup':
                         elementParser = new SetupParser();
                         break;
@@ -89,7 +93,8 @@ export const DesignParser = {
                 }
                 if (elementParser != null)
                 {
-                    elementParser.parseSection(section, design.designType);
+                    elementParser.parseSection(section, design.designType, parentType,
+                                               design.getDesignElement('setup'), paper);
                     design.designElements.push(elementParser.designElement);
                     design.graphicsElements.push(...elementParser.graphicsElements);
                 }

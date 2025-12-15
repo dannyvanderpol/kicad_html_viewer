@@ -2,11 +2,12 @@
 
 'use strict';
 
-import { Drawer } from './drawer/drawer.js';
-import { DesignParser } from './parser/design_parser.js';
-import { KI_FONT } from './lib/ki_font.js';
-import { logger } from './lib/logger.js';
 import { timer } from './lib/timer.js';
+import { logger } from './lib/logger.js';
+import { KI_FONT } from './lib/ki_font.js';
+import { Colors } from './lib/colors.js';
+import { DesignParser } from './parser/design_parser.js';
+import { Drawer } from './drawer/drawer.js';
 
 class KiViewer
 {
@@ -64,6 +65,7 @@ class KiViewer
     {
         timer.start('Render');
         const ctx = this.canvas.getContext('2d');
+        ctx.canvas.style.backgroundColor = Colors[this.design.designType]['background'];
         ctx.setTransform(1, 0, 0, 1, 0, 0)
         ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
         // Don't allow moving the page out of view

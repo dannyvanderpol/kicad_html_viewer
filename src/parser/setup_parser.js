@@ -13,7 +13,7 @@ export class SetupParser extends ParserBase
     parse(sections)
     {
         let properties = Sections.getProperties(sections, true);
-        this.designElement = new SetupElement('paper');
+        this.designElement = new SetupElement(this.sectionName);
         this.designElement.textSize = properties.textsize ? parseFloat(properties.textsize) : 0;
         this.designElement.lineWidth = properties.linewidth ? parseFloat(properties.linewidth) : 0;
         this.designElement.leftMargin = properties.left_margin ? parseFloat(properties.left_margin) : 0;

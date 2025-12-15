@@ -59,6 +59,10 @@ export const DesignParser = {
                 let sectionName = Sections.getSectionName(section);
                 switch (sectionName)
                 {
+                    case 'generator_version':
+                        design.version = Sections.getValues(section)[0];
+                        break;
+
                     case 'paper':
                         elementParser = new PaperParser();
                         break;
@@ -73,6 +77,8 @@ export const DesignParser = {
 
                     // Skip
                     case 'embedded_fonts':
+                    case 'generator':
+                    case 'version':
                         if (logger.logLevel & logger.LEVEL_PARSER_GENERAL) logger.info(`[Parser] Skip '${sectionName}'`);
                         break;
 

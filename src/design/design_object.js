@@ -9,6 +9,7 @@ export class DesignObject
     {
         this.filename = '';
         this.designType = '';
+        this.version = '';
         this.designElements = [];
         this.graphicsElements = [];
     }

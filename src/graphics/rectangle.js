@@ -14,6 +14,8 @@ export class Rectangle extends GraphicsBase
         {
             ctx.lineWidth /= this.scale;
         }
-        ctx.strokeRect(this.points[0].x, this.points[0].y, this.points[1].x, this.points[1].y);
+        const w = this.points[1].x - this.points[0].x;
+        const h = this.points[1].y - this.points[0].y;
+        ctx.strokeRect(this.points[0].x, this.points[0].y, w, h);
     }
 }

@@ -8,9 +8,11 @@ export const Colors = {
     default: 'grey',
     kicad_sch: {
         "background": "rgb(245, 244, 239)",
+        "worksheet": "rgb(132, 0, 0)"
     },
     kicad_pcb: {
         "background": "rgb(0, 16, 35)",
+        "worksheet": "rgb(200, 114, 171)",
         "cu": {
             "b": "rgb(77, 127, 196)",
             "f": "rgb(200, 52, 52)",

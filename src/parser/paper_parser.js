@@ -8,7 +8,7 @@ import { logger } from '../lib/logger.js';
 import { ParserBase } from './parser_base.js';
 import { Sections } from './sections_parser.js';
 import { Rectangle } from '../graphics/rectangle.js';
-import { PageElement } from '../design/page_element.js';
+import { PaperElement } from '../design/paper_element.js';
 
 export class PaperParser extends ParserBase
 {
@@ -22,7 +22,7 @@ export class PaperParser extends ParserBase
             pageSize = paperSizes.A4;
         }
 
-        this.designElement = new PageElement('paper');
+        this.designElement = new PaperElement('paper');
         this.designElement.width = pageSize.width;
         this.designElement.height = pageSize.height;
 

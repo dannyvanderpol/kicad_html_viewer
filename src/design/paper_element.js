@@ -6,7 +6,7 @@
 
 import { DesignElement } from "./design_element.js";
 
-export class PageElement extends DesignElement
+export class PaperElement extends DesignElement
 {
     constructor(reference)
     {

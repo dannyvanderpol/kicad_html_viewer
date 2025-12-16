@@ -13,6 +13,32 @@
         canvas {
             border: 1px solid #ccc;
         }
+        #logContainer {
+            margin-top: 20px;
+            border: 1px solid #ccc;
+            background: #eee;
+            padding: 8px;
+        }
+        #logTitle {
+            margin-bottom: 8px;
+        }
+        #logOutput {
+            background: #333;
+            color: #0d0;
+            padding: 4px;
+            margin: 8px 0px;
+            height: 400px;
+            overflow-y: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+        #logControls button {
+            margin-right: 8px;
+            padding: 4px 8px;
+            cursor: pointer;
+        }
     </style>
     <script type="module" src="/src/ki_viewer.js"></script>
 </head>
@@ -24,5 +50,14 @@
 
     <p>KiCad PCB:</p>
     <canvas src="designs/complex_hierarchy.kicad_pcb" type="application/kicad" width="900" height="640"></canvas>
+
+    <div id="logContainer">
+        <div id="logTitle">Log output:</div>
+        <div id="logControls">
+            <button id="btnClear">Clear Logs</button>
+            <button id="btnDownload">Download Logs</button>
+        </div>
+        <pre id="logOutput"></pre>
+    </div>
 </body>
 </html>

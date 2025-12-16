@@ -67,11 +67,13 @@ class Logger
         // Update DOM element if attached
         if (this.logElement && this.logLevel & logLevel)
         {
-            let textClass = 'info';
-            if (logLine.includes('[WARN')) textClass = 'warn';
-            if (logLine.includes('[ERROR')) textClass = 'error';
-            this.logElement.innerHTML += `<span class="${textClass}">${logLine}</span>` + '\n';
-            this.logElement.scrollTop = this.logElement.scrollHeight;
+            setTimeout(() => {
+                let textClass = 'info';
+                if (logLine.includes('[WARN')) textClass = 'warn';
+                if (logLine.includes('[ERROR')) textClass = 'error';
+                this.logElement.innerHTML += `<span class="${textClass}">${logLine}</span>` + '\n';
+                this.logElement.scrollTop = this.logElement.scrollHeight;
+            }, 0);
         }
     }
 

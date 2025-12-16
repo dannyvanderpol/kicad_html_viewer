@@ -13,14 +13,7 @@ class KiViewer
 {
     constructor(canvas, filename)
     {
-        // Default off
-        logger.logLevel = logger.LEVEL_OFF;
-        // Enable one of the levels below for debugging (see logger for other levels)
-        logger.logLevel |= logger.LEVEL_SYSTEM;
-        // logger.logLevel |= logger.LEVEL_VIEWER;
-        logger.logLevel |= logger.LEVEL_PARSER;
-        // logger.logLevel |= logger.LEVEL_DRAWER;
-
+        logger.setLogElement('logOutput');
         this.canvas = canvas;
         this.filename = filename;
         this.design = null;
@@ -40,12 +33,13 @@ class KiViewer
         this.canvas.addEventListener('mouseup', this._onMouseUp.bind(this));
         this.canvas.addEventListener('mousemove', this._onMouseMove.bind(this));
         this.canvas.addEventListener('wheel', this._onMouseWheel.bind(this));
+        timer.reset();
     }
 
     async initialize()
     {
         timer.start('Viewer');
-        if (logger.logLevel & logger.LEVEL_VIEWER_GENERAL) logger.info(`[Viewer] viewing file '${this.filename}'`);
+        logger.info(`[Viewer] viewing file '${this.filename}'`);
         this.design = await DesignParser.parseFile(this.filename);
 
         // Fit page to canvas
@@ -58,7 +52,7 @@ class KiViewer
 
         this._render();
         timer.stop('Viewer');
-        if (logger.logLevel & logger.LEVEL_TIMER) timer.showReport();
+        timer.showReport();
     }
 
     _render()
@@ -94,7 +88,6 @@ class KiViewer
     /* Event handlers */
     _onMouseDown(e)
     {
-        if (logger.logLevel & logger.LEVEL_EVENTS) console.log('Mouse down:', e);
         this.previousX = e.clientX;
         this.previousY = e.clientY;
         this.isMoving = true;
@@ -102,14 +95,12 @@ class KiViewer
 
     _onMouseUp(e)
     {
-        if (logger.logLevel & logger.LEVEL_EVENTS) console.log('Mouse up:', e);
         this.isMoving = false;
     }
 
     _onMouseMove(e)
     {
         if (!this.isMoving) return;
-        if (logger.logLevel & logger.LEVEL_EVENTS) console.log('Mouse move:', e);
         const localX = e.clientX;
         const localY = e.clientY;
         this.viewportTransform.x += localX - this.previousX;
@@ -120,7 +111,6 @@ class KiViewer
     }
 
     _onMouseWheel(e) {
-        if (logger.logLevel & logger.LEVEL_EVENTS) console.log('Mouse wheel:', e);
         e.preventDefault();
         const oldX = this.viewportTransform.x;
         const oldY = this.viewportTransform.y;

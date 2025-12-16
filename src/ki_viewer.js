@@ -17,6 +17,13 @@ class KiViewer
         // Default logging to the HTML is off (is slow)
         // It logs to an internal buffer and the log can be downloaded.
         logger.logLevel = logger.LEVEL_OFF;
+        // Enable one or more levels for showing logging on the HTML page
+        // logger.logLevel |= logger.LEVEL_SYSTEM;
+        // logger.logLevel |= logger.LEVEL_EVENTS;
+        // logger.logLevel |= logger.LEVEL_TIMER;
+        // logger.logLevel |= logger.LEVEL_VIEWER;
+        // logger.logLevel |= logger.LEVEL_PARSER;
+        // logger.logLevel |= logger.LEVEL_DRAWER;
 
         this.canvas = canvas;
         this.filename = filename;

@@ -25,7 +25,7 @@ export class GraphicsBase
     {
         const name = this.constructor.name;
         timer.start(`Draw ${name}`);
-        if (logger.logLevel & logger.LEVEL_DRAWER_ELEMENT) console.log(`[GraphicsBase] Drawing '${name}' on layer '${this.layer}'`);
+        logger.info(logger.LEVEL_DRAWER, `[GraphicsBase] Drawing '${name}' on layer '${this.layer}'`);
         if (this.points.length >= MIN_POINTS[name])
         {
             // default drawing settings
@@ -33,9 +33,9 @@ export class GraphicsBase
             ctx.lineJoin = 'round';
             this.drawElement(ctx);
         }
-        else if (logger.logLevel & logger.LEVEL_DRAWER_ELEMENT)
+        else
         {
-            console.warn(`[GraphicsBase] Drawing '${name}' skipped`, this, MIN_POINTS[name]);
+            logger.warn(logger.LEVEL_DRAWER, `[GraphicsBase] Drawing '${name}' skipped`, this, MIN_POINTS[name]);
         }
         timer.stop(`Draw ${name}`);
     }

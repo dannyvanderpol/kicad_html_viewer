@@ -22,20 +22,20 @@ class Logger
 
     constructor() {}
 
-    info(...args)
+    info(logLevel, ...args)
     {
-        this._addToBuffer('INFO ', ...args);
+        this._addToBuffer(logLevel, 'INFO ', ...args);
     }
 
-    warn(...args)
+    warn(logLevel, ...args)
     {
-        this._addToBuffer('WARN ', ...args);
+        this._addToBuffer(logLevel, 'WARN ', ...args);
     }
 
-    error(...args)
+    error(logLevel, ...args)
     {
         console.error(...args);
-        this._addToBuffer('ERROR', ...args);
+        this._addToBuffer(logLevel, 'ERROR', ...args);
     }
 
     setLogElement(elementId)
@@ -53,7 +53,7 @@ class Logger
         }
     }
 
-    _addToBuffer(level, ...args)
+    _addToBuffer(logLevel, level, ...args)
     {
         const timestamp = new Date().toISOString();
         const message = args.map(arg =>
@@ -65,7 +65,7 @@ class Logger
         this.logBuffer.push(logLine);
 
         // Update DOM element if attached
-        if (this.logElement)
+        if (this.logElement && this.logLevel & logLevel)
         {
             let textClass = 'info';
             if (logLine.includes('[WARN')) textClass = 'warn';

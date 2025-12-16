@@ -4,7 +4,6 @@
 
 'use strict';
 
-
 import { logger } from '../lib/logger.js';
 import { timer } from '../lib/timer.js';
 
@@ -18,15 +17,15 @@ export const Drawer = {
     {
         let drawnLayers = [];
         timer.start('Drawer');
-        if (logger.logLevel & logger.LEVEL_DRAWER_GENERAL) logger.info(`[Drawer] drawing '${designObject.filename}'`, designObject);
+        logger.info(logger.LEVEL_DRAWER, `[Drawer] drawing '${designObject.filename}'`, designObject);
 
         const byLayer = designObject.graphicsElements.reduce((acc, obj) => { (acc[obj.layer] ??= []).push(obj); return acc;}, {});
         for (const layer of this.layerOrder[designObject.designType])
         {
-            if (logger.logLevel & logger.LEVEL_DRAWER_LAYER) logger.info(`[Drawer] drawing layer '${layer}'`);
+            logger.info(logger.LEVEL_DRAWER, `[Drawer] drawing layer '${layer}'`);
             if (byLayer[layer])
             {
-                if (logger.logLevel & logger.LEVEL_DRAWER_ELEMENT) logger.info('[Drawer] drawing elements:' , byLayer[layer]);
+                logger.info(logger.LEVEL_DRAWER, '[Drawer] drawing elements:' , byLayer[layer]);
                 for (const element of byLayer[layer])
                 {
                     element.scale = scale;
@@ -35,10 +34,9 @@ export const Drawer = {
                 drawnLayers.push(layer);
             }
         }
-        if (logger.logLevel & logger.LEVEL_DRAWER_GENERAL) logger.info('[Drawer] drawn layers:', drawnLayers);
+        logger.info(logger.LEVEL_DRAWER, '[Drawer] drawn layers:', drawnLayers);
         const undrawn = Object.keys(byLayer).filter(layer => !drawnLayers.includes(layer));
-        if (undrawn.length > 0 && logger.logLevel & logger.LEVEL_DRAWER_GENERAL) logger.warn('[Drawer] undrawn layers:', undrawn);
-
+        if (undrawn.length > 0) logger.warn(logger.LEVEL_DRAWER, '[Drawer] undrawn layers:', undrawn);
         timer.stop('Drawer');
     }
 }

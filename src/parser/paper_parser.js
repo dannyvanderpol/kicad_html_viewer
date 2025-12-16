@@ -18,7 +18,7 @@ export class PaperParser extends ParserBase
         let pageSize = paperSizes[values[0]];
         if (!pageSize)
         {
-            if (logger.logLevel & logger.LEVEL_PARSER_ELEMENT) console.warn('Unknown page size:',  values[0]);
+            logger.warn(logger.LEVEL_PARSER, 'Unknown page size:',  values[0]);
             pageSize = paperSizes.A4;
         }
 

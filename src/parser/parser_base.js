@@ -48,7 +48,7 @@ export class ParserBase
     {
         const defaultPcbAlpha = 0.7;
         let color = Colors.default;
-        if (logger.logLevel & logger.LEVEL_PARSER_COLOR) logger.info('[ParserBase] Get color for:', this, identifier);
+        logger.info(logger.LEVEL_PARSER, '[ParserBase] Get color for:', this, identifier);
         let colors = Colors[this.designType];
         if (this.designType == 'kicad_wks')
         {
@@ -73,7 +73,7 @@ export class ParserBase
         }
         else
         {
-            if (logger.logLevel & logger.LEVEL_PARSER_COLOR) logger.warn(`[ParserBase] No colors for '${this.designType}/${this.parentType}'`);
+            logger.warn(logger.LEVEL_PARSER, `[ParserBase] No colors for '${this.designType}/${this.parentType}'`);
         }
         return color;
     }

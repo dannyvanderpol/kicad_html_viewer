@@ -61,7 +61,7 @@ class Timer
         lines.push(hLine);
         for (line of lines)
         {
-            logger.info(line);
+            logger.info(logger.LEVEL_TIMER, line);
         }
     }
 }

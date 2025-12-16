@@ -16,13 +16,13 @@ export async function fetchFile(filename)
         const response = await fetch(filename);
         if (!response.ok)
         {
-            logger.error(`fetchFile: HTTP error status: ${response.status}`);
+            logger.error(logger.LEVEL_PARSER, `fetchFile: HTTP error status: ${response.status}`);
         }
         content = await response.text();
     }
     catch (error)
     {
-        logger.error('fetchFile: error loading file:', error);
+        logger.error(logger.LEVEL_PARSER, 'fetchFile: error loading file:', error);
     }
     timer.stop('Fetch file');
     return content;

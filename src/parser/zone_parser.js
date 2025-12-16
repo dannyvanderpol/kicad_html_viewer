@@ -52,10 +52,11 @@ export class ZoneParser extends ParserBase
                 case 'polygon':
                 case 'priority':
                 case 'uuid':
+                    logger.info(logger.LEVEL_PARSER, '[ZoneParser]: skip subsection:', name);
                     break;
 
                 default:
-                    if (logger.logLevel & logger.LEVEL_PARSER_ELEMENT) console.warn('[ZoneParser]: unknown zone subsection:', name);
+                    logger.warn(logger.LEVEL_PARSER, '[ZoneParser]: unknown zone subsection:', name);
             }
         }
     }

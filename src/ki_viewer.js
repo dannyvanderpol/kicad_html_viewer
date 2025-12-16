@@ -14,6 +14,10 @@ class KiViewer
     constructor(canvas, filename)
     {
         logger.setLogElement('logOutput');
+        // Default logging to the HTML is off (is slow)
+        // It logs to an internal buffer and the log can be downloaded.
+        logger.logLevel = logger.LEVEL_OFF;
+
         this.canvas = canvas;
         this.filename = filename;
         this.design = null;
@@ -39,7 +43,7 @@ class KiViewer
     async initialize()
     {
         timer.start('Viewer');
-        logger.info(`[Viewer] viewing file '${this.filename}'`);
+        logger.info(logger.LEVEL_VIEWER, `[Viewer] viewing file '${this.filename}'`);
         this.design = await DesignParser.parseFile(this.filename);
 
         // Fit page to canvas

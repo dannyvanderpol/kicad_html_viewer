@@ -52,7 +52,6 @@ export class ZoneParser extends ParserBase
                 case 'polygon':
                 case 'priority':
                 case 'uuid':
-                    logger.info(logger.LEVEL_PARSER, '[ZoneParser]: skip subsection:', name);
                     break;
 
                 default:

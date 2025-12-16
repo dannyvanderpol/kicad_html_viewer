@@ -1,71 +1,88 @@
 /*
- * Application wide logger (singleton)
- * Debug levels:
- *  - System levels: first byte (0x01, 0x02, ..., 0x80)
- *  - Viewer levels: second byte (0x0100, 0x0200, ..., 0x8000)
- *  - Parser levels: third byte (0x010000, 0x020000, ..., 0x800000)
- *  - Drawer levels: fourth byte (0x01000000, 0x02000000, ..., 0x80000000)
- *
- * Each level can have 8 sub-levels (0x01 to 0x08)
+ * Application wide logger (singleton).
+ * Logs to log element (see HTML example).
+ * Log can be downloaded as a text file.
  */
 
 'use strict';
 
 class Logger
 {
-    LEVEL_OFF = 0;
-
-    // System levels
-    LEVEL_SYSTEM = 0xFF;
-    LEVEL_ERROR = 0x01;
-    LEVEL_WARN = 0x02;
-    LEVEL_INFO = 0x04;
-    LEVEL_TIMER = 0x08;
-    LEVEL_EVENTS = 0x10;
-
-    // Viewer levels
-    LEVEL_VIEWER = 0xFF00;
-    LEVEL_VIEWER_GENERAL = 0x0100;
-    LEVEL_VIEWER_EVENTS = 0x0200;
-
-    // Parser levels
-    LEVEL_PARSER = 0xFF0000;
-    LEVEL_PARSER_GENERAL = 0x010000;
-    LEVEL_PARSER_FETCH = 0x020000;
-    LEVEL_PARSER_ELEMENT = 0x040000;
-    LEVEL_PARSER_COLOR = 0x080000;
-
-    // Drawer levels
-    LEVEL_DRAWER = 0xFF000000;
-    LEVEL_DRAWER_GENERAL = 0x01000000;
-    LEVEL_DRAWER_LAYER = 0x02000000;
-    LEVEL_DRAWER_ELEMENT = 0x04000000;
-
-    logLevel = this.LEVEL_OFF;
+    logBuffer = [];
+    logElement = null;
 
     constructor() {}
 
     info(...args)
     {
-        if (this.logLevel & this.LEVEL_INFO)
-        {
-            console.info(...args);
-        }
+        this._addToBuffer('INFO ', ...args);
     }
 
     warn(...args)
     {
-        if (this.logLevel & this.LEVEL_WARN)
-        {
-            console.warn(...args);
-        }
+        this._addToBuffer('WARN ', ...args);
     }
 
     error(...args)
     {
-        if (this.logLevel & this.LEVEL_ERROR)
+        console.error(...args);
+        this._addToBuffer('ERROR', ...args);
+    }
+
+    setLogElement(elementId)
+    {
+        const element = document.getElementById(elementId);
+        if (element)
         {
-            console.error(...args);
+            this.logElement = element;
+            document.getElementById('btnClear').addEventListener('click', () => {
+                logger.clearLogs();
+            });
+            document.getElementById('btnDownload').addEventListener('click', () => {
+                logger.downloadLogs('kicad_viewer_logs.txt');
+            });
+        }
+    }
+
+    _addToBuffer(level, ...args)
+    {
+        const timestamp = new Date().toISOString();
+        const message = args.map(arg =>
+            typeof arg === 'object' ? JSON.stringify(arg, null, 2) : String(arg)
+        ).join(' ');
+
+        const logLine = `[${timestamp}] [${level}] ${message}`;
+
+        this.logBuffer.push(logLine);
+
+        // Update DOM element if attached
+        if (this.logElement)
+        {
+            this.logElement.textContent += logLine + '\n';
+            this.logElement.scrollTop = this.logElement.scrollHeight;
+        }
+    }
+
+    downloadLogs(filename = 'logs.txt')
+    {
+        const content = this.logBuffer.join('\n');
+        const blob = new Blob([content], { type: 'text/plain' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+    }
+
+    clearLogs()
+    {
+        this.logBuffer = [];
+        if (this.logElement)
+        {
+            this.logElement.textContent = '';
         }
     }
 }

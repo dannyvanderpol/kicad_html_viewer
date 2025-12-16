@@ -19,14 +19,11 @@ export const DesignParser = {
     parseFile: async function (filename)
     {
         timer.start('Parse design');
-        if (logger.logLevel & logger.LEVEL_PARSER_FETCH) logger.info('[Parser] Fetching file content');
-
+        if (logger.logLevel & logger.LEVEL_PARSER) logger.info('[Parser] Fetching file content');
         const content = await fetchFile(filename);
 
-        if (logger.logLevel & logger.LEVEL_PARSER_FETCH) logger.info(`[Parser] Content length: ${content.length} bytes`);
-
-        if (logger.logLevel & logger.LEVEL_PARSER_GENERAL) logger.info(`[Parser] Parsing file: '${filename}'`);
-
+        if (logger.logLevel & logger.LEVEL_PARSER) logger.info(`[Parser] Content length: ${content.length} bytes`);
+        if (logger.logLevel & logger.LEVEL_PARSER)logger.info(`[Parser] Parsing file: '${filename}'`);
         let design = this.parseContent(content);
         design.filename = filename;
 
@@ -34,7 +31,9 @@ export const DesignParser = {
         design.designElements.push(...pageLayout.designElements);
         design.graphicsElements.push(...pageLayout.graphicsElements);
 
-        if (logger.logLevel & logger.LEVEL_PARSER_GENERAL) logger.info('[Parser] Parsed design:', design);
+        if (logger.logLevel & logger.LEVEL_PARSER)logger.info(`[Parser] Parsed design: ${design.designType} ` +
+                                                              `${design.designElements.length} desing elements, ` +
+                                                              `${design.graphicsElements.length} graphic elements`);
         timer.stop('Parse design');
         return design;
     },
@@ -42,17 +41,16 @@ export const DesignParser = {
     parseContent: function (content, parentType=null, paper=null)
     {
         timer.start('Parse content');
-
         let design = new DesignObject();
         let sections = Sections.getSections(content);
         if (sections.length != 1)
         {
-            if (logger.logLevel & logger.LEVEL_PARSER_GENERAL) logger.error('[Parser] Invalid file format.');
+            if (logger.logLevel & logger.LEVEL_SYSTEM) logger.error('[Parser] Invalid file format.');
         }
         else
         {
             design.designType = Sections.getSectionName(sections[0]);
-            if (logger.logLevel & logger.LEVEL_PARSER_GENERAL) logger.info(`[Parser] Design type: '${design.designType}'`);
+            if (logger.logLevel & logger.LEVEL_PARSER) logger.info(`[Parser] Design type: '${design.designType}'`);
             for (let section of Sections.getSections(sections[0].substring(1, sections[0].length - 1)))
             {
                 let elementParser = null;
@@ -83,12 +81,12 @@ export const DesignParser = {
                     case 'embedded_fonts':
                     case 'generator':
                     case 'version':
-                        if (logger.logLevel & logger.LEVEL_PARSER_GENERAL) logger.info(`[Parser] Skip '${sectionName}'`);
+                        if (logger.logLevel & logger.LEVEL_PARSER) logger.info(`[Parser] Skip '${sectionName}'`);
                         break;
 
                     // Unknown
                     default:
-                        if (logger.logLevel & logger.LEVEL_PARSER_GENERAL) logger.warn('[Parser] Unknown section:', sectionName);
+                        if (logger.logLevel & logger.LEVEL_PARSER) logger.warn('[Parser] Unknown section:', sectionName);
                         break;
                 }
                 if (elementParser != null)

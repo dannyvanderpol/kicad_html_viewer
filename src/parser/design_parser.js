@@ -32,7 +32,7 @@ export const DesignParser = {
         design.graphicsElements.push(...pageLayout.graphicsElements);
 
         logger.info(logger.LEVEL_PARSER, `[Parser] Parsed design: ${design.designType} ` +
-                                         `${design.designElements.length} desing elements, ` +
+                                         `${design.designElements.length} design elements, ` +
                                          `${design.graphicsElements.length} graphic elements`);
         timer.stop('Parse design');
         return design;

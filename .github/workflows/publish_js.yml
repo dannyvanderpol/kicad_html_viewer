@@ -25,6 +25,7 @@ jobs:
       run: npm install -g esbuild
 
     - name: Bundle and minify
+      # minify white spaces only, full minify breaks the code
       run: esbuild src/ki_viewer.js --bundle --minify-whitespace --outfile=build/ki_viewer-dev.min.js
 
     - name: commit and push builded file
@@ -40,5 +41,3 @@ jobs:
         else
           echo "No changes"
         fi
-
-

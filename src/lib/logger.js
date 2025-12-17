@@ -8,7 +8,6 @@
 
 class Logger
 {
-    LEVEL_OFF = 0x00;
     LEVEL_SYSTEM = 0x01;
     LEVEL_EVENTS = 0x02;
     LEVEL_TIMER = 0x04;
@@ -18,7 +17,7 @@ class Logger
 
     logBuffer = [];
     logElement = null;
-    logLevel = this.LEVEL_OFF;
+    logLevel = this.LEVEL_SYSTEM | this.LEVEL_VIEWER | this.LEVEL_TIMER;
 
     constructor() {}
 

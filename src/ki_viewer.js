@@ -15,6 +15,16 @@ class KiViewer
     {
         logger.setLogElement('logOutput');
 
+        // Get user settings if defined, else use defaults
+        // User settings can be difined by:
+        // <script>
+        //     const kiViewerSettings {
+        //         ... add your settings here ...
+        //     }
+        // </script>
+        const userSettings = typeof kiViewerSettings !== 'undefined' ? kiViewerSettings : {};
+        logger.logLevel |= userSettings.logLevel || 0;
+
         this.canvas = canvas;
         this.filename = filename;
         this.design = null;

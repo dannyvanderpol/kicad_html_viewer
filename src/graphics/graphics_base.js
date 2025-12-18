@@ -35,7 +35,7 @@ export class GraphicsBase
         }
         else
         {
-            logger.warn(logger.LEVEL_DRAWER, `[GraphicsBase] Drawing '${name}' skipped`, this, MIN_POINTS[name]);
+            logger.warn(logger.LEVEL_DRAWER, `[GraphicsBase] Drawing '${name}' skipped`, MIN_POINTS[name]);
         }
         timer.stop(`Draw ${name}`);
     }
@@ -48,6 +48,7 @@ export class GraphicsBase
 }
 
 const MIN_POINTS = {
+    'Line': 2,
     'Polygon': 3,
     'Rectangle': 2
 }

@@ -10,6 +10,7 @@ import { fetchFile } from '../lib/fetch_file.js';
 import { DesignObject } from '../design/design_object.js';
 import { Sections } from './sections_parser.js';
 import { PAGE_LAYOUT } from '../lib/ki_pagelayout.js';
+import { LineParser } from './line_parser.js';
 import { PaperParser } from './paper_parser.js';
 import { RectangleParser } from './rectangle_parser.js';
 import { SetupParser } from './setup_parser.js';
@@ -59,6 +60,10 @@ export const DesignParser = {
                 {
                     case 'generator_version':
                         design.version = Sections.getValues(section)[0];
+                        break;
+
+                    case 'line':
+                        elementParser = new LineParser();
                         break;
 
                     case 'paper':

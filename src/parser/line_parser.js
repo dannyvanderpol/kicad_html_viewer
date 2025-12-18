@@ -21,7 +21,7 @@ export class LineParser extends ParserBase
         const incrX = parseInt(properties.incrx?.[0] ?? 0);
         const incrY = parseInt(properties.incry?.[0] ?? 0);
         const color = this.getColor('worksheet');
-        const thickness = this.getThickness();
+        const size = this.getLineThickness();
 
         let minX = 0;
         let minY = 0;
@@ -44,7 +44,7 @@ export class LineParser extends ParserBase
                 let line = new Line();
                 line.layer = 'sheet';
                 line.color = color;
-                line.thickness = thickness;
+                line.size = size;
                 line.points.push({ x: xs, y: ys });
                 line.points.push({ x: xe, y: ye });
                 this.graphicsElements.push(line);

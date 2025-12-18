@@ -73,7 +73,7 @@ export class ParserBase
         return color;
     }
 
-    getThickness()
+    getLineThickness()
     {
         return this.setup.lineWidth;
     }

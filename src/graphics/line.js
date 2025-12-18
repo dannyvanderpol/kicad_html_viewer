@@ -9,8 +9,8 @@ export class Line extends GraphicsBase
     drawElement(ctx)
     {
         ctx.strokeStyle = this.color;
-        ctx.lineWidth = this.thickness;
-        if (this.scaledThickness)
+        ctx.lineWidth = this.size;
+        if (this.scaledSize)
         {
             ctx.lineWidth /= this.scale;
         }

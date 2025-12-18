@@ -21,7 +21,7 @@ export class RectangleParser extends ParserBase
         const incrX = parseInt(properties.incrx?.[0] ?? 0);
         const incrY = parseInt(properties.incry?.[0] ?? 0);
         const color = this.getColor('worksheet');
-        const thickness = this.getThickness();
+        const size = this.getLineThickness();
 
         for (let i = 0; i < repeat; i++)
         {
@@ -32,7 +32,7 @@ export class RectangleParser extends ParserBase
             let rectangle = new Rectangle();
             rectangle.layer = 'sheet';
             rectangle.color = color;
-            rectangle.thickness = thickness;
+            rectangle.size = size;
             rectangle.points.push({ x: xs, y: ys });
             rectangle.points.push({ x: xe, y: ye });
             this.graphicsElements.push(rectangle);

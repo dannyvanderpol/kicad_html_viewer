@@ -10,9 +10,9 @@ import { Rectangle } from "../graphics/rectangle.js";
 
 export class RectangleParser extends ParserBase
 {
-    parse(sections)
+    parse(sectionContent)
     {
-        const properties = Sections.getProperties(sections);
+        const properties = Sections.getProperties(sectionContent);
         const startX = this.correctXY('x', parseFloat(properties.start[0]), properties.start?.[2] ?? null);
         const startY = this.correctXY('y', parseFloat(properties.start[1]), properties.start?.[2] ?? null);
         const endX = this.correctXY('x', parseFloat(properties.end[0]), properties.end?.[2] ?? null);

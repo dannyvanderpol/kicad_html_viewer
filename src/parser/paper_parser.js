@@ -12,9 +12,9 @@ import { PaperElement } from '../design/paper_element.js';
 
 export class PaperParser extends ParserBase
 {
-    parse(sections)
+    parse(sectionContent)
     {
-        let values = Sections.getValues(sections);
+        let values = Sections.getValues(sectionContent);
         let pageSize = paperSizes[values[0]];
         if (!pageSize)
         {

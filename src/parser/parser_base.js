@@ -29,16 +29,11 @@ export class ParserBase
         this.paper = paper;
         this.sectionName = Sections.getSectionName(sectionContent);
         timer.start(`Parse ${this.sectionName}`);
-        let sections = Sections.getSections(sectionContent.substring(1, sectionContent.length - 1))
-        if (sections.length == 0)
-        {
-            sections = sectionContent;
-        }
-        this.parse(sections);
+        this.parse(sectionContent);
         timer.stop(`Parse ${this.sectionName}`);
     }
 
-    parse(sections)
+    parse(sectionContent)
     {
         // To be implemented by subclasses
         console.error('parseSection() not implemented in subclass');

@@ -10,9 +10,9 @@ import { SetupElement } from '../design/setup_element.js';
 
 export class SetupParser extends ParserBase
 {
-    parse(sections)
+    parse(sectionContent)
     {
-        let properties = Sections.getProperties(sections, true);
+        let properties = Sections.getProperties(sectionContent, true);
         this.designElement = new SetupElement(this.sectionName);
         this.designElement.textSize = properties.textsize ? parseFloat(properties.textsize) : 0;
         this.designElement.lineWidth = properties.linewidth ? parseFloat(properties.linewidth) : 0;

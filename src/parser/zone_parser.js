@@ -11,8 +11,9 @@ import { Polygon    } from '../graphics/polygon.js';
 
 export class ZoneParser extends ParserBase
 {
-    parse(sections)
+    parse(sectionContent)
     {
+        let sections = Sections.getSections(sectionContent.substring(1, sectionContent.length - 1));
         for (const subSection of sections)
         {
             let name = Sections.getSectionName(subSection);

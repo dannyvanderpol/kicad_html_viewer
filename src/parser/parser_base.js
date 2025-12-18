@@ -78,6 +78,11 @@ export class ParserBase
         return this.setup.lineWidth;
     }
 
+    getTextSize()
+    {
+        return this.setup.textSize;
+    }
+
     correctXY(axis, value, relativeTo)
     {
         // Correct X and Y only for worksheet elements
@@ -137,5 +142,22 @@ export class ParserBase
                 value = this.correctXY(axis, value, 'rbcorner');
         }
         return value;
+    }
+
+    nextTextSequence(content)
+    {
+        if (!isNaN(content))
+        {
+            content = (parseInt(content) + 1).toString();
+        }
+        else if (content.length == 1)
+        {
+            content = String.fromCharCode(content.charCodeAt(0) + 1);
+        }
+        else
+        {
+            if (this.showDebug) console.warn('Drawer: no text sequence for:', content);
+        }
+        return content;
     }
 }

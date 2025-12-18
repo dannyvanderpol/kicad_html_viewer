@@ -15,10 +15,14 @@ export class GraphicsBase
         this.type = GraphicsBase.name;
         this.layer = 'design';
         this.color = Colors.default;
-        this.thickness = 1;
-        this.scaledThickness = false;
+        this.size = 1;
+        this.scaledSize = false;
         this.scale = 1;
         this.points = [];
+        this.text = '';
+        this.align_h = 'left';
+        this.align_v = 'middle';
+        this.mirror = false;
     }
 
     draw(ctx)
@@ -50,5 +54,6 @@ export class GraphicsBase
 const MIN_POINTS = {
     'Line': 2,
     'Polygon': 3,
-    'Rectangle': 2
+    'Rectangle': 2,
+    'Text': 1
 }

@@ -14,6 +14,7 @@ import { LineParser } from './line_parser.js';
 import { PaperParser } from './paper_parser.js';
 import { RectangleParser } from './rectangle_parser.js';
 import { SetupParser } from './setup_parser.js';
+import { TextParser } from './text_parser.js';
 import { ZoneParser } from './zone_parser.js';
 
 export const DesignParser = {
@@ -76,6 +77,10 @@ export const DesignParser = {
 
                     case 'setup':
                         elementParser = new SetupParser();
+                        break;
+
+                    case 'tbtext':
+                        elementParser = new TextParser();
                         break;
 
                     case 'zone':

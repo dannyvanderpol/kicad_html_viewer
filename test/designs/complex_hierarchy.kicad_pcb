@@ -84,7 +84,7 @@
 		(aux_axis_origin 83.5 138)
 		(pcbplotparams
 			(layerselection 0x00000000_00000000_000000fc_ffffffff)
-			(plot_on_all_layers_selection 0x00000000_00000000_00000020_00000000)
+			(plot_on_all_layers_selection 0x00000000_00000000_00000000_00000000)
 			(disableapertmacros no)
 			(usegerberextensions no)
 			(usegerberattributes yes)
@@ -109,7 +109,6 @@
 			(psnegative no)
 			(psa4output no)
 			(plot_black_and_white yes)
-			(plotinvisibletext no)
 			(sketchpadsonfab no)
 			(plotpadnumbers no)
 			(hidednponfab no)
@@ -22209,6 +22208,15 @@
 		(layer "B.Cu")
 		(net 10)
 		(uuid "ecd86a2e-9ce2-4cd0-9515-0ebbc2c20c81")
+	)
+	(via
+		(at 128.5 73.9)
+		(size 0.6)
+		(drill 0.3)
+		(layers "F.Cu" "B.Cu")
+		(free yes)
+		(net 11)
+		(uuid "8d99a58f-876f-48c7-9bfd-39fe606f686d")
 	)
 	(segment
 		(start 154.305 106.426)

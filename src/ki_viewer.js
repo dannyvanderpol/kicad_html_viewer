@@ -70,6 +70,7 @@ class KiViewer
     {
         timer.start('Render');
         const ctx = this.canvas.getContext('2d');
+        ctx.globalCompositeOperation = "source-over";
         ctx.setTransform(1, 0, 0, 1, 0, 0)
         ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
         // We draw the background instead of using CSS, when saving the canvas as image, the background is included

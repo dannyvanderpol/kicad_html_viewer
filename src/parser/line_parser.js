@@ -47,7 +47,7 @@ export class LineParser extends ParserBase
                 xe >= minX && xe <= maxX && ye >= minY && ye <= maxY)
             {
                 let line = new Line();
-                line.layer = 'sheet';
+                line.layer = layer;
                 line.color = color;
                 line.size = size;
                 line.points.push({ x: xs, y: ys });

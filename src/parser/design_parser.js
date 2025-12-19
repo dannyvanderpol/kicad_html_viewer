@@ -36,6 +36,9 @@ export const DesignParser = {
         let design = this.parseContent(content, keyValueMap);
         design.filename = filename;
 
+        keyValueMap.set('#', 1);
+        keyValueMap.set('##', 1);
+
         let pageLayout = this.parseContent(PAGE_LAYOUT, keyValueMap, design.designType, design.getDesignElement('paper'));
         design.designElements.push(...pageLayout.designElements);
         design.graphicsElements.push(...pageLayout.graphicsElements);

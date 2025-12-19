@@ -42,7 +42,7 @@ export class ParserBase
 
     getColor(identifier)
     {
-        const defaultPcbAlpha = 0.7;
+        const defaultPcbAlpha = 0.85;
         let color = Colors.default;
         logger.info(logger.LEVEL_PARSER, '[ParserBase] Get color for:', this.designType, this.parentType, identifier);
         let colors = Colors[this.designType];
@@ -74,8 +74,12 @@ export class ParserBase
         return color;
     }
 
-    getLineThickness()
+    getLineThickness(thickness=0)
     {
+        if (thickness > 0)
+        {
+            return thickness;
+        }
         return this.setup.lineWidth;
     }
 

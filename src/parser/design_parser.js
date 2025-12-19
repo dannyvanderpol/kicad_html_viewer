@@ -74,6 +74,7 @@ export const DesignParser = {
                         break;
 
                     case 'line':
+                    case 'segment':
                         elementParser = new LineParser();
                         break;
 

@@ -20,13 +20,18 @@ export class LineParser extends ParserBase
         const repeat = parseInt(properties.repeat?.[0] ?? 1);
         const incrX = parseInt(properties.incrx?.[0] ?? 0);
         const incrY = parseInt(properties.incry?.[0] ?? 0);
-        const color = this.getColor('worksheet');
-        const size = this.getLineThickness();
+        const layer = properties.layer?.[0] ?? 'sheet';
+        let color = this.getColor('worksheet');
+        if (this.sectionName == 'segment')
+        {
+            color = this.getColor(layer);
+        }
+        const size = this.getLineThickness(properties.width ? parseFloat(properties.width[0]) : 0);
 
-        let minX = 0;
-        let minY = 0;
-        let maxX = this.paper.width;
-        let maxY = this.paper.height;
+        let minX = this.paper ? 0 : -2000;
+        let minY = this.paper ? 0 : -2000;
+        let maxX = this.paper ? this.paper.width : 2000;
+        let maxY = this.paper ? this.paper.height : 2000;
         minX += this.setup.leftMargin || 0;
         minY += this.setup.topMargin || 0;
         maxX -= this.setup.rightMargin || 0;

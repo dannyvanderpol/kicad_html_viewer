@@ -18,6 +18,7 @@ import { PaperParser } from './paper_parser.js';
 import { RectangleParser } from './rectangle_parser.js';
 import { SetupParser } from './setup_parser.js';
 import { TextParser } from './text_parser.js';
+import { TitleBlockParser } from './title_block_parser.js';
 import { ZoneParser } from './zone_parser.js';
 
 export const DesignParser = {
@@ -87,6 +88,10 @@ export const DesignParser = {
 
                     case 'tbtext':
                         elementParser = new TextParser();
+                        break;
+
+                    case 'title_block':
+                        elementParser = new TitleBlockParser();
                         break;
 
                     case 'zone':

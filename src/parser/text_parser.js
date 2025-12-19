@@ -13,7 +13,7 @@ export class TextParser extends ParserBase
     parse(sectionContent)
     {
         const properties = Sections.getProperties(sectionContent);
-        let content = Sections.getValues(sectionContent)[0];
+        let content = this.keyValueMap.replace(Sections.getValues(sectionContent)[0]);
         let size = this.getTextSize();
         let bold = false;
         let italic = false;

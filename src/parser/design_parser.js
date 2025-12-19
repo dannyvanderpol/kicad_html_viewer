@@ -4,12 +4,15 @@
  * output: design object
  */
 
+'use strict';
+
 import { logger } from '../lib/logger.js';
 import { timer } from '../lib/timer.js';
 import { fetchFile } from '../lib/fetch_file.js';
+import { PAGE_LAYOUT } from '../lib/ki_pagelayout.js';
+import { KeyValueMap } from '../lib/key_value_map.js';
 import { DesignObject } from '../design/design_object.js';
 import { Sections } from './sections_parser.js';
-import { PAGE_LAYOUT } from '../lib/ki_pagelayout.js';
 import { LineParser } from './line_parser.js';
 import { PaperParser } from './paper_parser.js';
 import { RectangleParser } from './rectangle_parser.js';
@@ -26,10 +29,13 @@ export const DesignParser = {
 
         logger.info(logger.LEVEL_PARSER, `[Parser] Content length: ${content.length} bytes`);
         logger.info(logger.LEVEL_PARSER, `[Parser] Parsing file: '${filename}'`);
-        let design = this.parseContent(content);
+        const keyValueMap = new KeyValueMap();
+        keyValueMap.set('filename', filename);
+
+        let design = this.parseContent(content, keyValueMap);
         design.filename = filename;
 
-        let pageLayout = this.parseContent(PAGE_LAYOUT, design.designType, design.getDesignElement('paper'));
+        let pageLayout = this.parseContent(PAGE_LAYOUT, keyValueMap, design.designType, design.getDesignElement('paper'));
         design.designElements.push(...pageLayout.designElements);
         design.graphicsElements.push(...pageLayout.graphicsElements);
 
@@ -40,7 +46,7 @@ export const DesignParser = {
         return design;
     },
 
-    parseContent: function (content, parentType=null, paper=null)
+    parseContent: function (content, keyValueMap, parentType=null, paper=null)
     {
         timer.start('Parse content');
         let design = new DesignObject();
@@ -101,8 +107,9 @@ export const DesignParser = {
                 }
                 if (elementParser != null)
                 {
+                    keyValueMap;
                     elementParser.parseSection(section, design.designType, parentType,
-                                               design.getDesignElement('setup'), paper);
+                                               design.getDesignElement('setup'), paper, keyValueMap);
                     design.designElements.push(elementParser.designElement);
                     design.graphicsElements.push(...elementParser.graphicsElements);
                 }

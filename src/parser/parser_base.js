@@ -21,12 +21,13 @@ export class ParserBase
         this.graphicsElements = [];
     }
 
-    parseSection(sectionContent, designType, parentType, setup, paper)
+    parseSection(sectionContent, designType, parentType, setup, paper, keyValueMap)
     {
         this.designType = designType;
         this.parentType = parentType;
         this.setup = setup;
         this.paper = paper;
+        this.keyValueMap = keyValueMap;
         this.sectionName = Sections.getSectionName(sectionContent);
         timer.start(`Parse ${this.sectionName}`);
         this.parse(sectionContent);

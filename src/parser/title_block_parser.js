@@ -16,7 +16,6 @@ export class TitleBlockParser extends ParserBase
         const properties = Sections.getProperties(sectionContent, true);
         for (let prop in properties)
         {
-            console.log(prop);
             switch (prop)
             {
                 case 'comment1':

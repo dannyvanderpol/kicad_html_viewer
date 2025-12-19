@@ -70,9 +70,11 @@ class KiViewer
     {
         timer.start('Render');
         const ctx = this.canvas.getContext('2d');
-        ctx.canvas.style.backgroundColor = Colors[this.design.designType]['background'];
         ctx.setTransform(1, 0, 0, 1, 0, 0)
         ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
+        // We draw the background instead of using CSS, when saving the canvas as image, the background is included
+        ctx.fillStyle = Colors[this.design.designType]['background'];
+        ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
         // Don't allow moving the page out of view
         let scaleRatioX = this.viewportTransform.scale / this.fitScaleX;
         let scaleRatioY = this.viewportTransform.scale / this.fitScaleY;

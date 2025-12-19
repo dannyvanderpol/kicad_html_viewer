@@ -105,6 +105,7 @@ export const DesignParser = {
                     // Skip
                     case 'embedded_fonts':
                     case 'generator':
+                    case 'net':
                     case 'version':
                         logger.info(logger.LEVEL_PARSER, `[Parser] Skip '${sectionName}'`);
                         break;

@@ -21,6 +21,7 @@ export class PaperParser extends ParserBase
             logger.warn(logger.LEVEL_PARSER, 'Unknown page size:',  values[0]);
             pageSize = paperSizes.A4;
         }
+        this.keyValueMap.set('paper', values[0]);
 
         this.designElement = new PaperElement('paper');
         this.designElement.width = pageSize.width;

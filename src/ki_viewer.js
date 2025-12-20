@@ -103,6 +103,7 @@ class KiViewer
     /* Event handlers */
     _onMouseDown(e)
     {
+        if (logger.logLevel & logger.LEVEL_EVENTS) console.log(e);
         this.previousX = e.clientX;
         this.previousY = e.clientY;
         this.isMoving = true;
@@ -110,12 +111,14 @@ class KiViewer
 
     _onMouseUp(e)
     {
+        if (logger.logLevel & logger.LEVEL_EVENTS) console.log(e);
         this.isMoving = false;
     }
 
     _onMouseMove(e)
     {
         if (!this.isMoving) return;
+        if (logger.logLevel & logger.LEVEL_EVENTS) console.log(e);
         const localX = e.clientX;
         const localY = e.clientY;
         this.viewportTransform.x += localX - this.previousX;
@@ -126,6 +129,7 @@ class KiViewer
     }
 
     _onMouseWheel(e) {
+        if (logger.logLevel & logger.LEVEL_EVENTS) console.log(e);
         e.preventDefault();
         const oldX = this.viewportTransform.x;
         const oldY = this.viewportTransform.y;

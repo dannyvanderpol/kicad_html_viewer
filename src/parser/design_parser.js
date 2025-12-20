@@ -24,28 +24,31 @@ import { ZoneParser } from './zone_parser.js';
 export const DesignParser = {
     parseFile: async function (filename)
     {
+        let design = null;
         timer.start('Parse design');
         logger.info(logger.LEVEL_PARSER, '[Parser] Fetching file content');
         const content = await fetchFile(filename);
+        if (content)
+        {
+            logger.info(logger.LEVEL_PARSER, `[Parser] Content length: ${content.length} bytes`);
+            logger.info(logger.LEVEL_PARSER, `[Parser] Parsing file: '${filename}'`);
+            const keyValueMap = new KeyValueMap();
+            keyValueMap.set('filename', filename);
 
-        logger.info(logger.LEVEL_PARSER, `[Parser] Content length: ${content.length} bytes`);
-        logger.info(logger.LEVEL_PARSER, `[Parser] Parsing file: '${filename}'`);
-        const keyValueMap = new KeyValueMap();
-        keyValueMap.set('filename', filename);
+            let design = this.parseContent(content, keyValueMap);
+            design.filename = filename;
 
-        let design = this.parseContent(content, keyValueMap);
-        design.filename = filename;
+            keyValueMap.set('#', 1);
+            keyValueMap.set('##', 1);
 
-        keyValueMap.set('#', 1);
-        keyValueMap.set('##', 1);
+            let pageLayout = this.parseContent(PAGE_LAYOUT, keyValueMap, design.designType, design.getDesignElement('paper'));
+            design.designElements.push(...pageLayout.designElements);
+            design.graphicsElements.push(...pageLayout.graphicsElements);
 
-        let pageLayout = this.parseContent(PAGE_LAYOUT, keyValueMap, design.designType, design.getDesignElement('paper'));
-        design.designElements.push(...pageLayout.designElements);
-        design.graphicsElements.push(...pageLayout.graphicsElements);
-
-        logger.info(logger.LEVEL_PARSER, `[Parser] Parsed design: ${design.designType} ` +
-                                         `${design.designElements.length} design elements, ` +
-                                         `${design.graphicsElements.length} graphic elements`);
+            logger.info(logger.LEVEL_PARSER, `[Parser] Parsed design: ${design.designType} ` +
+                                            `${design.designElements.length} design elements, ` +
+                                            `${design.graphicsElements.length} graphic elements`);
+        }
         timer.stop('Parse design');
         return design;
     },

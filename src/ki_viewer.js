@@ -52,16 +52,18 @@ class KiViewer
         timer.start('Viewer');
         logger.info(logger.LEVEL_VIEWER, `[Viewer] viewing file '${this.filename}'`);
         this.design = await DesignParser.parseFile(this.filename);
+        if (this.design)
+        {
+            // Fit page to canvas
+            let page = this.design.getDesignElement('paper');
+            this.fitScaleX = this.canvas.width / page.width;
+            this.fitScaleY = this.canvas.height / page.height;
+            this.viewportTransform.scale = Math.min(this.fitScaleX, this.fitScaleY) * 0.98;
+            this.viewportTransform.x = (this.canvas.width - page.width * this.viewportTransform.scale) / 2;
+            this.viewportTransform.y = (this.canvas.height - page.height * this.viewportTransform.scale) / 2;
 
-        // Fit page to canvas
-        let page = this.design.getDesignElement('paper');
-        this.fitScaleX = this.canvas.width / page.width;
-        this.fitScaleY = this.canvas.height / page.height;
-        this.viewportTransform.scale = Math.min(this.fitScaleX, this.fitScaleY) * 0.98;
-        this.viewportTransform.x = (this.canvas.width - page.width * this.viewportTransform.scale) / 2;
-        this.viewportTransform.y = (this.canvas.height - page.height * this.viewportTransform.scale) / 2;
-
-        this._render();
+            this._render();
+        }
         timer.stop('Viewer');
         timer.showReport();
     }

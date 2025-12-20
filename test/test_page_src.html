@@ -1,32 +1,14 @@
 <html>
 <head>
-    <title>Test page using source</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="assets/test_page.css">
-    <script type="module" src="/src/ki_viewer.js"></script>
-    <script>
-        const kiViewerSettings = {
-            logLevel: 0         // change to show additional log levels (see logger.js)
-        }
-    </script>
+<title>Test page using source</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="assets/test_page.css">
+<script src="assets/test_page.js"></script>
+<script type="module" src="/src/ki_viewer.js"></script>
 </head>
 <body>
-    <p>This page uses the KiViewer from source.</p>
-
-    <p>KiCad Schematic:</p>
-    <canvas src="designs/all_features/all_features.kicad_sch" type="application/kicad" width="900" height="640"></canvas>
-
-    <p>KiCad PCB:</p>
-    <canvas src="designs/all_features/all_features.kicad_pcb" type="application/kicad" width="900" height="640"></canvas>
-
-    <div id="logContainer">
-        <div id="logTitle">Log output:</div>
-        <div id="logControls">
-            <button id="btnClear">Clear Logs</button>
-            <button id="btnDownload">Download Logs</button>
-        </div>
-        <pre id="logOutput"></pre>
-    </div>
+<p>This page uses the KiViewer from source.</p>
+<script>document.write(PAGE_CONTENT);</script>
 </body>
 </html>

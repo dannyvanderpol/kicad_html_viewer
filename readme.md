@@ -23,11 +23,11 @@ Support: KiCad 9 and higher
 
 ### Schematics
 
-![Schematics screenshot](test/screenshot_sch.png)
+![Schematics screenshot](test/images/screenshot_sch.png)
 
 ### PCB
 
-![PCB screenshot](test/screenshot_pcb.png)
+![PCB screenshot](test/images/screenshot_pcb.png)
 
 ## Usage
 

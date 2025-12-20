@@ -4,3 +4,6 @@
 # KiCad files
 *.kicad_prl
 fp-info-cache
+
+# Test settings
+/test/test_settings.js

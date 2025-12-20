@@ -35,7 +35,7 @@ export const DesignParser = {
             const keyValueMap = new KeyValueMap();
             keyValueMap.set('filename', filename);
 
-            let design = this.parseContent(content, keyValueMap);
+            design = this.parseContent(content, keyValueMap);
             design.filename = filename;
 
             keyValueMap.set('#', 1);

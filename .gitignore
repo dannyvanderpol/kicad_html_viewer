@@ -1,2 +1,6 @@
 # Temporary files
 /temp/*
+
+# KiCad files
+*.kicad_prl
+fp-info-cache

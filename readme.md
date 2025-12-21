@@ -41,31 +41,15 @@ Create a HTML page and include the minified buid.
     <title>Test page</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <style>
-        html, body {margin: 0; padding: 0;}
-        body {
-            margin: 32px;
-            font-family: sans-serif;
-            font-size: 14px;
-        }
-        /* Put your canvas styling here */
-        canvas {
-            border: 1px solid #ccc;
-        }
-    </style>
     <!-- include the JS module:
-      - use the -dev for development versions
-      - use the .x.y for a stable version
+      - use the -dev for development versions (may not be stable)
+      - use the .x.y for a stable version (tested, with test designs)
     -->
     <script type="module" src="ki_viewer-dev.min.js"></script>
 </head>
 <body>
     <!-- Add canvas for a design, the module does its magic -->
-
-    <p>KiCad Schematic:</p>
     <canvas src="path/to/your.kicad_sch" type="application/kicad" width="900" height="640"></canvas>
-
-    <p>KiCad PCB:</p>
     <canvas src="path/to/your.kicad_pcb" type="application/kicad" width="900" height="640"></canvas>
 </body>
 </html>

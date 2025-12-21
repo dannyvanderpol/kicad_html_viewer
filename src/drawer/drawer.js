@@ -8,19 +8,26 @@ import { logger } from '../lib/logger.js';
 import { timer } from '../lib/timer.js';
 
 export const Drawer = {
-    layerOrder: {
-        'kicad_sch': ['sheet', 'design'],
-        'kicad_pcb': ['sheet', 'B.Cu', 'F.Cu', 'design']
-    },
 
     draw: function (ctx, designObject, scale)
     {
+        // We always start with the worksheet
+        let layerOrder = [ 'sheet' ];
+        // Add any design specific layers
+        let layers = designObject.getDesignElement('layers');
+        if (layers)
+        {
+            layerOrder.push(...layers.layers);
+        }
+        // End with design layers
+        layerOrder.push('design');
+
         let drawnLayers = [];
         timer.start('Drawer');
         logger.info(logger.LEVEL_DRAWER, `[Drawer] drawing '${designObject.filename}'`, designObject.designType);
 
         const byLayer = designObject.graphicsElements.reduce((acc, obj) => { (acc[obj.layer] ??= []).push(obj); return acc;}, {});
-        for (const layer of this.layerOrder[designObject.designType])
+        for (const layer of layerOrder)
         {
             if (byLayer[layer])
             {

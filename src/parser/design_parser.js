@@ -21,6 +21,7 @@ import { SetupParser } from './setup_parser.js';
 import { TextParser } from './text_parser.js';
 import { TitleBlockParser } from './title_block_parser.js';
 import { ZoneParser } from './zone_parser.js';
+import { LayersParser } from './layers_parser.js';
 
 export const DesignParser = {
     parseFile: async function (filename)
@@ -87,6 +88,10 @@ export const DesignParser = {
 
                     case 'generator_version':
                         design.version = Sections.getValues(section)[0];
+                        break;
+
+                    case 'layers':
+                        elementParser = new LayersParser();
                         break;
 
                     case 'line':

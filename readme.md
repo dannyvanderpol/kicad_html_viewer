@@ -5,7 +5,7 @@ Viewer for viewing KiCad designs in a HTML page.
 Support: KiCad 9 and higher
 
 [![Bundle and minify](https://github.com/dannyvanderpol/kicad_html_viewer/actions/workflows/publish_js.yml/badge.svg)](https://github.com/dannyvanderpol/kicad_html_viewer/actions/workflows/publish_js.yml)
-[![Deploy static content to Pages](https://github.com/dannyvanderpol/kicad_html_viewer/actions/workflows/deploy_pages.yml/badge.svg)] https://github.com/dannyvanderpol/kicad_html_viewer/actions/workflows/deploy_pages.yml)
+[![Deploy static content to Pages](https://github.com/dannyvanderpol/kicad_html_viewer/actions/workflows/deploy_pages.yml/badge.svg)]https://github.com/dannyvanderpol/kicad_html_viewer/actions/workflows/deploy_pages.yml)
 
 ## Features
 

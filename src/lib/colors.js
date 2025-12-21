@@ -6,6 +6,7 @@
 
 export const Colors = {
     default: 'grey',
+    defaultPcbAlpha: 0.7,
     kicad_sch: {
         "background": "rgb(245, 244, 239)",
         "worksheet": "rgb(132, 0, 0)"

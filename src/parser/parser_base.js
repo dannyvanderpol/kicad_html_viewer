@@ -42,7 +42,6 @@ export class ParserBase
 
     getColor(identifier)
     {
-        const defaultPcbAlpha = 0.85;
         let color = Colors.default;
         let colors = Colors[this.designType];
         if (this.designType == 'kicad_wks')
@@ -58,7 +57,7 @@ export class ParserBase
                 color = colors[parts[1]][parts[0]] || Colors.default;
                 if (color.startsWith('rgb('))
                 {
-                    color = color.replace('rgb', 'rgba').replace(')', `, ${defaultPcbAlpha})`);
+                    color = color.replace('rgb', 'rgba').replace(')', `, ${Colors.defaultPcbAlpha})`);
                 }
             }
             else

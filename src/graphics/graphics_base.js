@@ -29,7 +29,6 @@ export class GraphicsBase
     {
         const name = this.constructor.name;
         timer.start(`Draw ${name}`);
-        logger.info(logger.LEVEL_DRAWER, `[GraphicsBase] Drawing '${name}' on layer '${this.layer}'`);
         if (this.points.length >= MIN_POINTS[name])
         {
             // default drawing settings

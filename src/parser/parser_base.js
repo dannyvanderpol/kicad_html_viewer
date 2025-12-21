@@ -44,7 +44,6 @@ export class ParserBase
     {
         const defaultPcbAlpha = 0.85;
         let color = Colors.default;
-        logger.info(logger.LEVEL_PARSER, '[ParserBase] Get color for:', this.designType, this.parentType, identifier);
         let colors = Colors[this.designType];
         if (this.designType == 'kicad_wks')
         {
@@ -161,7 +160,7 @@ export class ParserBase
         }
         else
         {
-            if (this.showDebug) console.warn('Drawer: no text sequence for:', content);
+            if (this.showDebug) logger.warn('Drawer: no text sequence for:', content);
         }
         return content;
     }

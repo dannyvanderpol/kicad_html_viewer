@@ -124,7 +124,6 @@ export const DesignParser = {
                     case 'net':
                     case 'uuid':
                     case 'version':
-                        logger.info(logger.LEVEL_PARSER, `[Parser] Skip '${sectionName}'`);
                         break;
 
                     // Unknown

@@ -21,6 +21,8 @@ Support: KiCad 9 and higher
 
 ## Screenshots
 
+Note that the screenshots are not of a high resolution and only here to give you an impression.
+
 ### Schematics
 
 ![Schematics screenshot](test/images/screenshot_sch.png)

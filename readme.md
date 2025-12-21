@@ -20,6 +20,14 @@ Support: KiCad 9 and higher
 * Roadmap:
   * V1.0: Can draw a complete schematics and PCB.
 
+## Live testing
+
+Upload a design file (SCH or PCB) and see for yourself.
+
+https://dannyvanderpol.github.io/kicad_html_viewer/
+
+Disclamer: we don't store or use the uploaded file for other purposes.
+
 ## Screenshots
 
 Note that the screenshots are not of a high resolution and only here to give you an impression.

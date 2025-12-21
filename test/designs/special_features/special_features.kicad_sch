@@ -12,6 +12,17 @@
 		(comment 2 "1234-12345")
 	)
 	(lib_symbols)
+	(text "Special features:\n- Using embedded worksheet file"
+		(exclude_from_sim no)
+		(at 13.97 13.97 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left top)
+		)
+		(uuid "51709cbd-4466-42d9-9ff5-081ff2608e70")
+	)
 	(sheet_instances
 		(path "/"
 			(page "1")

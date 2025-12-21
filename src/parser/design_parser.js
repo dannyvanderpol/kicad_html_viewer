@@ -13,6 +13,7 @@ import { PAGE_LAYOUT } from '../lib/ki_pagelayout.js';
 import { KeyValueMap } from '../lib/key_value_map.js';
 import { DesignObject } from '../design/design_object.js';
 import { Sections } from './sections_parser.js';
+import { EmbeddedFileParser } from './embedded_file_parser.js';
 import { LineParser } from './line_parser.js';
 import { PaperParser } from './paper_parser.js';
 import { RectangleParser } from './rectangle_parser.js';
@@ -38,10 +39,18 @@ export const DesignParser = {
             design = this.parseContent(content, keyValueMap);
             design.filename = filename;
 
+            // TODO: set to the actual page numbers
             keyValueMap.set('#', 1);
             keyValueMap.set('##', 1);
 
-            let pageLayout = this.parseContent(PAGE_LAYOUT, keyValueMap, design.designType, design.getDesignElement('paper'));
+            // Get embedded worksheet from design if any
+            let pageLayout = PAGE_LAYOUT;
+            let worksheet = design.getDesignElement('worksheet');
+            if (worksheet)
+            {
+                pageLayout = worksheet.content;
+            }
+            pageLayout = this.parseContent(pageLayout, keyValueMap, design.designType, design.getDesignElement('paper'));
             design.designElements.push(...pageLayout.designElements);
             design.graphicsElements.push(...pageLayout.graphicsElements);
 
@@ -72,6 +81,10 @@ export const DesignParser = {
                 let sectionName = Sections.getSectionName(section);
                 switch (sectionName)
                 {
+                    case 'embedded_files':
+                        elementParser = new EmbeddedFileParser();
+                        break;
+
                     case 'generator_version':
                         design.version = Sections.getValues(section)[0];
                         break;

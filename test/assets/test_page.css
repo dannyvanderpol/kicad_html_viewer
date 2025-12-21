@@ -8,12 +8,20 @@ body {
     font-size: 14px;
 }
 
+table {
+    font: inherit;
+}
+
+td {
+    padding: 4px 8px;
+}
+
 canvas {
     border: 1px solid #ccc;
 }
 
 #logContainer {
-    width: 884px;
+    min-width: 1000px;
     margin-top: 20px;
     border: 1px solid #ccc;
     background: #eee;

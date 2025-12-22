@@ -11,6 +11,17 @@
 <body>
 <h2>This page uses the KiViewer source.</h2>
 <script>document.write(PAGE_CONTENT);</script>
+<p><table>
+<tr><td>Log level:</td><td>
+    <select id="log-level" onchange="setLogLevel()">
+        <option value="0">Default</option>
+        <option value="0x10">Parser</option>
+        <option value="0x20">Drawer</option>
+        <option value="0x30">Parser and drawer</option>
+        <option value="0x02">Events</option>
+    </select>
+</td></tr>
+</table></p>
 <script>loadSettings();</script>
 </body>
 </html>

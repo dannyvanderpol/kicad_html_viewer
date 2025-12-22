@@ -65,11 +65,14 @@ const PAGE_CONTENT = `
 <select id="project" onchange="selectProject()">
     <option value="designs/kicad_demo_coldfire/kit-dev-coldfire-xilinx_5213.kicad_sch">KiCad demo coldfire SCH</option>
     <option value="designs/kicad_demo_coldfire/kit-dev-coldfire-xilinx_5213.kicad_pcb">KiCad demo coldfire PCB</option>
-    <option value="designs/kicad_demo_multi_channel/multichannel_mixer">KiCad demo multi channel</option>
-    <option value="designs/kicad_demo_sonde_xilinx/sonde_xilinx">KiCad demo sonde Xilinx</option>
-    <option value="designs/kicad_demo_stickhub/StickHub">KiCad demo StickHub</option>
-    <option value="designs/kicad_demo_test_xil_95108/carte_test">KiCad demo test xil 95108</option>
-    <option value="designs/special_features/special_features">Special features</option>
+    <option value="designs/kicad_demo_sonde_xilinx/sonde_xilinx.kicad_sch">KiCad demo sonde Xilinx SCH</option>
+    <option value="designs/kicad_demo_sonde_xilinx/sonde_xilinx.kicad_pcb">KiCad demo sonde Xilinx PCB</option>
+    <option value="designs/kicad_demo_stickhub/StickHub.kicad_sch">KiCad demo StickHub SCH</option>
+    <option value="designs/kicad_demo_stickhub/StickHub.kicad_pcb">KiCad demo StickHub PCB</option>
+    <option value="designs/kicad_demo_test_xil_95108/carte_test.kicad_sch">KiCad demo test xil 95108 SCH</option>
+    <option value="designs/kicad_demo_test_xil_95108/carte_test.kicad_pcb">KiCad demo test xil 95108 PCB</option>
+    <option value="designs/special_features/special_features.kicad_sch">Special features SCH</option>
+    <option value="designs/special_features/special_features.kicad_pcb">Special features PCB</option>
 </select>
 </td></tr>
 <tr><td>Upload design:</td>

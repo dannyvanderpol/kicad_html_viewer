@@ -16,6 +16,20 @@ td {
     padding: 4px 8px;
 }
 
+select {
+    padding: 4px;
+}
+
+button, input::file-selector-button {
+    padding: 4px 8px;
+}
+
+input[type="file"] {
+    padding: 2px;
+    min-width: 500px;
+    border: 1px solid #ccc;
+}
+
 canvas {
     border: 1px solid #ccc;
 }
@@ -49,6 +63,11 @@ canvas {
     margin-right: 8px;
     padding: 4px 8px;
     cursor: pointer;
+}
+
+.fileName
+{
+    padding: 4px 8px;
 }
 
 .info { color: #0c0; }

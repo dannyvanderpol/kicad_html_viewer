@@ -34,11 +34,11 @@ Note that the screenshots are not of a high resolution and only here to give you
 
 ### Schematics
 
-![Schematics screenshot](test/images/screenshot_sch.png)
+![Schematics screenshot](pages/images/screenshot_sch.png)
 
 ### PCB
 
-![PCB screenshot](test/images/screenshot_pcb.png)
+![PCB screenshot](pages/images/screenshot_pcb.png)
 
 ## Usage
 

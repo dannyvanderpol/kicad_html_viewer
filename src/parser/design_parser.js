@@ -24,12 +24,12 @@ import { ZoneParser } from './zone_parser.js';
 import { LayersParser } from './layers_parser.js';
 
 export const DesignParser = {
-    parseFile: async function (filename)
+    parseFile: async function (src, filename)
     {
         let design = null;
         timer.start('Parse design');
         logger.info(logger.LEVEL_PARSER, '[Parser] Fetching file content');
-        const content = await fetchFile(filename);
+        const content = await fetchFile(src);
         if (content)
         {
             logger.info(logger.LEVEL_PARSER, `[Parser] Content length: ${content.length} bytes`);

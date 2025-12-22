@@ -11,7 +11,7 @@ import { Drawer } from './drawer/drawer.js';
 
 class KiViewer
 {
-    constructor(canvas, filename)
+    constructor(canvas)
     {
         logger.setLogElement('logOutput');
 
@@ -26,7 +26,6 @@ class KiViewer
         logger.logLevel |= userSettings.logLevel || 0;
 
         this.canvas = canvas;
-        this.filename = filename;
         this.design = null;
         this.viewportTransform = {
             x: 0,
@@ -50,8 +49,11 @@ class KiViewer
     async initialize()
     {
         timer.start('Viewer');
-        logger.info(logger.LEVEL_VIEWER, `[Viewer] viewing file '${this.filename}'`);
-        this.design = await DesignParser.parseFile(this.filename);
+        let canvasSrc = this.canvas.getAttribute('src');
+        let filename = this.canvas.getAttribute('filename');
+
+        logger.info(logger.LEVEL_VIEWER, `[Viewer] viewing file '${filename}'`);
+        this.design = await DesignParser.parseFile(canvasSrc, filename);
         if (this.design)
         {
             // Fit page to canvas
@@ -157,11 +159,7 @@ document.addEventListener('DOMContentLoaded', async function() {
 
     for (const canvas of document.querySelectorAll('canvas[type="application/kicad"]'))
     {
-        let filename = canvas.getAttribute('src');
-        if (filename)
-        {
-            const viewer = new KiViewer(canvas, filename);
-            await viewer.initialize();
-        }
+        const viewer = new KiViewer(canvas);
+        await viewer.initialize();
     }
 });

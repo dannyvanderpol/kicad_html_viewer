@@ -40,8 +40,21 @@ export class ParserBase
         console.error('parseSection() not implemented in subclass');
     }
 
-    getColor(identifier)
+    getColor(identifier, overrideColor=[])
     {
+        // Check if override has a color (usually read from the design)
+        if (overrideColor.some(x => x !== 0))
+        {
+            if (overrideColor.length === 3)
+            {
+                return `rgb(${overrideColor.join(', ')})`;
+            }
+            else if (overrideColor.length === 4)
+            {
+                return `rgba(${overrideColor.join(', ')})`;
+            }
+        }
+        // If we did not return here, the override was invalid, use default color or based on identifier
         let color = Colors.default;
         let colors = Colors[this.designType];
         if (this.designType == 'kicad_wks')

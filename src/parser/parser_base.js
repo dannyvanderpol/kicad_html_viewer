@@ -4,7 +4,6 @@
 
 'use strict';
 
-import { DesignElement } from '../design/design_element.js';
 import { Colors } from '../lib/colors.js';
 import { logger } from '../lib/logger.js';
 import { Sections } from './sections_parser.js';

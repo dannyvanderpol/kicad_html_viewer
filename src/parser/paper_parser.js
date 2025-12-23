@@ -15,7 +15,6 @@ export class PaperParser extends ParserBase
     parse(sectionContent)
     {
         let values = Sections.getValues(sectionContent);
-        console.log(values);
         let pageSize = paperSizes[values[0]];
         let isPortrait = false;
         if (values.length > 1)

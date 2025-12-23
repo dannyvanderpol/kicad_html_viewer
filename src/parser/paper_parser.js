@@ -15,7 +15,13 @@ export class PaperParser extends ParserBase
     parse(sectionContent)
     {
         let values = Sections.getValues(sectionContent);
+        console.log(values);
         let pageSize = paperSizes[values[0]];
+        let isPortrait = false;
+        if (values.length > 1)
+        {
+            isPortrait = values[1] == 'portrait';
+        }
         if (!pageSize)
         {
             logger.warn(logger.LEVEL_PARSER, 'Unknown page size:',  values[0]);
@@ -24,8 +30,16 @@ export class PaperParser extends ParserBase
         this.keyValueMap.set('paper', values[0]);
 
         this.designElement = new PaperElement('paper');
-        this.designElement.width = pageSize.width;
-        this.designElement.height = pageSize.height;
+        if (isPortrait)
+        {
+            this.designElement.width = pageSize.height;
+            this.designElement.height = pageSize.width;
+        }
+        else
+        {
+            this.designElement.width = pageSize.width;
+            this.designElement.height = pageSize.height;
+        }
 
         let rectangle = new Rectangle();
         rectangle.layer = 'sheet';
@@ -33,7 +47,7 @@ export class PaperParser extends ParserBase
         rectangle.size = 0.5;
         rectangle.scaledSize = true;
         rectangle.points.push({ x: 0, y: 0 });
-        rectangle.points.push({ x: pageSize.width, y: pageSize.height });
+        rectangle.points.push({ x: this.designElement.width, y: this.designElement.height });
         this.graphicsElements.push(rectangle);
     }
 }

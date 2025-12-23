@@ -101,6 +101,7 @@ export const DesignParser = {
 
                     case 'line':
                     case 'segment':
+                    case 'wire':
                         elementParser = new LineParser();
                         break;
 

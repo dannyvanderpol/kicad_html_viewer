@@ -13,29 +13,56 @@ export class LineParser extends ParserBase
     parse(sectionContent)
     {
         const properties = Sections.getProperties(sectionContent);
-        const startX = this.correctXY('x', parseFloat(properties.start[0]), properties.start?.[2] ?? null);
-        const startY = this.correctXY('y', parseFloat(properties.start[1]), properties.start?.[2] ?? null);
-        const endX = this.correctXY('x', parseFloat(properties.end[0]), properties.end?.[2] ?? null);
-        const endY = this.correctXY('y', parseFloat(properties.end[1]), properties.end?.[2] ?? null);
-        const repeat = parseInt(properties.repeat?.[0] ?? 1);
-        const incrX = parseInt(properties.incrx?.[0] ?? 0);
-        const incrY = parseInt(properties.incry?.[0] ?? 0);
-        const layer = properties.layer?.[0] ?? 'sheet';
-        let color = this.getColor('worksheet');
-        if (this.sectionName == 'segment')
+
+        let startX = 0;
+        let startY = 0;
+        let endX = 0;
+        let endY = 0;
+        if (properties.start)
         {
-            color = this.getColor(layer);
+            startX = this.correctXY('x', parseFloat(properties.start[0]), properties.start?.[2] ?? null);
+            startY = this.correctXY('y', parseFloat(properties.start[1]), properties.start?.[2] ?? null);
         }
-        const size = this.getLineThickness(properties.width ? parseFloat(properties.width[0]) : 0);
+        if (properties.end)
+        {
+            endX = this.correctXY('x', parseFloat(properties.end[0]), properties.end?.[2] ?? null);
+            endY = this.correctXY('y', parseFloat(properties.end[1]), properties.end?.[2] ?? null);
+        }
+        if (properties.pts)
+        {
+            startX = parseFloat(properties.pts[0].split(' ')[1]);
+            startY = parseFloat(properties.pts[0].split(' ')[2]);
+            endX = parseFloat(properties.pts[1].split(' ')[1]);
+            endY = parseFloat(properties.pts[1].split(' ')[2]);
+        }
+
+        let repeat = parseInt(properties.repeat?.[0] ?? 1);
+        let incrX = parseInt(properties.incrx?.[0] ?? 0);
+        let incrY = parseInt(properties.incry?.[0] ?? 0);
+
+        let layer = properties.layer?.[0] ?? 'design';
+        let color = this.sectionName == 'segment' ? this.getColor(layer) : this.getColor(this.sectionName);
+        if (this.designType == 'kicad_wks')
+        {
+            layer = 'sheet';
+            color = this.getColor('worksheet');
+        }
+        let size = properties.width ? parseFloat(properties.width[0]) : 0;
+        if (properties.stroke)
+        {
+            let parts = properties.stroke[0].split(' ')
+            size = parts[0] == 'width' ? parseFloat(parts[1]) : 0;
+        }
+        size = this.getLineThickness(size);
 
         let minX = this.paper ? 0 : -2000;
         let minY = this.paper ? 0 : -2000;
         let maxX = this.paper ? this.paper.width : 2000;
         let maxY = this.paper ? this.paper.height : 2000;
-        minX += this.setup.leftMargin || 0;
-        minY += this.setup.topMargin || 0;
-        maxX -= this.setup.rightMargin || 0;
-        maxY -= this.setup.bottomMargin || 0;
+        minX += this.setup ? this.setup.leftMargin : 0;
+        minY += this.setup ? this.setup.topMargin : 0;
+        maxX -= this.setup ? this.setup.rightMargin : 0;
+        maxY -= this.setup ? this.setup.bottomMargin : 0;
 
         for (let i = 0; i < repeat; i++)
         {

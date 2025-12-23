@@ -90,7 +90,15 @@ export class ParserBase
         {
             return thickness;
         }
-        return this.setup.lineWidth;
+        if (this.designType == 'kicad_wks')
+        {
+            thickness = this.setup.lineWidth;
+        }
+        else
+        {
+            thickness = designDefaults.lineWidth;
+        }
+        return thickness;
     }
 
     getTextSize()
@@ -175,4 +183,9 @@ export class ParserBase
         }
         return content;
     }
+}
+
+const designDefaults = {
+    lineWidth: 0.1524,  // 6 mil
+    buswidth: 0.3048    // 12 mil
 }

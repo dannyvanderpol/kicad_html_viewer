@@ -18,6 +18,11 @@ jobs:
     steps:
     - uses: actions/checkout@v6
 
+    - name: Count code lines
+      run: |
+        sudo apt-get install cloc
+        cloc --include-lang=JavaScript .
+
     - name: Use node
       uses: actions/setup-node@v6
 

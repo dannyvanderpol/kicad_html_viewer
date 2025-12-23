@@ -16,6 +16,6 @@ export class DesignObject
 
     getDesignElement(reference)
     {
-        return this.designElements.find(o => o.reference === reference);
+        return this.designElements.find(o => (o != null && o.reference === reference));
     }
 }

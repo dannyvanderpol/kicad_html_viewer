@@ -17,7 +17,7 @@ export class ParserBase
         this.designType = null;
         this.parentType = null;
         this.setup = null;
-        this.designElement = new DesignElement;
+        this.designElement = null;
         this.graphicsElements = [];
     }
 

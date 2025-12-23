@@ -9,6 +9,7 @@ export const Colors = {
     defaultPcbAlpha: 0.7,
     kicad_sch: {
         "background": "rgb(245, 244, 239)",
+        "junction": "rgb(0, 150, 0)",
         "worksheet": "rgb(132, 0, 0)"
     },
     kicad_pcb: {

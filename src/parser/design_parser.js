@@ -14,6 +14,8 @@ import { KeyValueMap } from '../lib/key_value_map.js';
 import { DesignObject } from '../design/design_object.js';
 import { Sections } from './sections_parser.js';
 import { EmbeddedFileParser } from './embedded_file_parser.js';
+import { JunctionParser } from './junction_parser.js';
+import { LayersParser } from './layers_parser.js';
 import { LineParser } from './line_parser.js';
 import { PaperParser } from './paper_parser.js';
 import { RectangleParser } from './rectangle_parser.js';
@@ -21,7 +23,6 @@ import { SetupParser } from './setup_parser.js';
 import { TextParser } from './text_parser.js';
 import { TitleBlockParser } from './title_block_parser.js';
 import { ZoneParser } from './zone_parser.js';
-import { LayersParser } from './layers_parser.js';
 
 export const DesignParser = {
     parseFile: async function (src, filename)
@@ -88,6 +89,10 @@ export const DesignParser = {
 
                     case 'generator_version':
                         design.version = Sections.getValues(section)[0];
+                        break;
+
+                    case 'junction':
+                        elementParser = new JunctionParser();
                         break;
 
                     case 'layers':

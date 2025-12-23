@@ -51,6 +51,7 @@ export class GraphicsBase
 }
 
 const MIN_POINTS = {
+    'Junction': 1,
     'Line': 2,
     'Polygon': 3,
     'Rectangle': 2,

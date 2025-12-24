@@ -13,17 +13,7 @@ import { PAGE_LAYOUT } from '../lib/ki_pagelayout.js';
 import { KeyValueMap } from '../lib/key_value_map.js';
 import { DesignObject } from '../design/design_object.js';
 import { Sections } from './sections_parser.js';
-import { BusEntryParser } from './bus_entry_parser.js';
-import { EmbeddedFileParser } from './embedded_file_parser.js';
-import { JunctionParser } from './junction_parser.js';
-import { LayersParser } from './layers_parser.js';
-import { LineParser } from './line_parser.js';
-import { PaperParser } from './paper_parser.js';
-import { RectangleParser } from './rectangle_parser.js';
-import { SetupParser } from './setup_parser.js';
-import { TextParser } from './text_parser.js';
-import { TitleBlockParser } from './title_block_parser.js';
-import { ZoneParser } from './zone_parser.js';
+import { getParser } from './section_to_parser.js';
 
 export const DesignParser = {
     parseFile: async function (src, filename)
@@ -80,77 +70,10 @@ export const DesignParser = {
             logger.info(logger.LEVEL_PARSER, `[Parser] Design type: '${design.designType}'`);
             for (let section of Sections.getSections(sections[0].substring(1, sections[0].length - 1)))
             {
-                let elementParser = null;
                 let sectionName = Sections.getSectionName(section);
-                switch (sectionName)
+                let elementParser = getParser(sectionName);
+                if (elementParser)
                 {
-                    case 'bus_entry':
-                        elementParser = new BusEntryParser();
-                        break;
-
-                    case 'embedded_files':
-                        elementParser = new EmbeddedFileParser();
-                        break;
-
-                    case 'generator_version':
-                        design.version = Sections.getValues(section)[0];
-                        break;
-
-                    case 'junction':
-                        elementParser = new JunctionParser();
-                        break;
-
-                    case 'layers':
-                        elementParser = new LayersParser();
-                        break;
-
-                    case 'bus':
-                    case 'line':
-                    case 'segment':
-                    case 'wire':
-                        elementParser = new LineParser();
-                        break;
-
-                    case 'paper':
-                        elementParser = new PaperParser();
-                        break;
-
-                    case 'rect':
-                        elementParser = new RectangleParser();
-                        break;
-
-                    case 'setup':
-                        elementParser = new SetupParser();
-                        break;
-
-                    case 'tbtext':
-                        elementParser = new TextParser();
-                        break;
-
-                    case 'title_block':
-                        elementParser = new TitleBlockParser();
-                        break;
-
-                    case 'zone':
-                        elementParser = new ZoneParser();
-                        break;
-
-                    // Skip
-                    case 'embedded_fonts':
-                    case 'generator':
-                    case 'net':
-                    case 'uuid':
-                    case 'version':
-                        break;
-
-                    // Unknown
-                    default:
-                        logger.warn(logger.LEVEL_PARSER, '[Parser] Unknown section:', sectionName);
-                        break;
-                }
-                if (elementParser != null)
-                {
-                    keyValueMap;
                     elementParser.parseSection(section, design.designType, parentType,
                                                design.getDesignElement('setup'), paper, keyValueMap);
                     design.designElements.push(elementParser.designElement);

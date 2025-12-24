@@ -10,6 +10,7 @@ import { Sections } from '../sections_parser.js';
 import { timer } from '../../lib/timer.js';
 import { Circle } from '../../graphics/circle.js';
 import { Line } from '../../graphics/line.js';
+import { Text } from '../../graphics/text.js';
 
 export class BaseParser
 {
@@ -125,7 +126,7 @@ export class BaseParser
 
     getTextSize()
     {
-        return this.setup.textSize;
+        return this.setup ? this.setup.textSize : designDefaults.textSize;
     }
 
     correctXY(axis, value, relativeTo)
@@ -225,12 +226,32 @@ export class BaseParser
 
     addLine(layer, points, size, color)
     {
-        let line = new Line();
+        const line = new Line();
         line.layer = layer;
         line.points = points;
         line.size = size;
         line.color = color;
         this.graphicsElements.push(line);
+    }
+
+    addText(layer, points, content, size, color, bold, italic, hAlign, vAlign, mirror)
+    {
+        let font = '';
+        font += bold ? 'bold ' : '';
+        font += italic ? 'italic ' : '';
+        font += `${size}px `;
+        font += 'KiCadFont';
+
+        const text = new Text();
+        text.layer = layer;
+        text.points = points;
+        text.text = content;
+        text.font = font;
+        text.color = color;
+        text.hAlign = hAlign;
+        text.vAlign = vAlign;
+        text.mirror = mirror;
+        this.graphicsElements.push(text);
     }
 }
 

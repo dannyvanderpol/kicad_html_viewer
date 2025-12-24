@@ -1,5 +1,6 @@
 /*
  * Retieve sections from content.
+ * Retrieve properties or values from sections.
  * A section is eveything between the opening '(' and the corresponding closing ')'.
  * Also includes nested sections.
  */

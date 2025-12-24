@@ -1,0 +1,60 @@
+/*
+ * Parsing the paper section.
+ */
+
+'use strict';
+
+import { logger } from '../../lib/logger.js';
+import { BaseParser } from './base_parser.js';
+import { Sections } from '../sections_parser.js';
+import { PaperElement } from '../../design/paper_element.js';
+import { Rectangle } from '../../graphics/rectangle.js';
+
+export class PaperParser extends BaseParser
+{
+    parse(sectionContent)
+    {
+        let values = Sections.getValues(sectionContent);
+        let pageSize = paperSizes[values[0]];
+        let isPortrait = false;
+        if (values.length > 1)
+        {
+            isPortrait = values[1] == 'portrait';
+        }
+        if (!pageSize)
+        {
+            logger.warn(logger.LEVEL_PARSER, 'Unknown page size:',  values[0]);
+            pageSize = paperSizes.A4;
+        }
+        this.keyValueMap.set('paper', values[0]);
+
+        this.designElement = new PaperElement('paper');
+        if (isPortrait)
+        {
+            this.designElement.width = pageSize.height;
+            this.designElement.height = pageSize.width;
+        }
+        else
+        {
+            this.designElement.width = pageSize.width;
+            this.designElement.height = pageSize.height;
+        }
+
+        let rectangle = new Rectangle();
+        rectangle.layer = 'sheet';
+        rectangle.color = this.getColor('page_limits');
+        rectangle.size = 0.5;
+        rectangle.scaledSize = true;
+        rectangle.points.push({ x: 0, y: 0 });
+        rectangle.points.push({ x: this.designElement.width, y: this.designElement.height });
+        this.graphicsElements.push(rectangle);
+    }
+}
+
+const paperSizes = {
+  A0: { width: 1189, height: 841 },
+  A1: { width: 841,  height: 594 },
+  A2: { width: 594,  height: 420 },
+  A3: { width: 420,  height: 297 },
+  A4: { width: 297,  height: 210 }
+};

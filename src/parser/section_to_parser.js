@@ -3,6 +3,7 @@
  */
 
 import { logger } from '../lib/logger.js';
+import { PaperParser } from './section_parsers/paper_parser.js';
 
 export function getParser(sectionName)
 {
@@ -22,5 +23,5 @@ export function getParser(sectionName)
 const skipSections = [ 'version', 'generator' ];
 
 const sectionToParser = {
-
+    'paper': PaperParser
 };

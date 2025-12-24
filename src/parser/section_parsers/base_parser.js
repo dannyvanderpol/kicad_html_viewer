@@ -124,49 +124,56 @@ export class BaseParser
             return value;
         }
 
+        const leftMargin = this.setup ? this.setup.leftMargin : 0;
+        const topMargin = this.setup ? this.setup.topMargin : 0;
+        const rightMargin = this.setup ? this.setup.rightMargin : 0;
+        const bottomMargin = this.setup ? this.setup.bottomMargin : 0;
+        const paperWidth = this.paper ? this.paper.width : 0;
+        const paperHeight = this.paper ? this.paper.height : 0;
+
         switch (relativeTo)
         {
             case 'ltcorner':
                 if (axis == 'x')
                 {
-                    value += this.setup.leftMargin;
+                    value += leftMargin;
                 }
                 if (axis == 'y')
                 {
-                    value += this.setup.topMargin;
+                    value += topMargin;
                 }
                 break;
 
             case 'rtcorner':
                 if (axis == 'x')
                 {
-                    value = this.paper.width - this.setup.rightMargin - value;
+                    value = paperWidth - rightMargin - value;
                 }
                 if (axis == 'y')
                 {
-                    value += this.setup.topMargin;
+                    value += topMargin;
                 }
                 break;
 
             case 'lbcorner':
                 if (axis == 'x')
                 {
-                    value += this.setup.leftMargin;
+                    value += leftMargin;
                 }
                 if (axis == 'y')
                 {
-                    value = this.paper.height - this.setup.bottomMargin - value;
+                    value = paperHeight - bottomMargin - value;
                 }
                 break;
 
             case 'rbcorner':
                 if (axis == 'x')
                 {
-                    value = this.paper.width - this.setup.rightMargin - value;
+                    value = paperWidth - rightMargin - value;
                 }
                 else if (axis == 'y')
                 {
-                    value = this.paper.height - this.setup.bottomMargin - value;
+                    value = paperHeight - bottomMargin - value;
                 }
                 break;
 

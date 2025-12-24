@@ -13,16 +13,7 @@ export class GraphicsBase
     constructor()
     {
         this.type = GraphicsBase.name;
-        this.layer = 'design';
-        this.color = Colors.default;
-        this.size = 1;
-        this.scaledSize = false;
-        this.scale = 1;
         this.points = [];
-        this.text = '';
-        this.align_h = 'left';
-        this.align_v = 'middle';
-        this.mirror = false;
     }
 
     draw(ctx)

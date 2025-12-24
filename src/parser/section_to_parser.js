@@ -4,6 +4,7 @@
 
 import { logger } from '../lib/logger.js';
 import { PaperParser } from './section_parsers/paper_parser.js';
+import { TitleBlockParser } from './section_parsers/title_block_parser.js';
 
 export function getParser(sectionName)
 {
@@ -23,5 +24,6 @@ export function getParser(sectionName)
 const skipSections = [ 'version', 'generator' ];
 
 const sectionToParser = {
-    'paper': PaperParser
+    'paper'         : PaperParser,
+    'title_block'   : TitleBlockParser
 };

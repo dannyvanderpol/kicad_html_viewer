@@ -58,11 +58,14 @@ class KiViewer
         {
             // Fit page to canvas
             let page = this.design.getDesignElement('paper');
-            this.fitScaleX = this.canvas.width / page.width;
-            this.fitScaleY = this.canvas.height / page.height;
-            this.viewportTransform.scale = Math.min(this.fitScaleX, this.fitScaleY) * 0.98;
-            this.viewportTransform.x = (this.canvas.width - page.width * this.viewportTransform.scale) / 2;
-            this.viewportTransform.y = (this.canvas.height - page.height * this.viewportTransform.scale) / 2;
+            if (page)
+            {
+                this.fitScaleX = this.canvas.width / page.width;
+                this.fitScaleY = this.canvas.height / page.height;
+                this.viewportTransform.scale = Math.min(this.fitScaleX, this.fitScaleY) * 0.98;
+                this.viewportTransform.x = (this.canvas.width - page.width * this.viewportTransform.scale) / 2;
+                this.viewportTransform.y = (this.canvas.height - page.height * this.viewportTransform.scale) / 2;
+            }
             this._render();
         }
         timer.stop('Viewer');

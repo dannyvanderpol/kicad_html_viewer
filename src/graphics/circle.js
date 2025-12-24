@@ -1,10 +1,10 @@
 /*
- * Junction graphics item.
+ * Circle graphics item.
  */
 
 import { GraphicsBase } from './graphics_base.js';
 
-export class Junction extends GraphicsBase
+export class Circle extends GraphicsBase
 {
     drawElement(ctx)
     {

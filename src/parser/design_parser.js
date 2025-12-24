@@ -71,13 +71,25 @@ export const DesignParser = {
             for (let section of Sections.getSections(sections[0].substring(1, sections[0].length - 1)))
             {
                 let sectionName = Sections.getSectionName(section);
-                let elementParser = getParser(sectionName);
-                if (elementParser)
+                // Sepecific sections that doesn't require a parser
+                if (sectionName == 'generator_version')
                 {
-                    elementParser.parseSection(section, design.designType, parentType,
-                                               design.getDesignElement('setup'), paper, keyValueMap);
-                    design.designElements.push(elementParser.designElement);
-                    design.graphicsElements.push(...elementParser.graphicsElements);
+                    design.version = Sections.getValues(section)[0];
+                }
+                else if (sectionName == 'uuid')
+                {
+                    design.uuid = Sections.getValues(section)[0];
+                }
+                else
+                {
+                    let elementParser = getParser(sectionName);
+                    if (elementParser)
+                    {
+                        elementParser.parseSection(section, design.designType, parentType,
+                                                design.getDesignElement('setup'), paper, keyValueMap);
+                        design.designElements.push(elementParser.designElement);
+                        design.graphicsElements.push(...elementParser.graphicsElements);
+                    }
                 }
             }
         }

@@ -10,6 +10,7 @@ export class DesignObject
         this.filename = '';
         this.designType = '';
         this.version = '';
+        this.uuid = '';
         this.designElements = [];
         this.graphicsElements = [];
     }

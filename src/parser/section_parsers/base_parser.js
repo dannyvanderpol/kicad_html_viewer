@@ -4,12 +4,12 @@
 
 'use strict';
 
-import { Colors } from '../lib/colors.js';
-import { logger } from '../lib/logger.js';
-import { Sections } from './sections_parser.js';
-import { timer } from '../lib/timer.js';
+import { Colors } from '../../lib/colors.js';
+import { logger } from '../../lib/logger.js';
+import { Sections } from '../sections_parser.js';
+import { timer } from '../../lib/timer.js';
 
-export class ParserBase
+export class BaseParser
 {
     constructor()
     {

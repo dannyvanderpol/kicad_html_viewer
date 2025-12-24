@@ -8,6 +8,7 @@ import { Colors } from '../../lib/colors.js';
 import { logger } from '../../lib/logger.js';
 import { Sections } from '../sections_parser.js';
 import { timer } from '../../lib/timer.js';
+import { Circle } from '../../graphics/circle.js';
 
 export class BaseParser
 {
@@ -191,6 +192,16 @@ export class BaseParser
             if (this.showDebug) logger.warn('Drawer: no text sequence for:', content);
         }
         return content;
+    }
+
+    addCircle(layer, points, size, color)
+    {
+        const circle = new Circle();
+        circle.layer = layer;
+        circle.points = points;
+        circle.size = size;
+        circle.color = color;
+        this.graphicsElements.push(circle);
     }
 }
 

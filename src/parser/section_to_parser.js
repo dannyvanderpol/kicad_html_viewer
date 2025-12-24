@@ -19,9 +19,7 @@ export function getParser(sectionName)
     return new parserClass();
 }
 
-const skipSections = [
-
-];
+const skipSections = [ 'version', 'generator' ];
 
 const sectionToParser = {
 

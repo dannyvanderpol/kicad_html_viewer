@@ -4,6 +4,7 @@
 
 import { logger } from '../lib/logger.js';
 import { JunctionParser } from './section_parsers/junction_parser.js';
+import { LineParser } from './section_parsers/line_parser.js';
 import { PaperParser } from './section_parsers/paper_parser.js';
 import { TitleBlockParser } from './section_parsers/title_block_parser.js';
 
@@ -26,6 +27,7 @@ const skipSections = [ 'version', 'generator' ];
 
 const sectionToParser = {
     'junction'      : JunctionParser,
+    'line'          : LineParser,
     'paper'         : PaperParser,
     'title_block'   : TitleBlockParser
 };

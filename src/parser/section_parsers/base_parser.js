@@ -9,6 +9,7 @@ import { logger } from '../../lib/logger.js';
 import { Sections } from '../sections_parser.js';
 import { timer } from '../../lib/timer.js';
 import { Circle } from '../../graphics/circle.js';
+import { Line } from '../../graphics/line.js';
 
 export class BaseParser
 {
@@ -17,6 +18,8 @@ export class BaseParser
         this.designType = null;
         this.parentType = null;
         this.setup = null;
+        this.paper = null;
+        this.keyValueMap = null;
         this.designElement = null;
         this.graphicsElements = [];
     }
@@ -28,6 +31,15 @@ export class BaseParser
         this.setup = setup;
         this.paper = paper;
         this.keyValueMap = keyValueMap;
+        // Calculate boundaries for X and Y values
+        this.minX = this.paper ? 0 : -2000;
+        this.minY = this.paper ? 0 : -2000;
+        this.maxX = this.paper ? this.paper.width : 2000;
+        this.maxY = this.paper ? this.paper.height : 2000;
+        this.minX += this.setup ? this.setup.leftMargin : 0;
+        this.minY += this.setup ? this.setup.topMargin : 0;
+        this.maxX -= this.setup ? this.setup.rightMargin : 0;
+        this.maxY -= this.setup ? this.setup.bottomMargin : 0;
         this.sectionName = Sections.getSectionName(sectionContent);
         timer.start(`Parse ${this.sectionName}`);
         this.parse(sectionContent);
@@ -93,7 +105,7 @@ export class BaseParser
         }
         if (this.designType == 'kicad_wks')
         {
-            thickness = this.setup.lineWidth;
+            thickness = this.setup ? this.setup.lineWidth : designDefaults.lineWidth;
         }
         else
         {
@@ -209,6 +221,16 @@ export class BaseParser
         circle.size = size;
         circle.color = color;
         this.graphicsElements.push(circle);
+    }
+
+    addLine(layer, points, size, color)
+    {
+        let line = new Line();
+        line.layer = layer;
+        line.points = points;
+        line.size = size;
+        line.color = color;
+        this.graphicsElements.push(line);
     }
 }
 

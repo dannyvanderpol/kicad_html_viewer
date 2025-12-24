@@ -13,6 +13,7 @@ import { PAGE_LAYOUT } from '../lib/ki_pagelayout.js';
 import { KeyValueMap } from '../lib/key_value_map.js';
 import { DesignObject } from '../design/design_object.js';
 import { Sections } from './sections_parser.js';
+import { BusEntryParser } from './bus_entry_parser.js';
 import { EmbeddedFileParser } from './embedded_file_parser.js';
 import { JunctionParser } from './junction_parser.js';
 import { LayersParser } from './layers_parser.js';
@@ -83,6 +84,10 @@ export const DesignParser = {
                 let sectionName = Sections.getSectionName(section);
                 switch (sectionName)
                 {
+                    case 'bus_entry':
+                        elementParser = new BusEntryParser();
+                        break;
+
                     case 'embedded_files':
                         elementParser = new EmbeddedFileParser();
                         break;

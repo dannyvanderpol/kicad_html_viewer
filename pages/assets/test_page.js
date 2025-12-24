@@ -19,6 +19,10 @@ function loadSettings()
     let elmProject = document.getElementById('project');
     let elmLogLevel = document.getElementById('log-level');
 
+    if (!canvasSrc)
+    {
+        canvasSrc = elmProject.value;
+    }
     if (canvasSrc.startsWith('local_storage:'))
     {
         filename = canvasSrc.split(':')[1];

@@ -96,7 +96,16 @@ export class ParserBase
         }
         else
         {
-            thickness = designDefaults.lineWidth;
+            switch (this.sectionName)
+            {
+                case 'bus':
+                    thickness = designDefaults.buswidth;
+                    break;
+
+                case 'wire':
+                    thickness = designDefaults.lineWidth;
+                    break;
+            }
         }
         return thickness;
     }

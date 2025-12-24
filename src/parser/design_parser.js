@@ -99,6 +99,7 @@ export const DesignParser = {
                         elementParser = new LayersParser();
                         break;
 
+                    case 'bus':
                     case 'line':
                     case 'segment':
                     case 'wire':

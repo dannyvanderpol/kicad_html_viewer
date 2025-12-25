@@ -1,15 +1,15 @@
 /*
- * Parsing a setup section into a design element and graphics elements.
+ * Parsing the embedded files section.
  */
 
 'use strict';
 
-import { ParserBase } from './parser_base.js';
-import { Sections } from './sections_parser.js';
-import { WorksheetElement } from '../design/worksheet_element.js';
-import * as fzstd from '../lib/fzstd.js';
+import { BaseParser } from './base_parser.js';
+import { Sections } from '../sections_parser.js';
+import { WorksheetElement } from '../../design/worksheet_element.js';
+import * as fzstd from '../../lib/fzstd.js';
 
-export class EmbeddedFileParser extends ParserBase
+export class EmbeddedFilesParser extends BaseParser
 {
     parse(sectionContent)
     {

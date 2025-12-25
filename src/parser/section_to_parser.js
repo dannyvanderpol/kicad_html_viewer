@@ -4,6 +4,7 @@
 
 import { logger } from '../lib/logger.js';
 import { BusEntryParser } from './section_parsers/bus_entry_parser.js';
+import { EmbeddedFilesParser } from './section_parsers/embedded_files_parser.js';
 import { JunctionParser } from './section_parsers/junction_parser.js';
 import { LineParser } from './section_parsers/line_parser.js';
 import { PaperParser } from './section_parsers/paper_parser.js';
@@ -32,6 +33,7 @@ const skipSections = [ 'embedded_fonts', 'generator', 'version' ];
 
 const sectionToParser = {
     'bus_entry'     : BusEntryParser,
+    'embedded_files': EmbeddedFilesParser,
     'junction'      : JunctionParser,
     'line'          : LineParser,
     'paper'         : PaperParser,

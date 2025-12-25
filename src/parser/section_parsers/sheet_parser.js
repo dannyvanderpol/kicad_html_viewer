@@ -21,7 +21,7 @@ export class SheetParser extends BaseParser
         {
             const name = Sections.getSectionName(subSection);
             const values = Sections.getValues(subSection);
-            const properties = Sections.getProperties(subSection.substring(1, subSection.length - 1));
+            const properties = Sections.getProperties(subSection);
             switch (name)
             {
                 case 'at':

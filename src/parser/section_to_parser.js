@@ -14,6 +14,7 @@ import { SetupParser } from './section_parsers/setup_parser.js';
 import { TbTextParser } from './section_parsers/tbtext_parser.js';
 import { TitleBlockParser } from './section_parsers/title_block_parser.js';
 import { WireParser } from './section_parsers/wire_parser.js';
+import { ZoneParser } from './section_parsers/zone_parser.js';
 
 export function getParser(sectionName)
 {
@@ -43,5 +44,6 @@ const sectionToParser = {
     'setup'         : SetupParser,
     'tbtext'        : TbTextParser,
     'title_block'   : TitleBlockParser,
-    'wire'          : WireParser
+    'wire'          : WireParser,
+    'zone'          : ZoneParser
 };

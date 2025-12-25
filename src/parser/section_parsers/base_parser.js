@@ -10,6 +10,7 @@ import { Sections } from '../sections_parser.js';
 import { timer } from '../../lib/timer.js';
 import { Circle } from '../../graphics/circle.js';
 import { Line } from '../../graphics/line.js';
+import { Rectangle } from '../../graphics/rectangle.js';
 import { Text } from '../../graphics/text.js';
 
 export class BaseParser
@@ -232,6 +233,16 @@ export class BaseParser
         line.size = size;
         line.color = color;
         this.graphicsElements.push(line);
+    }
+
+    addRectangle(layer, points, size, color)
+    {
+        const rectangle = new Rectangle();
+        rectangle.layer = layer;
+        rectangle.points = points;
+        rectangle.size = size;
+        rectangle.color = color;
+        this.graphicsElements.push(rectangle);
     }
 
     addText(layer, points, content, size, color, bold, italic, hAlign, vAlign, mirror)

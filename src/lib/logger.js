@@ -72,7 +72,7 @@ class Logger
                 if (logLine.includes('[ERROR')) textClass = 'error';
                 this.logElement.innerHTML += `<span class="${textClass}">${logLine}</span>` + '\n';
                 this.logElement.scrollTop = this.logElement.scrollHeight;
-            }, 0);
+            }, 1);
         }
     }
 

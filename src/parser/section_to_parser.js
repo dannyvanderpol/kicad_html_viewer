@@ -26,7 +26,7 @@ export function getParser(sectionName)
     return new parserClass();
 }
 
-const skipSections = [ 'version', 'generator' ];
+const skipSections = [ 'embedded_fonts', 'generator', 'version' ];
 
 const sectionToParser = {
     'junction'      : JunctionParser,

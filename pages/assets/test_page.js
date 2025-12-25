@@ -110,7 +110,7 @@ const PAGE_CONTENT = `
 <p>Selected file: <span id="filename"></span></p>
 <hr />
 <p>KiCad design viewer</p>
-<canvas id="kicad-design" type="application/kicad" width="900" height="640"></canvas>
+<canvas id="kicad-design" type="application/kicad" width="1016px" height="720px"></canvas>
 <hr />
 <div id="logContainer">
     <div id="logTitle">Log output:</div>

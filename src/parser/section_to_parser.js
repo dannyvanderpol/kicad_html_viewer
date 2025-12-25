@@ -10,6 +10,7 @@ import { RectangleParser } from './section_parsers/rectangle_parser.js';
 import { SetupParser } from './section_parsers/setup_parser.js';
 import { TbTextParser } from './section_parsers/tbtext_parser.js';
 import { TitleBlockParser } from './section_parsers/title_block_parser.js';
+import { WireParser } from './section_parsers/wire_parser.js';
 
 export function getParser(sectionName)
 {
@@ -35,5 +36,6 @@ const sectionToParser = {
     'rect'          : RectangleParser,
     'setup'         : SetupParser,
     'tbtext'        : TbTextParser,
-    'title_block'   : TitleBlockParser
+    'title_block'   : TitleBlockParser,
+    'wire'          : WireParser
 };

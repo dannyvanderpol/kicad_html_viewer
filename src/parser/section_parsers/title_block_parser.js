@@ -1,5 +1,5 @@
 /*
- * Parse the title block section.
+ * Parsing the title block section.
  */
 
 'use strict';

@@ -1,5 +1,5 @@
 /*
- * Parse the wire section.
+ * Parsing the wire section.
  */
 
 'use strict';

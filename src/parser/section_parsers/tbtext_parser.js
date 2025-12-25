@@ -1,5 +1,5 @@
 /*
- * Parse a tbtext section (title block text).
+ * Parsing the tbtext section (title block text).
  */
 
 'use strict';

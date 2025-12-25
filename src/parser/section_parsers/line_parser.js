@@ -1,5 +1,5 @@
 /*
- * Parse the line section.
+ * Parsing the line section.
  */
 
 'use strict';

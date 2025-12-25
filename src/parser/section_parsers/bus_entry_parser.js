@@ -1,5 +1,5 @@
 /*
- * Parse the bus entry section.
+ * Parsing the bus entry section.
  */
 
 'use strict';

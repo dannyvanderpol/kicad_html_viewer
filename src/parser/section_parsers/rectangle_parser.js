@@ -1,5 +1,5 @@
 /*
- * Parse the rectangle section.
+ * Parsing the rectangle section.
  */
 
 'use strict';

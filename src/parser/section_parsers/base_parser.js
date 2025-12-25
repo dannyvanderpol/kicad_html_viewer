@@ -235,13 +235,17 @@ export class BaseParser
         this.graphicsElements.push(line);
     }
 
-    addRectangle(layer, points, size, color)
+    addRectangle(layer, points, size, color, fillColor)
     {
         const rectangle = new Rectangle();
         rectangle.layer = layer;
         rectangle.points = points;
         rectangle.size = size;
         rectangle.color = color;
+        if (fillColor)
+        {
+            rectangle.fillColor = fillColor;
+        }
         this.graphicsElements.push(rectangle);
     }
 

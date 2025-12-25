@@ -16,6 +16,11 @@ export class Rectangle extends GraphicsBase
         }
         const w = this.points[1].x - this.points[0].x;
         const h = this.points[1].y - this.points[0].y;
+        if (this.fillColor)
+        {
+            ctx.fillStyle = this.fillColor;
+            ctx.fillRect(this.points[0].x, this.points[0].y, w, h);
+        }
         ctx.strokeRect(this.points[0].x, this.points[0].y, w, h);
     }
 }

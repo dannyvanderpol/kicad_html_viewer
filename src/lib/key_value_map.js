@@ -21,6 +21,7 @@ export class KeyValueMap {
             'revision': '',
             'sheetpath': '/',
             'title': '',
+            'sheetname': '',
             '#': '',
             '##': ''
         };

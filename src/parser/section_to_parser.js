@@ -6,6 +6,7 @@ import { logger } from '../lib/logger.js';
 import { JunctionParser } from './section_parsers/junction_parser.js';
 import { LineParser } from './section_parsers/line_parser.js';
 import { PaperParser } from './section_parsers/paper_parser.js';
+import { SetupParser } from './section_parsers/setup_parser.js';
 import { TbTextParser } from './section_parsers/tbtext_parser.js';
 import { TitleBlockParser } from './section_parsers/title_block_parser.js';
 
@@ -30,6 +31,7 @@ const sectionToParser = {
     'junction'      : JunctionParser,
     'line'          : LineParser,
     'paper'         : PaperParser,
+    'setup'         : SetupParser,
     'tbtext'        : TbTextParser,
     'title_block'   : TitleBlockParser
 };

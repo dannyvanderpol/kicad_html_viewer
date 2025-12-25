@@ -8,7 +8,8 @@
 export const Sections = {
     getSections: function (data)
     {
-        let sections = []
+        data = data.substring(1, data.length - 1);
+        const sections = []
         let start = -1
         let section = 0
         for (let i = 0; i < data.length; i++)
@@ -53,8 +54,8 @@ export const Sections = {
     {
         // Remove any new lines ot tabs, and multiple spaces
         section = section.replace(/[\r\n\t]/g, ' ').replace(/ +/g, ' ');
-        let values = [];
-        let pos = section.indexOf(' ');
+        const values = [];
+        const pos = section.indexOf(' ');
         if (pos > 0)
         {
             let start = pos;
@@ -87,9 +88,9 @@ export const Sections = {
         // Section content can be a list of sub-sections with values or a string with a section
         if (typeof sectionContent === 'string')
         {
-            sectionContent = this.getSections(sectionContent.substring(1, sectionContent.length - 1));
+            sectionContent = this.getSections(sectionContent);
         }
-        let properties = {};
+        const properties = {};
         for (const subSection of sectionContent)
         {
             let value = this.getValues(subSection);

@@ -13,7 +13,7 @@ export class EmbeddedFilesParser extends BaseParser
 {
     parse(sectionContent)
     {
-        let sections = Sections.getSections(sectionContent.substring(1, sectionContent.length - 1));
+        let sections = Sections.getSections(sectionContent);
         for (let section of sections)
         {
             let properties = Sections.getProperties(section);

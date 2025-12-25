@@ -12,7 +12,7 @@ export class ZoneParser extends BaseParser
 {
     parse(sectionContent)
     {
-        let sections = Sections.getSections(sectionContent.substring(1, sectionContent.length - 1));
+        let sections = Sections.getSections(sectionContent);
         for (const subSection of sections)
         {
             let name = Sections.getSectionName(subSection);

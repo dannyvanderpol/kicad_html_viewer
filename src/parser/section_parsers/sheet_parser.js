@@ -16,7 +16,7 @@ export class SheetParser extends BaseParser
         let size = 0;
         let fillColor = '';
 
-        let sections = Sections.getSections(sectionContent.substring(1, sectionContent.length - 1));
+        let sections = Sections.getSections(sectionContent);
         for (const subSection of sections)
         {
             const name = Sections.getSectionName(subSection);

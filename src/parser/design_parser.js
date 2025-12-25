@@ -38,7 +38,7 @@ export const DesignParser = {
 
             // Get embedded worksheet from design if any
             let pageLayout = PAGE_LAYOUT;
-            let worksheet = design.getDesignElement('worksheet');
+            const worksheet = design.getDesignElement('worksheet');
             if (worksheet)
             {
                 pageLayout = worksheet.content;
@@ -58,19 +58,19 @@ export const DesignParser = {
     parseContent: function (content, keyValueMap, parentType=null, paper=null)
     {
         timer.start('Parse content');
-        let design = new DesignObject();
-        let sections = Sections.getSections(content);
-        if (sections.length != 1)
+        const design = new DesignObject();
+        const designType = Sections.getSectionName(content);
+        if (!supportedTypes.includes(designType))
         {
             logger.error(logger.LEVEL_SYSTEM, '[Parser] Invalid file format.');
         }
         else
         {
-            design.designType = Sections.getSectionName(sections[0]);
+            design.designType = designType;
             logger.info(logger.LEVEL_PARSER, `[Parser] Design type: '${design.designType}'`);
-            for (let section of Sections.getSections(sections[0].substring(1, sections[0].length - 1)))
+            for (let section of Sections.getSections(content))
             {
-                let sectionName = Sections.getSectionName(section);
+                const sectionName = Sections.getSectionName(section);
                 // Sepecific sections that doesn't require a parser
                 if (sectionName == 'generator_version')
                 {
@@ -82,7 +82,7 @@ export const DesignParser = {
                 }
                 else
                 {
-                    let elementParser = getParser(sectionName);
+                    const elementParser = getParser(sectionName);
                     if (elementParser)
                     {
                         elementParser.parseSection(section, design.designType, parentType,
@@ -97,3 +97,5 @@ export const DesignParser = {
         return design;
     }
 }
+
+const supportedTypes = [ 'kicad_wks', 'kicad_sch', 'kicad_pcb' ];

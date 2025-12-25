@@ -11,6 +11,8 @@ export const Colors = {
         "background": "rgb(245, 244, 239)",
         "bus": "rgb(0, 0, 132)",
         "junction": "rgb(0, 150, 0)",
+        "sheet": "rgb(132, 0, 0)",
+        "sheet_background": "rgba(255, 255, 255, 0.000)",
         "wire": "rgb(0, 150, 0)",
         "worksheet": "rgb(132, 0, 0)"
     },

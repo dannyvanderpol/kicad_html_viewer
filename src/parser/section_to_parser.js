@@ -12,6 +12,7 @@ import { PaperParser } from './section_parsers/paper_parser.js';
 import { RectangleParser } from './section_parsers/rectangle_parser.js';
 import { SegmentParser } from './section_parsers/segment_parser.js';
 import { SetupParser } from './section_parsers/setup_parser.js';
+import { SheetParser } from './section_parsers/sheet_parser.js';
 import { TbTextParser } from './section_parsers/tbtext_parser.js';
 import { TitleBlockParser } from './section_parsers/title_block_parser.js';
 import { WireParser } from './section_parsers/wire_parser.js';
@@ -44,6 +45,7 @@ const sectionToParser = {
     'rect'          : RectangleParser,
     'segment'       : SegmentParser,
     'setup'         : SetupParser,
+    'sheet'         : SheetParser,
     'tbtext'        : TbTextParser,
     'title_block'   : TitleBlockParser,
     'wire'          : WireParser,

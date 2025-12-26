@@ -28,19 +28,24 @@ export class SheetParser extends BaseParser
                     points.push({ x: parseFloat(values[0]), y: parseFloat(values[1])});
                     break;
 
+                case 'pin':
+                    const pinData = this.getLabelData(subSection)
+                    this.addHierPin(pinData.pos, pinData.attributes[1]);
+                    break;
+
                 case 'property':
-                    const data = this.getLabelData(subSection)
-                    let content = data.attributes[1];
-                    if (data.attributes[0] == "Sheetfile")
+                    const propData = this.getLabelData(subSection)
+                    let content = propData.attributes[1];
+                    if (propData.attributes[0] == "Sheetfile")
                     {
                         content = 'File: ' + content;
                     }
                     const pos = [
-                        { x: data.pos[0], y: data.pos[1] }
+                        { x: propData.pos[0], y: propData.pos[1] }
                     ]
-                    const color = this.getColor(data.attributes[0]);
-                    this.addText('design', pos, content, data.size, color, data.bold, data.italic,
-                                 data.hAlign, data.vAlign, data.mirror)
+                    const color = this.getColor(propData.attributes[0]);
+                    this.addText('design', pos, content, propData.size, color, propData.bold, propData.italic,
+                                 propData.hAlign, propData.vAlign, propData.mirror)
                     break;
 
                 case 'size':

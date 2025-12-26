@@ -7,9 +7,11 @@
 import { Colors } from '../../lib/colors.js';
 import { logger } from '../../lib/logger.js';
 import { Sections } from '../sections_parser.js';
+import { HIER_PINS } from '../pins.js';
 import { timer } from '../../lib/timer.js';
 import { Circle } from '../../graphics/circle.js';
 import { Line } from '../../graphics/line.js';
+import { Polygon } from '../../graphics/polygon.js';
 import { Rectangle } from '../../graphics/rectangle.js';
 import { Text } from '../../graphics/text.js';
 
@@ -323,6 +325,53 @@ export class BaseParser
         text.vAlign = vAlign;
         text.mirror = mirror;
         this.graphicsElements.push(text);
+    }
+
+    addPolygon(layer, points, size, strokeColor, fillColor)
+    {
+        let polygon = new Polygon();
+        polygon.layer = layer;
+        polygon.points = points;
+        polygon.size = size;
+        polygon.strokeColor = strokeColor;
+        polygon.fillColor = fillColor;
+        this.graphicsElements.push(polygon);
+    }
+
+    addHierPin(pos, type)
+    {
+        const pin = HIER_PINS[type];
+        if (pin)
+        {
+            const points = [];
+            let current = { x: pos[0], y: pos[1] };
+            for (let xy of pin)
+            {
+                // Correct X and Y steps for rotation
+                if (pos[2] == 90)
+                {
+                    current.x += xy[1];
+                    current.y += -xy[0];
+                }
+                else if (pos[2] == 180)
+                {
+                    current.x += -xy[0];
+                    current.y += -xy[1];
+                }
+                else if (pos[2] == 270)
+                {
+                    current.x += -xy[1];
+                    current.y += xy[0];
+                }
+                else
+                {
+                    current.x += xy[0];
+                    current.y += xy[1];
+                }
+                points.push({ ...current });
+            }
+            this.addPolygon('design', points, this.getLineThickness, this.getColor('label_hier'));
+        }
     }
 }
 

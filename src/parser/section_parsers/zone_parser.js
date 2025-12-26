@@ -5,8 +5,7 @@
 'use strict';
 
 import { BaseParser } from './base_parser.js';
-import { Sections   } from '../sections_parser.js';
-import { Polygon    } from '../../graphics/polygon.js';
+import { Sections } from '../sections_parser.js';
 
 export class ZoneParser extends BaseParser
 {
@@ -19,21 +18,20 @@ export class ZoneParser extends BaseParser
             if (name == 'filled_polygon')
             {
                 let props = Sections.getProperties(subSection);
-                let polygon = new Polygon();
-                polygon.layer = props.layer[0];
-                polygon.color = this.getColor(polygon.layer);
+                const layer = props.layer[0];
+                const points = [];
                 for (let pt of props.pts)
                 {
                     let parts = pt.split(' ');
                     if (parts.length == 3 && parts[0] == 'xy')
                     {
-                        polygon.points.push({
+                        points.push({
                             x: parseFloat(parts[1]),
                             y: parseFloat(parts[2])
                         });
                     }
                 }
-                this.graphicsElements.push(polygon);
+                this.addPolygon(layer, points, 0, null, this.getColor(layer));
             }
         }
     }

@@ -8,7 +8,8 @@ export class Polygon extends GraphicsBase
 {
     drawElement(ctx)
     {
-        ctx.fillStyle = this.color;
+        ctx.strokeStyle = this.strokeColor;
+        ctx.fillStyle = this.fillColor;
         ctx.lineWidth = 0;
         ctx.beginPath();
         ctx.moveTo(this.points[0].x, this.points[0].y);
@@ -17,6 +18,13 @@ export class Polygon extends GraphicsBase
             ctx.lineTo(this.points[i].x, this.points[i].y);
         }
         ctx.closePath();
-        ctx.fill();
+        if (this.fillColor)
+        {
+            ctx.fill();
+        }
+        if (this.strokeColor)
+        {
+            ctx.stroke();
+        }
     }
 }

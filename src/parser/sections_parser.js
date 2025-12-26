@@ -75,8 +75,8 @@ export const Sections = {
                 if (token != '' && (section[i] == token || i == section.length - 2))
                 {
                     values.push(section.substring(start, i + 1).trim().replace(/^"|"$/g, '').replace(/\)$/g, ''));
-                    if (token == ')') token = '';
-                    start = i + 1;
+                    if (token != ' ') token = '';
+                    start = i;
                 }
             }
         }

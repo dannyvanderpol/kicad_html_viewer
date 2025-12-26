@@ -13,6 +13,8 @@ export const Colors = {
         "junction": "rgb(0, 150, 0)",
         "sheet": "rgb(132, 0, 0)",
         "sheet_background": "rgba(255, 255, 255, 0.000)",
+        "sheetfile": "rgb(114, 86, 0)",
+        "sheetname": "rgb(0, 100, 100)",
         "wire": "rgb(0, 150, 0)",
         "worksheet": "rgb(132, 0, 0)"
     },

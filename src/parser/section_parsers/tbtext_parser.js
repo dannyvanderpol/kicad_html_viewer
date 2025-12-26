@@ -28,7 +28,7 @@ export class TbTextParser extends BaseParser
                 if (value == 'italic') italic = true;
                 if (value.startsWith('size '))
                 {
-                    size = value.split(' ')[1];
+                    size = parseFloat(value.split(' ')[1]);
                 }
             }
         }

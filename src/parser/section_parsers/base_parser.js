@@ -89,7 +89,7 @@ export class BaseParser
             }
             else
             {
-                color = colors[identifier] || Colors.default;
+                color = colors[identifier.toLowerCase()] || Colors.default;
             }
         }
         else
@@ -213,6 +213,62 @@ export class BaseParser
             if (this.showDebug) logger.warn('Drawer: no text sequence for:', content);
         }
         return content;
+    }
+
+    getLabelData(sectionData)
+    {
+        const data = {
+            attributes: [],
+            pos: [],
+            size: 0,
+            hAlign: 'center',
+            vAlign: 'middle',
+            mirror: false
+        };
+        const subSections = Sections.getSections(sectionData);
+        const values = Sections.getValues(sectionData);
+        for (const value of values)
+        {
+            if (value.startsWith(Sections.getSectionName(subSections[0]))) break;
+            data.attributes.push(value);
+        }
+        for (const section of subSections)
+        {
+            const name = Sections.getSectionName(section);
+            if (name == 'at')
+            {
+                data.pos = Sections.getValues(section).map(parseFloat);
+            }
+            if (name == 'effects')
+            {
+                const properties = Sections.getProperties(section);
+                for (let value of properties.font)
+                {
+                    if (value == 'bold') data.bold = true;
+                    if (value == 'italic') data.italic = true;
+                    if (value.startsWith('size '))
+                    {
+                        data.size = parseFloat(value.split(' ')[1]);
+                    }
+                }
+                for (let value of properties.justify)
+                {
+                    if (['left', 'center', 'right'].includes(value))
+                    {
+                        data.hAlign = value;
+                    }
+                    if (['top', 'middle', 'bottom'].includes(value))
+                    {
+                        data.vAlign = value;
+                    }
+                    if (value == 'mirror')
+                    {
+                        data.mirror = true;
+                    }
+                }
+            }
+        }
+        return data;
     }
 
     addCircle(layer, points, size, color)

@@ -12,8 +12,8 @@ export class SheetParser extends BaseParser
     parse(sectionContent)
     {
         const points = [];
-        let color = '';
-        let size = 0;
+        let sheetColor = '';
+        let sheetSize = 0;
         let fillColor = '';
 
         let sections = Sections.getSections(sectionContent);
@@ -28,6 +28,21 @@ export class SheetParser extends BaseParser
                     points.push({ x: parseFloat(values[0]), y: parseFloat(values[1])});
                     break;
 
+                case 'property':
+                    const data = this.getLabelData(subSection)
+                    let content = data.attributes[1];
+                    if (data.attributes[0] == "Sheetfile")
+                    {
+                        content = 'File: ' + content;
+                    }
+                    const pos = [
+                        { x: data.pos[0], y: data.pos[1] }
+                    ]
+                    const color = this.getColor(data.attributes[0]);
+                    this.addText('design', pos, content, data.size, color, data.bold, data.italic,
+                                 data.hAlign, data.vAlign, data.mirror)
+                    break;
+
                 case 'size':
                     const point = { ...points[0] };
                     point.x += parseFloat(values[0]);
@@ -36,20 +51,23 @@ export class SheetParser extends BaseParser
                     break;
 
                 case 'stroke':
-                    size = parseFloat(properties.width[0]);
+                    sheetSize = parseFloat(properties.width[0]);
                     break;
 
                 case 'fill':
                     fillColor = properties.color;
                     break;
+
+                default:
+                    //console.log(subSection);
             }
         }
         fillColor = this.getColor(this.sectionName + '_background', fillColor);
         if (points.length == 2)
         {
-            size = this.getLineThickness(size);
-            color = this.getColor('sheet');
-            this.addRectangle('design', points, size, color, fillColor);
+            sheetSize = this.getLineThickness(sheetSize);
+            sheetColor = this.getColor('sheet');
+            this.addRectangle('design', points, sheetSize, sheetColor, fillColor);
         }
     }
 }

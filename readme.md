@@ -67,7 +67,16 @@ Create a HTML page and include the minified buid.
 You can add as many canvas elements as you wish.
 The JS module starts working on the `DOMContentLoaded` event.
 
-### Disclamer
+## Statistics
+
+<table>
+  <tr><td>JS files</td><td>45</td></tr>
+  <tr><td>Code lines</td><td>2900+</td></tr>
+  <tr><td>JS code size</td><td>220KB</td></tr>
+  <tr><td>Minified size</td><td>72KB</td></tr>
+</table>
+
+## Disclamer
 
 This software can be used for any purpose, in case of any issues, open an issue in the issue tracker.
 For the rest, you are on your own. I do not accept any liabilities when using this software.

@@ -223,6 +223,8 @@ export class BaseParser
             attributes: [],
             pos: [],
             size: 0,
+            bold: false,
+            italic: false,
             hAlign: 'center',
             vAlign: 'middle',
             mirror: false
@@ -307,23 +309,20 @@ export class BaseParser
         this.graphicsElements.push(rectangle);
     }
 
-    addText(layer, points, content, size, color, bold, italic, hAlign, vAlign, mirror)
+    addText(layer, points, content, size, color, bold, italic, hAlign, vAlign, mirror, rotation)
     {
-        let font = '';
-        font += bold ? 'bold ' : '';
-        font += italic ? 'italic ' : '';
-        font += `${size}px `;
-        font += 'KiCadFont';
-
         const text = new Text();
         text.layer = layer;
         text.points = points;
         text.text = content;
-        text.font = font;
+        text.size = size;
+        text.bold = bold;
+        text.italic = italic;
         text.color = color;
         text.hAlign = hAlign;
         text.vAlign = vAlign;
         text.mirror = mirror;
+        text.rotation = rotation;
         this.graphicsElements.push(text);
     }
 

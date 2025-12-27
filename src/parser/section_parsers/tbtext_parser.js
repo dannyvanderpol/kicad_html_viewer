@@ -54,7 +54,6 @@ export class TbTextParser extends BaseParser
         const x = this.correctXY('x', parseFloat(properties.pos[0]), properties.pos?.[2] ?? null);
         let y = this.correctXY('y', parseFloat(properties.pos[1]), properties.pos?.[2] ?? null);
         // Looks like the Y is a bit off, so adjust for that
-        y += size * 0.15;
         const repeat = parseInt(properties.repeat?.[0] ?? 1);
         const incrX = parseInt(properties.incrx?.[0] ?? 0);
         const incrY = parseInt(properties.incry?.[0] ?? 0);

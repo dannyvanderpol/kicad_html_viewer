@@ -31,7 +31,6 @@ export class SheetParser extends BaseParser
                 case 'pin':
                     const pinData = this.getLabelData(subSection)
                     this.addHierPin(pinData.pos, pinData.attributes[1]);
-                    console.log(pinData);
                     const rotation = pinData.pos[2] == 180 ? 0 : pinData.pos[2] == 90 ? 270 : pinData.pos[2];
                     const textPoints = [{
                         x: pinData.pos[0] + (pinData.pos[2] == 0 ? -2 : pinData.pos[2] == 180 ? 2 : 0),
